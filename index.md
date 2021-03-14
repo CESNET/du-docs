@@ -2,7 +2,7 @@
 
 You can use the [editor on GitHub](https://github.com/CERIT-SC/kube-docs/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
-Added new section [this section](https://github.com/CERIT-SC/kube-docs/edit/gh-pages/jupyterhub.md)
+Added new section [this section](jupyterhub.md)
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
