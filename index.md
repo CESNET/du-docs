@@ -1,9 +1,9 @@
 # Welcome to CERIT-SC documetation for Kubernetes and Rancher usage
 
 CERIT-SC's Kubernetes clusters are available for use to all people eligible to login via ELIXIR, EGI or MetaCentrum. 
-Everybody gets default project in one of the clusters but group projects can be set up as well. To setup group project, a PERUN group must exist (in Meta VO) with all intended members.
+Everybody has default project in one of the clusters but group projects for team collaboration can be set up as well. To create group project, a _PERUN_ group must exist (in Meta VO) with all intended members.
 
-One can maipulate with cluster through command line or graphical user tool _Rancher_. Nevertheless, it is mandatory to log into _Rancher_ to obtain token for command line tool. 
+One can manipulate with cluster through command line tool `kubectl` or graphical user tool _Rancher_. Nevertheless, it is mandatory to log into _Rancher_ to obtain token for command line tool. 
 
 ## Rancher
 
@@ -12,48 +12,45 @@ After logging in, you shall see default dashboard. Right now, you do not have an
 
 You can find assigned project in the upper left corner of the page under tab `Global` &rarr; `hdhu-cluster` &rarr; `Default project (your name)`
 
-[image]
+![default project](https://github.com/CERIT-SC/kube-docs/blob/Start-docs/default.png?raw=true)
 
-It is possible to work to certain extent only with Rancher or use command line tool `kubectl` (or both). We do not recommend `kubectl` for users inexperienced with working in terminal.
+It is possible to work to certain extent only with Rancher. However, command line tool `kubectl` allows more actions. You can utilize both ways but we do not recommend `kubectl` for users inexperienced with working in terminal.
 
 More about Rancher [here](rancher.md).
 
-Added new section [this section](jupyterhub.md)
 
 ## Kubectl
 
-`Kubectl` is a powerful tool for interacting with Kubernetes clusters. For installation, see [official documentation](https://kubernetes.io/docs/tasks/tools/#kubectl). A `kube config` file is required for `kubectl` to function. The file is located under tab `Global` &rarr; `hdhu-cluster` (click on the cluster name) in upper right corner.
+`Kubectl` is a powerful tool for interacting with Kubernetes clusters. For installation, see [official documentation](https://kubernetes.io/docs/tasks/tools/#kubectl). After installation, a `kube config` file is required to function. The file is located under tab `Global` &rarr; `hdhu-cluster` (click on the cluster name) in upper right corner.
 
-[image]
+![kube config](https://github.com/CERIT-SC/kube-docs/blob/Start-docs/config.png?raw=true)
 
+Copy contents of this file into `$HOME/.kube/config` and change permissions to 700 (`chmod 700 $HOME/.kube/config`). It is possible to have multiple cluster configurations in one config file. 
 
+## Applications available for users
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+There are multiple applications currently available for users that run solely in Kubernetes clusters. They are maintained either by CERIT-SC or individuals under Institute of Computer Science. 
 
-```markdown
-Syntax highlighted code block
+Applications for users:
 
-# Header 1
-## Header 2
-### Header 3
+- [JupyterHub](jupyterhub.md)
+- [Galaxy](galaxy.md)
+- [MagicForceField](mff.md)
+- [Tes/WES] (teswes.md)
 
-- Bulleted
-- List
+## Operational applications running in Kuberentes 
 
-1. Numbered
-2. List
+There are some applications that are not directly used by users but function in containers and are managed in Kubernetes. Numerous applications can be turned into containers and microservices. You can be inspired by some of ours, but presently we run:
 
-**Bold** and _Italic_ and `Code` text
+- whole proxy (the one used for logging into Rancher) 
 
-[Link](url) and ![Image](src)
-```
+## Examples and hands-ons
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+We provide a short tutorial on how to deploy a sample hello-world web to acknowledge yourself with working in clusters.
 
-### Jekyll Themes
+[Hello-world tutorial](helloworld.md)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/CERIT-SC/kube-docs/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## Further information
 
-### Support or Contact
+If you need support or advice on whether (and how) you can use Kubernetes and containers for your use case, contact us in RT. 
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
