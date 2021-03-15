@@ -16,7 +16,7 @@ You can find assigned project in the upper left corner of the page under tab `Gl
 
 It is possible to work to certain extent only with Rancher. However, command line tool `kubectl` allows more actions. You can utilize both ways but we do not recommend `kubectl` for users inexperienced with working in terminal.
 
-More about Rancher [here](rancher.md).
+More about working with Rancher [here](rancher.md).
 
 
 ## Kubectl
@@ -27,6 +27,8 @@ More about Rancher [here](rancher.md).
 
 Copy contents of this file into `$HOME/.kube/config` and change permissions to 700 (`chmod 700 $HOME/.kube/config`). It is possible to have multiple cluster configurations in one config file. 
 
+More about working with `kubectl` [here](kubectl.md).
+
 ## Applications available for users
 
 There are multiple applications currently available for users that run solely in Kubernetes clusters. They are maintained either by CERIT-SC or individuals under Institute of Computer Science. 
@@ -36,7 +38,7 @@ Applications for users:
 - [JupyterHub](jupyterhub.md)
 - [Galaxy](galaxy.md)
 - [MagicForceField](mff.md)
-- [Tes/WES] (teswes.md)
+- [Tes/WES](teswes.md)
 
 ## Operational applications running in Kuberentes 
 
