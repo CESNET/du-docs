@@ -32,57 +32,11 @@ cat sshfs-keys/id_rsa.pub | ssh {meta-username}@storage-brno3-cerit.metacentrum.
 ```                                                                             
                                                                                 
 
-*Secondly*, create PersistentVolume + PersistentVolumeClaim to have your home available. 
-                                                                                
-1. Copy following configuration to new file and save as `volume.yaml`.              
-   *Change each occurence of {meta-username} to your name!*                     
-   If you have `vim` you can open the file as `vim volume.yaml` and after copying use `:%s/{meta-username}/[real-name]/gg`
+*Secondly*,  PersistentVolume + PersistentVolumeClaim have to be availbale to have your home mounted in hub. 
 
-```                                                                             
-apiVersion: v1                                                                  
-kind: PersistentVolume                                                          
-metadata:                                                                       
-  name: {meta-username}-data-sshfs                                              
-  labels:                                                                       
-    name: {meta-username}-data-sshfs                                            
-spec:                                                                           
-  accessModes:                                                                  
-  - ReadWriteMany                                                               
-  capacity:                                                                     
-    storage: 100Gi                                                              
-  storageClassName: sshfs                                                       
-  csi:                                                                          
-    driver: csi-sshfs                                                           
-    volumeHandle: data-id                                                       
-    volumeAttributes:                                                           
-      server: "nfs-kat.ics.muni.cz"                                             
-      port: "22"                                                                
-      share: "/nfs4/home/{meta-username}"                                       
-      privateKey: "jupyterhub-prod-ns/{meta-username}-secret"                   
-      user: "{meta-username}"                                                   
-      sshOpts: "uid=1000,gid=100,allow_other"                                   
----                                                                             
-apiVersion: v1                                                                  
-kind: PersistentVolumeClaim                                                     
-metadata:                                                                       
-  name: {meta-username}-claim                                                   
-spec:                                                                           
-  accessModes:                                                                  
-  - ReadWriteMany                                                               
-  resources:                                                                    
-    requests:                                                                   
-      storage: 100Gi                                                            
-  storageClassName: sshfs                                                       
-  selector:                                                                     
-    matchLabels:                                                                
-      name: {meta-username}-data-sshfs                                          
-```                                                                             
+# TODO
+how.
                                                                                 
-2. Create PV and PVC with                                                       
-                                                                                                                                                                                                        
-```                                                                             
-kubectl apply -f volume.yaml -n jupyterhub-prod-ns                              
-```   
 
 Now you can access notebook on `hub.cerit-sc.cz` where you can choose which notebook type you want to use. Sign in with your meta username (do not use @META, only username). In jupyterhub, your home is located in `/home/meta/{meta-username}`. 
 
