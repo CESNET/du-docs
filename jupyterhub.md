@@ -3,15 +3,53 @@ You will need `kubectl` installed on your machine, see [official documentation](
 
 ## Create Kuberentes resources 
 
-*Firstly*, create a Secret. The secret contains private ssh key to your MetaCentrum home which needs to be generated and copied into your home.
-There's a couple of steps you need to take:                                     
+*Firstly*, create a Secret. The secret contains private ssh key to your MetaCentrum home which needs to be generated locally and copied to chosen remote home. MetaCentrum home can be attached to the JupyterHub so you can perform analysis on data stored there. You can have notebooks with different homes attached to them (but not at the same time, these will be different notebooks).
+
+<table border="0">
+ <tr>
+    <td>brno10-ceitec-hsm</td>
+    <td>brno14-ceitec</td>
+    <td>brno3-cerit</td>
+    <td>brno7-cerit</td>
+    <td>budejovice1</td>
+    <td>liberec3-tul</td>
+    <td>plzen1</td>
+ </tr>
+ <tr>
+    <td>praha2-natur</td>
+    <td>pruhonice1-ibot</td>
+    <td>brno11-elixir</td>
+    <td>brno1-cerit</td>
+    <td>brno4-cerit-hsm</td>
+    <td>brno8</td>
+    <td>du-cesnet</td>
+ </tr>
+ <tr>
+    <td>ostrava1</td>
+    <td>plzen4-ntis</td>
+    <td>praha5-elixir</td>
+    <td>brno12-cerit</td>
+    <td>brno2</td>
+    <td>brno6</td>
+    <td>brno9-ceitec</td>
+ </tr>
+ <tr>
+    <td>jihlava1-cerit</td>
+    <td>ostrava2-archive</td>
+    <td>praha1</td>
+    <td>projects</td>
+    <td>vestec1-elixir</td>   
+ </tr>
+</table>
+
+
+When you have chosen which one you want to use, there's a couple of steps you need to take:                                     
                                                                                 
                                                                                 
 1. Generate ssh key using keygen on Linux, leave passphrase empty (press enter 2 times)
                                                                                 
 ```                                                                             
-mkdir -p sshfs-keys; ssh-keygen -t rsa -b 4096 -f sshfs-keys/id_rsa             
-                                                                                
+mkdir -p sshfs-keys; ssh-keygen -t rsa -b 4096 -f sshfs-keys/id_rsa                                                                                        
 ```                                                                             
                                                                                 
 2. Rename the id_rsa (needed for setup to work)                                 
@@ -25,20 +63,16 @@ mv sshfs-keys/id_rsa sshfs-keys/ssh-privatekey
 kubectl create secret generic {meta-username}-secret  --type=kubernetes.io/ssh-auth --from-file sshfs-keys/ssh-privatekey  -n jupyterhub-prod-ns
 ```                                                                             
                                                                                 
-4. Copy the id_rsa.pub to your `.ssh/authorized_keys` on storage-XXX.metacentrum.cz (according to where you have your data stored). E.g.
+4. Copy the id_rsa.pub to your `.ssh/authorized_keys` on storage-{CHOSEN_STORAGE}.metacentrum.cz *change {meta-username} to yours and change the place!* E.g.
                                                                                 
 ```                                                                             
 cat sshfs-keys/id_rsa.pub | ssh {meta-username}@storage-brno3-cerit.metacentrum.cz -T "cat >> .ssh/authorized_keys"
 ```                                                                             
-                                                                                
+                                                                                                                                              
+Now you can access notebook on `hub.cerit-sc.cz` where you can choose which notebook type you want to use. Sign in with your meta username but to have access to the home, enter only your username (without @META). In jupyterhub, your home is located in `/home/meta/{meta-username}-{CHOSEN_STORAGE}`. 
 
-*Secondly*,  PersistentVolume + PersistentVolumeClaim have to be availbale to have your home mounted in hub. 
-
-# TODO
-how.
-                                                                                
-
-Now you can access notebook on `hub.cerit-sc.cz` where you can choose which notebook type you want to use. Sign in with your meta username (do not use @META, only username). In jupyterhub, your home is located in `/home/meta/{meta-username}`. 
+## Conda
+Creating custom environments through conda is allowed. Once you create some, they are stored in `/home/jovyan/my-conda-envs/`. Environments will persist across sessions but after 5 hours, the notebooks are destroyed and created environments cease to exist. (This can be changed. YES/NO?)  
 
 ## Feature requests
 Any tips for features or new notebook types are welcomed in RT.
