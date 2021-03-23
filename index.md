@@ -50,7 +50,7 @@ There are some applications that are not directly used by users but function in 
 
 We provide a short tutorial on how to deploy a sample hello-world web to acknowledge yourself with working in clusters.
 
-[Hello-world tutorial](helloworld.md)
+[Hello-world tutorial](helloworld-cmd.md)
 
 ## Further information
 
