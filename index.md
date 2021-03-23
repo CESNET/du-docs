@@ -25,13 +25,13 @@ More about working with Rancher [here](rancher.md).
 
 ![kube config](https://github.com/CERIT-SC/kube-docs/blob/gh-pages/config.png?raw=true)
 
-Copy contents of this file into `$HOME/.kube/config` and change permissions to 700 (`chmod 700 $HOME/.kube/config`). It is possible to have multiple cluster configurations in one config file. 
+Copy contents of this file into `$HOME/.kube/config` and change permissions to 700 (`chmod 700 $HOME/.kube/config`). 
 
-More about working with `kubectl` [here](kubectl.md).
+It is possible to have multiple cluster configurations in one config file. More about working with `kubectl` with access to multiple clusters [here](multiple.md).
 
 ## Applications available for users
 
-There are multiple applications currently available for users that run solely in Kubernetes clusters. They are maintained either by CERIT-SC or individuals under Institute of Computer Science. 
+There are applications currently available for users that run solely in Kubernetes clusters. They are maintained either by CERIT-SC or individuals under Institute of Computer Science. 
 
 Applications for users:
 
