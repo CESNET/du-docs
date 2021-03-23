@@ -12,7 +12,7 @@ After logging in, you shall see default dashboard. Right now, you do not have an
 
 You can find assigned project in the upper left corner of the page under tab `Global` &rarr; `hdhu-cluster` &rarr; `Default project (your name)`
 
-![default project](https://github.com/CERIT-SC/kube-docs/blob/Start-docs/default.png?raw=true)
+![default project](https://github.com/CERIT-SC/kube-docs/blob/gh-pages/default.png?raw=true)
 
 It is possible to work to certain extent only with Rancher. However, command line tool `kubectl` allows more actions. You can utilize both ways but we do not recommend `kubectl` for users inexperienced with working in terminal.
 
@@ -23,7 +23,7 @@ More about working with Rancher [here](rancher.md).
 
 `Kubectl` is a powerful tool for interacting with Kubernetes clusters. For installation, see [official documentation](https://kubernetes.io/docs/tasks/tools/#kubectl). After installation, a `kube config` file is required to function. The file is located under tab `Global` &rarr; `hdhu-cluster` (click on the cluster name) in upper right corner.
 
-![kube config](https://github.com/CERIT-SC/kube-docs/blob/Start-docs/config.png?raw=true)
+![kube config](https://github.com/CERIT-SC/kube-docs/blob/gh-pages/config.png?raw=true)
 
 Copy contents of this file into `$HOME/.kube/config` and change permissions to 700 (`chmod 700 $HOME/.kube/config`). It is possible to have multiple cluster configurations in one config file. 
 
