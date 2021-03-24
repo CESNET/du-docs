@@ -84,7 +84,7 @@ You can use whatever name you want but it has to fullfill 2 requirements:
 - name is composed only from letters, numbers and '-'
 - name ends with `.dyn.cerit-sc.cz`
 
-The name is filled in `spec.rules.host` and in `spec.tls`. Before you use any name, check in browser it doesn't already exist. 
+The name is filled in `spec.rules.host` and in `spec.tls`. Before you use any name, check in browser it doesn't already exist. After creation, it takes a minute to create new DNS entry so your app will not be available right away at specified name, wait one minute.
 
 ```                                                                                                                                                                                                        
 apiVersion: networking.k8s.io/v1                                                
@@ -169,28 +169,12 @@ spec:
 
 ![hello2](https://github.com/CERIT-SC/kube-docs/blob/gh-pages/hello2.png?raw=true)
 
-## Pod Security Policy
-For security reasons, not everything is allowed in `hdhu-cluster`. 
-
-List of (dis)allowed actions:
-- Allow Privilege Escalation:  false
-- Fs Group: must run as 1-65535
-- User: must run as non root
-- Supplemental groups: must run as 1-65535
-- Volumes: can mount `configMap, emptyDir, projected, secret, downwardAPI, persistentVolumeClaim`
-
-Any deployment that will attempt to run as root won't be created and will persist in state similar to (notice READY 0/3 and AVAILABLE 0, logs and describe would tell more)
-```
-NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-hello-kubernetes   0/3     3            0           7m8s
-```
-
-## Further customization
-Further customization can include:
+Other customization can include:
 - creating a `Secret` (e.g. for password) and mounting it into the pod into the file
 - creating a `ConfigMap` (e.g. for bigger configurations) and mounting into the pod
 - creating a `PersistentVolumeClaim` (storage) from NFS (S3 #TODO) and mounting into the Pod
 - creating resources of other types e.g. ReplicaSet, StatefulSet, DaemonSet
+
 
 ## Creating PersistentVolumeClaim
 If you need to use some persistent storage, you can demand a NFS volume and mount it in `Deployment`. 
@@ -247,7 +231,21 @@ spec:
           claimName: my-first-claim
 ```
 
+## Pod Security Policy
+For security reasons, not everything is allowed in `hdhu-cluster`. 
 
+List of (dis)allowed actions:
+- Allow Privilege Escalation:  false
+- Fs Group: must run as 1-65535
+- User: must run as non root
+- Supplemental groups: must run as 1-65535
+- Volumes: can mount `configMap, emptyDir, projected, secret, downwardAPI, persistentVolumeClaim`
+
+Any deployment that will attempt to run as root won't be created and will persist in state similar to (notice READY 0/3 and AVAILABLE 0, logs and describe would tell more)
+```
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+hello-kubernetes   0/3     3            0           7m8s
+```
 
 ## Kubectl command
 There are many useful `kubectl` commands that can be used to verify status of deployed resources or get information about them. To list some of the most handy:
