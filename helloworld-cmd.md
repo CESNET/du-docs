@@ -103,7 +103,7 @@ spec:
           service:                                                              
             name: hello-kubernetes-svc                                          
             port:                                                               
-              number: 8080                                                      
+              number: 80                                                      
         pathType: ImplementationSpecific
 ```
 
@@ -117,7 +117,7 @@ This example file is composed of fields:
     - `secretName` has to match DNS name but *all dots are substituted by '-' and -tls is added at the end*
   - `.rules` is the most important part
     - `host` is optional, if provided, rules apply to that host
-    - `paths` (for example, `/testpath`), each of which has an associated backend defined with a `service.name` and a `service.port.name` or `service.port.number`. Path type can be specified, more about it [here](https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types)
+    - `paths` (for example, `/testpath`), each of which has an associated backend defined with a `service.name` and a `service.port.name` or `service.port.number`. `service.port.number` is the port which is exposed by the service therefore in service denoted as `spec.ports.port`, similarly `service.ports.[i].name` is equivalent to `spec.ports.[i].name`. Path type can be specified, more about it [here](https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types)
 
 ### 4. Create
 Now, create all resources with using whole directory as an argument and specify your namespace 
