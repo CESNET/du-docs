@@ -33,9 +33,9 @@ spec:
       labels:
         app: hello-kubernetes
     spec:
-      containers:
-       securityContext:                                                          
-        runAsUser: 1000      
+      securityContext:                                                          
+        runAsUser: 1000
+      containers:      
       - name: hello-kubernetes
         image: paulbouwer/hello-kubernetes:1.9
         ports:
