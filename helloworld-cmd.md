@@ -84,7 +84,7 @@ You can use whatever name you want but it has to fullfill 2 requirements:
 - name is composed only from letters, numbers and '-'
 - name ends with `.dyn.cerit-sc.cz`
 
-The name is filled in `spec.rules.host` and in `spec.tls`.
+The name is filled in `spec.rules.host` and in `spec.tls`. Before you use any name, check in browser it doesn't already exist. 
 
 ```                                                                                                                                                                                                        
 apiVersion: networking.k8s.io/v1                                                
