@@ -79,7 +79,12 @@ A Service can map any incoming port to a targetPort. By default, the targetPort 
 ### 3. Ingress
 
 Lastly, we have to create `Ingress` which exposes HTTP and HTTPS routes from outside world to the cluster world. Traffic is controled by rules set in the resource.
-10 test DNS names exist (`test-hello1.cerit-sc.cz` -- `test-hello10.cerit-sc.cz`) so you can use any of them. See here [#TODO] which are currently free to use. Test deployments are removed at daily basis automatically. 
+It is possible to expose your deployments in [2 ways](expose.md) but here we will use cluster LoadBalancer with creation of just new DNS name.
+You can use whatever name you want but it has to fullfill 2 requirements:
+- name is composed only from letters, numbers and '-'
+- name ends with `.dyn.cerit-sc.cz`
+
+The name is filled in `spec.rules.host` and in `spec.tls`.
 
 ```                                                                                                                                                                                                        
 apiVersion: networking.k8s.io/v1                                                
@@ -89,14 +94,15 @@ metadata:
   annotations:                                                                  
     kuberentes.io/ingress.class: "nginx"                                        
     kubernetes.io/tls-acme: "true"                                              
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"                          
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    external-dns.alpha.kubernetes.io/target: k8s-public-u.cerit-sc.cz
 spec:                                                                           
   tls:                                                                          
     - hosts:                                                                    
-        - "test-hello.cerit-sc.cz"                                              
-      secretName: test-hello-cerit-sc-cz-tls                                    
+        - "test-hello.dyn.cerit-sc.cz"                                              
+      secretName: test-hello-dyn-cerit-sc-cz-tls                                    
   rules:                                                                        
-  - host: "test-hello.cerit-sc.cz"                                              
+  - host: "test-hello.dyn.cerit-sc.cz"                                          
     http:                                                                       
       paths:                                                                    
       - backend:                                                                
