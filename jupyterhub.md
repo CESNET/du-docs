@@ -6,11 +6,9 @@ You will need `kubectl` installed on your machine, see [official documentation](
 *Firstly*, create a Secret. The secret contains private ssh key to your MetaCentrum home which needs to be generated and copied into your home.
 There's a couple of steps you need to take:                                                                                                               
                                                                                 
-1. Generate ssh key using keygen on Linux, leave passphrase empty (press enter 2 times)
-                                                                                
+1. Generate ssh key using keygen on Linux, leave passphrase empty (press enter 2 times)                                                                            
 ```                                                                             
-mkdir -p sshfs-keys; ssh-keygen -t rsa -b 4096 -f sshfs-keys/id_rsa             
-                                                                                
+mkdir -p sshfs-keys; ssh-keygen -t rsa -b 4096 -f sshfs-keys/id_rsa                                                                                            
 ```                                                                             
                                                                                 
 2. Rename the id_rsa (needed for setup to work)                                 
@@ -19,7 +17,6 @@ mv sshfs-keys/id_rsa sshfs-keys/ssh-privatekey
 ```                                                                             
                                                                                 
 3. Create Kubernetes secret using kubectl, *change {meta-username} to yours!*     
-                                                                                
 ```                                                                             
 kubectl create secret generic {meta-username}-secret  --type=kubernetes.io/ssh-auth --from-file sshfs-keys/ssh-privatekey  -n jupyterhub-prod-ns
 ```                                                                             
@@ -35,7 +32,6 @@ liberec3-tul | ostrava1 | ostrava2-archive | pruhonice1-ibot | praha5-elixir
 plzen1 | plzen4-ntis 
 
 The command to run:
-
 ```                                                                             
 cat sshfs-keys/id_rsa.pub | ssh {meta-username}@storage-brno3-cerit.metacentrum.cz -T "mkdir -p .ssh; cat >> .ssh/authorized_keys"
 ```                  
