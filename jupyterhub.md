@@ -36,7 +36,6 @@ The command to run:
 cat sshfs-keys/id_rsa.pub | ssh {meta-username}@storage-brno3-cerit.metacentrum.cz -T "mkdir -p .ssh; cat >> .ssh/authorized_keys"
 ```                  
  
- 
 ## Access notebook
 You can access notebook on `hub.cerit-sc.cz`. Sign in with your meta username (do not use @META, only username). 
 
@@ -51,27 +50,34 @@ If you choose custom, you have to provide image name together with its repo and 
 
 You can choose to mount any of your homes. It is possible to mount only one home to notebook at time. `brno3-cerit` is chosen as default storage.  In hub, your home is located in `/home/meta/{meta-username}`.
 
-If you want to mount other home and you already have one notebook existing, you have to wait until it deletes. Culling is set to 5h so you have to wait.
+### I've chosen wrong home! What now?!
+
+If you want to mount different home but already have a running notebook, you can stop your current notebook. In the top left corner, go to `File &rarr; Hub Control Panel` and click red `Stop My Server`. In a couple of seconds, your container hub instance will be deleted and you can again `Start Server` with different home.
+
+If you chose wrong home name **by mistake** and many errors apeear, you can safely ignore them and wait for 10 minutes. The service has a timeout set to 10 minutes and during this time, it is trying to create all necessary resources. Due to errors creation won't succeed and after 10 minutes you will see red progress bars with message `Spawn failed: pod/jupyter-[username] did not start in 600 seconds!`. At this point, it is sufficient to reload the page and click on `Relaunch server`.
 
 ## Error handling
-Wrong form input results in _HTTP 500:Internal Server Error_ . The most common reasons:
+Wrong form input results in _HTTP 500:Internal Server Error_ . 
+
+If you chose to mount MetaCentrum home, the most common reasons are:
 - secret
   - doesn't exist at all/in wrong namespace 
-  - is spelled badly (misspelled username) 
-- custom image name
-  - has incorrect format - slash or colon at the beginning or end
-  - has more than one slash (exactly one has to exist to differentiate between repo and image name _repo/imagename_)
-  - has more than one colon (zero on one are possible - to separate imagename and tag if provided)
-  - generally has to be in form either *repo/imagename* or *repo/imagename:tag*
+  - is spelled badly (misspelled username)
+
+In both cases, error can lie in custom image name:
+- has incorrect format - slash or colon at the beginning or end
+- has more than one slash (exactly one has to exist to differentiate between repo and image name _repo/imagename_)
+- has more than one colon (zero on one are possible - to separate imagename and tag if provided)
+- generally has to be in form either *repo/imagename* or *repo/imagename:tag*
 
 If you exeprience error while spawning, clicking on small arrow `Event log` provides more information. The most common:
 - `TimeoutError("Server at http://10.42.3.77:8888/user/{username}/ didn't respond in 30 seconds")> after timeout` - specified image is too large and didn't get pulled in 10 minuts - contact us
-- `output: "read: Connection reset by peer` - secret exists but you haven't copied `id_rsa.pub` to remote location. See point 4 in _Create Kuberentes resources_.
-  - if you've certainly done this *before* spawning notebook, contact us
-  - if you've done this only when error appeared, wait for a minute. If you experience red progress bar and , wait a minute and refresh the page. You will be presented with new form.
 - `output: "{username}@storage-{storage}.metacentrum.cz:/home/{username}: Not a directory` - contact us
 
-
+If you experience error`output: "read: Connection reset by peer` while spawning you have probably chose to mount MetaCentrum home but some of these might have not been performed:
+  - secret exists but you haven't copied `id_rsa.pub` to remote location. See point 4 in _Create Kuberentes resources_.
+  - if you've certainly copied `id_rsa.pub` *before* spawning notebook, contact us
+  - if you've copied `id_rsa.pub` only when error appeared, wait for a minute. If you experience red progress bar and , wait a minute and refresh the page. You will be presented with new form.
 
 ## Feature requests
 Any tips for features or new notebook types are welcomed in RT.
