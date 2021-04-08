@@ -18,7 +18,7 @@ mv sshfs-keys/id_rsa sshfs-keys/ssh-privatekey
                                                                                 
 3. Create Kubernetes secret using kubectl, *change {meta-username} to yours!*     
 ```                                                                             
-kubectl create secret generic {meta-username}-secret  --type=kubernetes.io/ssh-auth --from-file sshfs-keys/ssh-privatekey  -n jupyterhub-prod-ns
+kubectl create secret generic {meta-username}-secret  --type=kubernetes.io/ssh-auth --from-file=ssh-privatekey=sshfs-keys/ssh-privatekey  -n jupyterhub-prod-ns
 ```                                                                             
                                                                                 
 4. Copy the `id_rsa.pub` to your `.ssh/authorized_keys` on storage-XXX.metacentrum.cz (according to where you have your data stored). 
