@@ -1,6 +1,6 @@
 # JupyterHub 
 
-We provide a JupyterHub running on Kubernetes for every MetaCentrum member. The hub can be accessed notebook on `hub.cerit-sc.cz`. Sign in with meta username (do not use @META, only username). 
+We provide a JupyterHub running on Kubernetes for every MetaCentrum member. The hub can be accessed on `hub.cerit-sc.cz`. Sign in with meta username (do not use @META, only username). 
 
 ## Choosing image
 
@@ -15,7 +15,7 @@ If you choose custom, you have to provide image name together with its repo and 
 
 
 ## Choosing storage
-By default, every notebook runs with persistent storage mounted to `/home/jovyan`. Therefore, we recomment to save the data to `/home/jovyan` directory to have them accessible every time notebook is spawned. 
+By default, every notebook runs with persistent storage mounted to `/home/jovyan`. Therefore, we recommend to save the data to `/home/jovyan` directory to have them accessible every time notebook is spawned. 
 
 
 Optionally, you can mount your MetaCentrum home - check the option and select the desired home. Now, it is possible to mount only one home per notebook. In hub, your home is located in `/home/meta/{meta-username}`.
@@ -29,6 +29,15 @@ brno8 | brno9-ceitec | budejovice1 | du-cesnet | praha2-natur
 liberec3-tul | ostrava1 | ostrava2-archive | pruhonice1-ibot | praha5-elixir
 plzen1 | plzen4-ntis                   
  
+
+## Named servers
+In the top left corner, go to `File &rarr; Hub Control Panel`. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
+
+## Conda environment
+Conda is supported in all provided images and we can assure its functionality. 
+
+New conda environment in hub's terminal is created with command `conda create -n tenv --yes python=3.8 ipykernel nb_conda_kernels` (nb_conda_kernels is mandatory). Check if environment is installed with `conda env list`. You can use the environemnt right away, either by creating new notebook or changing the kernel of existing one (tab `Kernel &rarr; Change Kernel...` and choose the one you want to use)
+
 
 ## Error handling
 You receive _HTTP 500:Internal Server Error_ when accessing the URL `/user/your_name`. Most likely, this error is caused by:
@@ -45,10 +54,9 @@ Solutions:
 
 ## I've chosen wrong home! What now?!
 
-If notebook is already running, in the top left corner, go to `File &rarr; Hub Control Panel` and click red `Stop My Server`. In a couple of seconds, your container hub instance will be deleted (stop button disapperas) and you can again `Start Server` with different home.
+If notebook is already running, in the top left corner, go to `File &rarr; Hub Control Panel` and click red `Stop My Server`. In a couple of seconds, your container hub instance will be deleted (stop button disapperas) and you can again `Start Server` with different home. 
 
-## Named servers
-In the top left corner, go to `File &rarr; Hub Control Panel`. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
+Alternatively, you can create another named server. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
 
 All of your named server are accessible under `Hub Control panel` where you can manipulate with them (create, delete, log in to).
 
