@@ -36,7 +36,9 @@ In the top left corner, go to `File &rarr; Hub Control Panel`. Fill in the `Serv
 ## Conda environment
 Conda is supported in all provided images and we can assure its functionality. 
 
-New conda environment in hub's terminal is created with command `conda create -n tenv --yes python=3.8 ipykernel nb_conda_kernels` (nb_conda_kernels is mandatory). Check if environment is installed with `conda env list`. You can use the environemnt right away, either by creating new notebook or changing the kernel of existing one (tab `Kernel &rarr; Change Kernel...` and choose the one you want to use)
+New conda environment in hub's terminal is created with command `conda create -n tenv --yes python=3.8 ipykernel nb_conda_kernels` (`ipykernel nb_conda_kernels` part is required, alternatively irkernel). 
+
+Check if environment is installed with `conda env list`. You can use the environemnt right away, either by creating new notebook or changing the kernel of existing one (tab `Kernel &rarr; Change Kernel...` and choose the one you want to use)
 
 
 ## Error handling
