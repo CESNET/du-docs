@@ -42,9 +42,9 @@ Applications for users:
 
 ## Operational applications running in Kuberentes 
 
-There are some applications that are not directly used by users but function in containers and are managed in Kubernetes. Numerous applications can be turned into containers and microservices. You can be inspired by some of ours, but presently we run:
+There are some applications that are not directly used by users but function in containers and are managed in Kubernetes. Numerous applications can be turned into containers and microservices. Currently, we run:
 
-- whole proxy (the one used for logging into Rancher) 
+- proxy (the one used for logging into Rancher) 
 
 ## Examples and hands-ons
 
