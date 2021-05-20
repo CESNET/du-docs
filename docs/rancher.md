@@ -16,6 +16,6 @@ After logging in, you shall see default dashboard. Right now, you do not have an
 
 You can find assigned project in the upper left corner of the page under tab `Global` &rarr; `hdhu-cluster` &rarr; `Default project (your name)`
 
-![default project](https://github.com/CERIT-SC/kube-docs/blob/gh-pages/default.png?raw=true)
+![default project](default.png)
 
 It is possible to work to certain extent only with Rancher. However, command line tool `kubectl` allows more actions. You can utilize both ways but we do not recommend `kubectl` for users inexperienced with working in terminal.

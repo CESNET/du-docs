@@ -21,7 +21,7 @@ The server could be run locally but our clusters are on private network and ther
 *IMPORTANT*
 Unless agreed beforehand, for personal projects and experiments you can use `hdhu-cluster`. Here, you have to work in your namespace and its name is derived from your last name with added `-ns`. However, names are not unique and therefore we recommend to check yours on `Rancher` site under  under tab `Global` &rarr; `hdhu-cluster` &rarr; `Default project (your name)` and under tab `Namespaces`
 
-![kube ns](https://github.com/CERIT-SC/kube-docs/blob/gh-pages/ns.png?raw=true)
+![kube ns](ns.png)
 
 ## Create files
 
@@ -146,7 +146,7 @@ service/hello-kubernetes-svc created
 ```
 
 You can check status of deplyed resources with `kubectl get pods/services/ingress -n [namespace]` and when all of them are up and running, you can access the URL and you will be presented with sample page.
-![hello](https://github.com/CERIT-SC/kube-docs/blob/gh-pages/hello.png?raw=true)
+![hello](hello.png)
 
 ## Further customization
 You can specify various fields in every resource's file, many of them not used here. One of more wanted features is passing environment variables into `Deployments` in case spawned containers need some. We will use one environment variable in our deployment to change displayed message. At the end, add new section `env` which will forward the value into the pod. Then, run again `kubectl apply -f hello-world -n [namespace]` to apply changes. When you access the website now, new message is displayed!
@@ -178,7 +178,7 @@ spec:
           value: Hello from the other side!
 ```
 
-![hello2](https://github.com/CERIT-SC/kube-docs/blob/gh-pages/hello2.png?raw=true)
+![hello2](hello2.png)
 
 Other customization can include:
 - creating a `Secret` (e.g. for password) and mounting it into the pod into the file
