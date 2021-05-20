@@ -1,3 +1,15 @@
+---
+layout: article
+title: Multiple Clusters
+permalink: /docs/rancher-multiple.html
+key: rancher-multiple
+#cover: /docs/assets/images/axure/page-single.jpg
+aside:
+  toc: true
+sidebar:
+  nav: docs
+---
+
 One person can posses access rights to multiple clusters. To work with them, every cluster's `config` must be available in either:
 - `$HOME/.kube/config`
 - in separate file but then `-f [filename]` must be specified when using `kubectl`

@@ -1,3 +1,15 @@
+---
+layout: article
+title: JupyterHub
+permalink: /docs/jupyterhub.html
+key: jupyterhub
+#cover: /docs/assets/images/axure/page-single.jpg
+aside:
+  toc: true
+sidebar:
+  nav: docs
+---
+
 # JupyterHub 
 
 We provide a JupyterHub running on Kubernetes for every MetaCentrum member. The hub can be accessed on `hub.cerit-sc.cz`. Sign in with meta username (do not use @META, only username). 

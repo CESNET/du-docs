@@ -1,3 +1,15 @@
+---
+layout: article
+title: TESK/WES
+permalink: /docs/teskwes.html
+key: teskwes
+#cover: /docs/assets/images/axure/page-single.jpg
+aside:
+  toc: true
+sidebar:
+  nav: docs
+---
+
 # TESK/WES
 As members of ELIXIR we support TESK/WES deployment, developement and infrastructure. 
 

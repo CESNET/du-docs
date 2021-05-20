@@ -1,3 +1,14 @@
+---
+layout: article
+title: Galaxy
+permalink: /docs/galaxy.html
+key: galaxy
+#cover: /docs/assets/images/axure/page-single.jpg
+aside:
+  toc: true
+sidebar:
+  nav: docs
+---
 ## Galaxy
 
 ***The instance is currently under maintenance***

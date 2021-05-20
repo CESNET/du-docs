@@ -1,3 +1,15 @@
+---
+layout: article
+title: Kubectl Hello World
+permalink: /docs/kubectl-helloworld.html
+key: kubectl-helloworld
+#cover: /docs/assets/images/axure/page-single.jpg
+aside:
+  toc: true
+sidebar:
+  nav: docs
+---
+
 # Hello world tutorial
 
 Here we provide a short tutorial on how to deploy a custom webserver in Kubernetes with `kubectl`. We shall use already existing example from [hello-kubernetes](https://github.com/paulbouwer/hello-kubernetes) but with a bit more explanation. This tutorial by far doesn't include everything that can be configured and done but rather provides first experience with Kubernetes.
