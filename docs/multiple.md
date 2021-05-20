@@ -3,7 +3,6 @@ layout: article
 title: Multiple Clusters
 permalink: /docs/rancher-multiple.html
 key: rancher-multiple
-#cover: /docs/assets/images/axure/page-single.jpg
 aside:
   toc: true
 sidebar:

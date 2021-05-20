@@ -3,7 +3,6 @@ layout: article
 title: Kubectl Hello World
 permalink: /docs/kubectl-helloworld.html
 key: kubectl-helloworld
-#cover: /docs/assets/images/axure/page-single.jpg
 aside:
   toc: true
 sidebar:
@@ -91,7 +90,7 @@ A Service can map any incoming port to a targetPort. By default, the targetPort 
 ### 3. Ingress
 
 Lastly, we have to create `Ingress` which exposes HTTP and HTTPS routes from outside world to the cluster world. Traffic is controled by rules set in the resource.
-It is possible to expose your deployments in [2 ways](expose.md) but here we will use cluster LoadBalancer with creation of just new DNS name.
+It is possible to expose your deployments in [2 ways](/docs/kubectl-expose.html) but here we will use cluster LoadBalancer with creation of just new DNS name.
 You can use whatever name you want but it has to fullfill 2 requirements:
 - name is composed only from letters, numbers and '-'
 - name ends with `.dyn.cerit-sc.cz`

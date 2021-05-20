@@ -3,7 +3,6 @@ layout: article
 title: MagicForceField
 permalink: /docs/magicforcefield.html
 key: magicforcefield
-#cover: /docs/assets/images/axure/page-single.jpg
 aside:
   toc: true
 sidebar:

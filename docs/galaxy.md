@@ -3,7 +3,6 @@ layout: article
 title: Galaxy
 permalink: /docs/galaxy.html
 key: galaxy
-#cover: /docs/assets/images/axure/page-single.jpg
 aside:
   toc: true
 sidebar:

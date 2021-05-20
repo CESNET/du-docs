@@ -3,7 +3,6 @@ layout: article
 title: JupyterHub
 permalink: /docs/jupyterhub.html
 key: jupyterhub
-#cover: /docs/assets/images/axure/page-single.jpg
 aside:
   toc: true
 sidebar:

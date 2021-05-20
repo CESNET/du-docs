@@ -56,8 +56,12 @@ docs:
         url:    /docs/galaxy.html
   - title: Kubectl
     children:
+      - title: Overview
+        url: /docs/kubectl.html
       - title: Hello World
         url: /docs/kubectl-helloworld.html
+      - title: Exposing applications
+        url: /docs/kubectl-expose.html
   - title: JupyterHub
     children:
       - title: Overview

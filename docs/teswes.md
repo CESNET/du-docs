@@ -3,7 +3,6 @@ layout: article
 title: TESK/WES
 permalink: /docs/teskwes.html
 key: teskwes
-#cover: /docs/assets/images/axure/page-single.jpg
 aside:
   toc: true
 sidebar:
