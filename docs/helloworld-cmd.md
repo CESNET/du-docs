@@ -30,7 +30,7 @@ We have to create at least 3 Kubernetes resources to deploy the app -- `Deployme
 
 ### 1. Deployment
 Create new directory, e.g. `hellok` and inside, create new file `deployment.yaml `with content:
-```
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -70,7 +70,7 @@ Complete reference docs for resources and their allowed fields and subfields is 
 ### 2. Service
 Secondly, we have to create `Service` which is abstract way to expose an application as a network service.
 
-```
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -98,7 +98,7 @@ You can use whatever name you want but it has to fullfill 2 requirements:
 
 The name is filled in `spec.rules.host` and in `spec.tls`. Before you use any name, check in browser it doesn't already exist. After creation, it takes a minute to create new DNS entry so your app will not be available right away at specified name, wait one minute.
 
-```                                                                                                                                                                                                        
+```yaml
 apiVersion: networking.k8s.io/v1                                                
 kind: Ingress                                                                   
 metadata:                                                                       
@@ -139,7 +139,7 @@ This example file is composed of fields:
 
 ### 4. Create
 Now, create all resources with using whole directory as an argument and specify your namespace 
-```
+```bash
 kubectl apply -f hello-world -n [namespace]                     
 deployment.apps/hello-kubernetes created
 ingress.networking.k8s.io/hello-kubernetes-ingress created
@@ -152,7 +152,7 @@ You can check status of deplyed resources with `kubectl get pods/services/ingres
 ## Further customization
 You can specify various fields in every resource's file, many of them not used here. One of more wanted features is passing environment variables into `Deployments` in case spawned containers need some. We will use one environment variable in our deployment to change displayed message. At the end, add new section `env` which will forward the value into the pod. Then, run again `kubectl apply -f hello-world -n [namespace]` to apply changes. When you access the website now, new message is displayed!
 
-```
+```yaml
 apiVersion: apps/v1                                                                                                                                                                                         
 kind: Deployment                                                                
 metadata:                                                                       
@@ -192,7 +192,7 @@ Other customization can include:
 If you need to use some persistent storage, you can demand a NFS volume and mount it in `Deployment`. 
 
 Example: create file `claim.yaml` with content
-```
+```yaml
 apiVersion: v1                                                                                                                                                                                              
 kind: PersistentVolumeClaim                                                     
 metadata:                                                                       
@@ -206,7 +206,7 @@ spec:
   storageClassName: csi-nfs
 ```
 The `spec.resources.requests` field has to be specified but doesn't really mean anything. Then perform `kubectl apply -f claim.yaml -n [namespace]`. You can check if everything went fine by running
-```
+```bash
 kubectl get pvc -n [namespace]
 NAME                                                               STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 my-first-claim                                                    Bound    pvc-bcdcea2e-3019-409b-8b0f-18eb50d72c21   1Gi        RWX            csi-nfs        11d
@@ -218,7 +218,7 @@ The claim (and other mountable resources are done very similarly) is mounted int
 
 A piece of relevant config. `Volumes` is a list of volumes to mount with at least `name` field and type of resource which will be mounted (here `persistentVolumeClaim`) together with its name (the one specified in PVC's `metadata.name`). `volumeMounts` mounts items from `volumes` in certain path inside container. In container, everything saved in path `/work` will persist and can be shared between multiple containers (one volume can be mount many times if its type is `ReadWriteMany` which NFS is)
 
-```
+```yaml
 spec:                                                                           
   replicas: ...                                                                  
   selector:                                                                     
@@ -254,7 +254,7 @@ List of (dis)allowed actions:
 - Volumes: can mount `configMap, emptyDir, projected, secret, downwardAPI, persistentVolumeClaim`
 
 Any deployment that will attempt to run as root won't be created and will persist in state similar to (notice READY 0/3 and AVAILABLE 0, logs and describe would tell more)
-```
+```bash
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
 hello-kubernetes   0/3     3            0           7m8s
 ```
@@ -262,13 +262,13 @@ hello-kubernetes   0/3     3            0           7m8s
 ## Kubectl command
 There are many useful `kubectl` commands that can be used to verify status of deployed resources or get information about them. To list some of the most handy:
 - `kubectl get [resource]` provides basic information about resource e.g. if we query service, we can see IP address
-```
+```bash
  kubectl get service hello-kubernetes-svc -n [namespace]
 NAME                   TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)        AGE
 hello-kubernetes-svc   LoadBalancer   10.43.124.251   147.251.253.171   80:31334/TCP   3h23m
 ```
 - `kubectl describe [resource]` offers detailed information about resource (output is heavily trimmed)
-```
+```bash
 kubectl describe pod hello-kubernetes -n cerit23-ns
 Name:         hello-kubernetes-5547c96ddc-4hxnf
 Namespace:    cerit23-ns
@@ -288,8 +288,9 @@ Controlled By:  ReplicaSet/hello-kubernetes-5547c96ddc
 ...
 ```
 - `kubectl get pods -n [namespace]` + `kubectl logs [pod_name] -n [namespace]` shows pod's logs if they were configured or any output occured. This combination is very useful for debugging.
-```
- kubectl get pods -n cerit23-ns --context hdhu-cluster 
+
+```bash
+kubectl get pods -n cerit23-ns --context hdhu-cluster 
 NAME                                READY   STATUS    RESTARTS   AGE
 hello-kubernetes-5547c96ddc-4hxnf   1/1     Running   0          3h19m
 hello-kubernetes-5547c96ddc-856pp   1/1     Running   0          3h19m

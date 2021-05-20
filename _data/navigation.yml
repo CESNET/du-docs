@@ -51,7 +51,9 @@ header:
 
 docs:
   - title: Galaxy
-    url:    /docs/galaxy.html
+    children:
+      - title: Overview
+        url:    /docs/galaxy.html
   - title: Kubectl
     children:
       - title: Hello World
@@ -69,4 +71,6 @@ docs:
       - title: Multiple Clusters
         url: /docs/rancher-multiple.html
   - title: TESK/WES
-    url: /docs/teskwes.html
+    children:
+      - title: Overview
+        url: /docs/teskwes.html

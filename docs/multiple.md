@@ -19,7 +19,7 @@ It's much more convenient to squash multiple cluster configs into one because yo
 ## Merging configs
 If your `config` already has some content, it looks similar to:
 
-```
+```yaml
 apiVersion: v1
 kind: Config
 clusters:
@@ -48,7 +48,8 @@ To add another cluster, go to its `config` file in Rancher and do not copy whole
 - item under `users` section which will be placed as new item under `users` in existing config
  
 This is config you want to add. Copy only parts labeled with *.
-```
+
+```yaml
 apiVersion: v1
 kind: Config
 clusters:
@@ -75,7 +76,7 @@ and place them in existing `config` file. The `token` value is unique but always
 Therefore you could have only item under `users` section and change to this value in each `user` occurrence in `contexts`. Nevertheless, it is simpler and not so prone to errors when the value is copied and used as is.
 Final file looks similar to this:
 
-```
+```yaml
 apiVersion: v1
 kind: Config
 clusters:
