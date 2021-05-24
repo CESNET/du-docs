@@ -29,3 +29,7 @@ docs:
     children:
       - title: Overview
         url: /docs/teskwes.html
+  - title: Benchmarks
+    children:
+      - title: Storage
+        url: /docs/benchmarks-volumes.html
