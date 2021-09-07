@@ -38,7 +38,7 @@ docs:
       - title: JupyterHub
         url: /docs/jupyterhub.html
       - title: BinderHub
-        url: /docs/jupyterhub.html
+        url: /docs/binderhub.html
       - title: MagicForceField 
         url: /docs/magicforcefield.html
       - title: Kubeflow
@@ -46,7 +46,7 @@ docs:
   - title: Task/Workflow execution services
     children:
       - title: TESK/WES 
-        url: /docs/teskwes.html
+        url: /docs/teswes.html
       - title: Snakemake 
         url: /docs/snakemake.html
       - title: CWL
