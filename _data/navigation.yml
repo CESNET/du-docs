@@ -1,10 +1,14 @@
 header:
 
 docs:
-  - title: Galaxy
+  - title: Rancher
     children:
       - title: Overview
-        url:    /docs/galaxy.html
+        url: /docs/rancher.html
+      - title: Multiple Clusters
+        url: /docs/rancher-multiple.html
+      - title: Applications
+        url: /docs/rancher-applications.html
   - title: Kubectl
     children:
       - title: Overview
@@ -13,22 +17,40 @@ docs:
         url: /docs/kubectl-helloworld.html
       - title: Exposing applications
         url: /docs/kubectl-expose.html
-  - title: JupyterHub
+  - title: Rancher Applications
     children:
-      - title: Overview
+      - title: Ansys
+        url: /docs/ansys.html
+      - title: Bioconductor
+        url: /docs/bioconductor.html
+      - title: Matlab
+        url: /docs/matlab.html
+      - title: RStudio Server 
+        url: /docs/rstudio.html
+      - title: VMD
+        url: /docs/vmd.html
+      - title: Desktop Server
+        url: /docs/desktop.html
+  - title: Web Applications
+    children:
+      - title: Galaxy
+        url: /docs/galaxy.html
+      - title: JupyterHub
         url: /docs/jupyterhub.html
-      - title: MagicForceField
+      - title: BinderHub
+        url: /docs/jupyterhub.html
+      - title: MagicForceField 
         url: /docs/magicforcefield.html
-  - title: Rancher
+      - title: Kubeflow
+        url: /docs/kubeflow.html
+  - title: Task/Workflow execution services
     children:
-      - title: Overview
-        url: /docs/rancher.html
-      - title: Multiple Clusters
-        url: /docs/rancher-multiple.html
-  - title: TESK/WES
-    children:
-      - title: Overview
+      - title: TESK/WES 
         url: /docs/teskwes.html
+      - title: Snakemake 
+        url: /docs/snakemake.html
+      - title: CWL
+        url: /docs/cwl.html       
   - title: Benchmarks
     children:
       - title: Storage
