@@ -10,8 +10,10 @@ sidebar:
 ---
 ## Galaxy
 
-***The instance is currently under maintenance***
+A containerized Galaxy instance is available on [europdx-galaxy website](https://europdx-galaxy.cerit-sc.cz). Tutorials and documentation are located on [dedicated wiki](https://europdx-wiki.cerit-sc.cz). 
 
-A containerized Galaxy instance is available on [europdx-galaxy website](https://europdx-galaxy.cerit-sc.cz/galaxy/)
+The limit for concurrent jobs is set as following:
+ - registered users: 5
+ - anonymous users: 2
 
-Implemented tools are maintained by Boris Jurič (499542@mail.muni.cz). Tutorials and documentation will be availeble on dedicated page. 
+Implemented tools are maintained by Boris Jurič (499542@mail.muni.cz). 
