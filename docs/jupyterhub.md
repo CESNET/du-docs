@@ -49,7 +49,12 @@ Conda is supported in all provided images and we can assure its functionality.
 
 New conda environment in hub's terminal is created with command `conda create -n tenv --yes python=3.8 ipykernel nb_conda_kernels` (`ipykernel nb_conda_kernels` part is required, alternatively irkernel). 
 
-Check if environment is installed with `conda env list`. You can use the environemnt right away, either by creating new notebook or changing the kernel of existing one (tab `Kernel &rarr; Change Kernel...` and choose the one you want to use)
+Check if environment is installed with `conda env list`. You can use the environment right away, either by creating new notebook or changing the kernel of existing one (tab `Kernel` → `Change Kernel...` and choose the one you want to use).
+
+## Install Conda packages
+To install conda packages you have to create new conda environment (as described above). Then, install new packages in terminal into newly created environment e.g. `conda install keyring -n myenv`. 
+
+Open new notebook and change the kernel in tab `Kernel` → `Change Kernel...` → `myenv` (or the nemae of kernel you installed packages into).
 
 
 ## Error handling
