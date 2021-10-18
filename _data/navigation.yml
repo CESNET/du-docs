@@ -55,3 +55,7 @@ docs:
     children:
       - title: Storage
         url: /docs/benchmarks-volumes.html
+  - title: Case Studies
+    children:
+      - title: Nextflow
+        url: /docs/nextflow.html
