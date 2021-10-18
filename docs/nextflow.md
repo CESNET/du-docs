@@ -9,8 +9,6 @@ sidebar:
   nav: docs
 ---
 
-# Running Nextflow Pipelines in Kubernetes
-
 The following text describes how to run Nextflow pipelines in CERIT-SC Kubernetes cluster.
 
 ## Nextflow Installation
@@ -52,7 +50,7 @@ cluster. Its task is to run *worker* pods according to pipeline definition.
 ### Requirements
 
 * Installed [`kubectl`](https://cerit-sc.github.io/kube-docs/docs/kubectl.html) with configuration file.
-* Created [PVC](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) (see below how to do it)
+* Created [PVC](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) (see below how to do it).
 
 ### PVC
 
@@ -61,7 +59,7 @@ a *pod*. PVCs are usually network volumes, e.g., NFS or CIFS/SMB. These kind
 of PVCs can be mounted to many pods simultaneously thus making it a shared
 storage among pods.
 
-* User can create an ad-hoc PVC using [this yaml](https://github.com/CERIT-SC/example-deployments/blob/master/pvc/pvc.yaml)
+* User can create an ad-hoc PVC using [pvc.yaml](https://github.com/CERIT-SC/example-deployments/blob/master/pvc/pvc.yaml)
    template. Downloading it and filling proper `name` and `storage` size and
    issuing command:
     ```
@@ -75,8 +73,7 @@ kubectl create -f pvc.yaml -n namespace
     TODO: how to populate data.
 
 * Another option is to create PVC as CIFS storage from CERIT-SC. In such a case,
-    user needs to download [this
-    yaml](https://github.com/CERIT-SC/example-deployments/blob/master/pvc/secret.yaml),
+    user needs to download [secret.yaml](https://github.com/CERIT-SC/example-deployments/blob/master/pvc/secret.yaml),
     fill in proper `name` and the following two annotations: `cerit.io/storage`,
     `cerit.io/share`. Those values from the example work for *storage-brno12-cerit* as
     they are. User also needs to fill in `mount_flags`. The `mount_flags` is
@@ -113,7 +110,7 @@ to your needs. You can request it at k8s@ics.muni.cz.
 
 Running the Nextflow in Kubernetes requires local configuration. You can
 download
-[example](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/nextflow.config)
+[nextflow.config](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/nextflow.config)
 which can be used as is in the case, you change `namespace` to correct value
 and specify `launchDir` and `workDir` to point somewhere on the PVC. Take
 care, if running Nextflow in parallel, always use different `launchDir` and
