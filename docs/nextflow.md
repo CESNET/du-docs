@@ -89,7 +89,7 @@ echo -n "username=USER,password=PASS,uid=1000,gid=1000,nosetuids,vers=3.11,noser
     ```
 
     In case, you do not know CIFS password for CERIT-SC storage, just ask for one
-    on support@cerit-sc.cz. It is **not** the same password you use for logging
+    on [support@cerit-sc.cz](mailto: support@cerit-sc.cz). It is **not** the same password you use for logging
     into infrastructure!
 
     Be aware that the base64 encoded string is not encrypted, so keep it secret!
@@ -104,7 +104,7 @@ kubectel create -f secret.yaml -n namespace
     be empty, it contains data from your home from storage-brno12-cerit.
 
 * The last option is to request admins to create special PVC for you according
-to your needs. You can request it at k8s@ics.muni.cz.
+to your needs. You can request it at [k8s@ics.muni.cz](mailto: k8s@ics.muni.cz).
 
 ### Running Nextflow
 
