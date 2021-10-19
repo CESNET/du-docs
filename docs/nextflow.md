@@ -229,3 +229,36 @@ the PVC.
 
 
 ## vib-singlecell-nf/vsn-pipelines pipeline
+
+[vsn-pipelines](https://vsn-pipelines.readthedocs.io/en/latest/) contain multiple workflows for analyzing single cell transcriptomics data, and depends on a number of tools.
+
+### Kubernetes Run
+
+You need to download pipeline specific [nextflow.config](deployments/nextflow-vsn.config) and put it into the current directory where you start Nextflow from. This pipeline uses `-entry` parameter to specify entry point of workflow. Unless this [issue #2397](https://github.com/nextflow-io/nextflow/issues/2397) is resolved, patched version of Nextflow is needed. To deal with this bug, you need Nextflow version 20.10.0, this is the only supported version.
+
+On your local machine (or machine where you run Nextflow) run the following
+command (run this command **after and only if** you already installed Nextflow
+version 20.10.0):
+```
+cd /tmp; wget http://repo.cerit-sc.cz/misc/nextflow-20.10.0.jar -q && mv nextflow-20.10.0.jar ~/.nextflow/capsule/deps/io/nextflow/nextflow/20.10.0/
+```
+
+This command will install patched version of Nextflow to mitigate the
+mentioned bug.
+
+On the PVC you need to prepare data into directories specified in the `nextflow.config` see all occurrences of `/mnt/data1` in the config and change them accordingly.
+
+Consult [documentation](https://vsn-pipelines.readthedocs.io/_/downloads/en/latest/pdf/) for further config options. 
+
+You can run the pipeline with the following command:
+```
+nextflow -C nextflow.config kuberun vib-singlecell-nf/vsn-pipelines -v PVC:/mnt -entry scenic
+```
+
+where `PVC` is the mentioned PVC, `scenic` is pipeline entry point, and `nextflow.config` is the downloaded `nextflow.config`.
+
+### Caveats
+
+* For parallel run, you need to set `maxForks` in the `nextflow.config` together with `params.sc.scenic.numRuns` parameter. 
+
+* `NUMBA_CACHE_DIR` variable pointing to `/tmp` or other writable directory is requirement otherwise execution fails on permission denied. It tries to update readonly parts of running container.
