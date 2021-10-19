@@ -64,7 +64,7 @@ a *pod*. PVCs are usually network volumes, e.g., NFS or CIFS/SMB. These kind
 of PVCs can be mounted to many pods simultaneously thus making it a shared
 storage among pods.
 
-* User can create an ad-hoc PVC using [pvc.yaml](https://github.com/CERIT-SC/example-deployments/blob/master/pvc/pvc.yaml)
+* User can create an ad-hoc PVC using [pvc.yaml](deployments/pvc.yaml)
    template. Downloading it and filling proper `name` and `storage` size and
    issuing command:
     ```
@@ -78,7 +78,7 @@ kubectl create -f pvc.yaml -n namespace
     TODO: how to populate data.
 
 * Another option is to create PVC as CIFS storage from CERIT-SC. In such a case,
-    user needs to download [secret.yaml](https://github.com/CERIT-SC/example-deployments/blob/master/pvc/secret.yaml),
+    user needs to download [secret.yaml](deployments/secret.yaml),
     fill in proper `name` and the following two annotations: `cerit.io/storage`,
     `cerit.io/share`. Those values from the example work for *storage-brno12-cerit* as
     they are. User also needs to fill in `mount_flags`. The `mount_flags` is
@@ -115,7 +115,7 @@ to your needs. You can request it at [k8s@ics.muni.cz](mailto: k8s@ics.muni.cz).
 
 Running the Nextflow in Kubernetes requires local configuration. You can
 download
-[nextflow.config](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/nextflow.config)
+[nextflow.config](deployments/nextflow.config)
 which can be used as is in the case, you change `namespace` to correct value
 and specify `launchDir` and `workDir` to point somewhere on the PVC. Take
 care, if running Nextflow in parallel, always use different `launchDir` and
@@ -168,11 +168,11 @@ targeted sequencing.
 ### Kubernetes Run
 
 The Sarek requires specific
-[nextflow.config](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/nextflow-sarek.config),
+[nextflow.config](deployments/nextflow-sarek.config),
 it sets more memory for a VEP process which is a part of the pipeline. With
 basic settings, VEP process will be killed most probably due to memory.
 It also requires specific
-[custom.config](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/custom.config)
+[custom.config](deployments/custom.config)
 as the git version of the Sarek contains bug so that output stats will be
 written to wrong files.
 
@@ -184,9 +184,9 @@ To deal with this bug, you need Nextflow version 20.10.0,
 this is the only supported version.
 
 Download
-[nextflow-cfg.sh](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/nextflow-cfg.sh)
+[nextflow-cfg.sh](deployments/nextflow-cfg.sh)
 and
-[nextflow.config.add](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/nextflow.config.add)
+[nextflow.config.add](deployments/nextflow.config.add)
 and put both on the PVC (into its root). Do not rename the files and make
 `nextflow-cfg.sh` executable (`chmod a+x nextflow-cfg.sh`).
 
