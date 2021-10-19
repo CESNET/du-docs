@@ -153,11 +153,17 @@ Hello world!
 
 * Running pipeline can be terminated from Rancher GUI, hitting `ctrl-c` does not terminate the pipeline.
 
-* Pipeline debug log can be found on the PVC in `launcherDir/.nextflow.log`. Consecutive runs rotate the logs, so that they are not overwritten.
+* Pipeline debug log can be found on the PVC in `launchDir/.nextflow.log`. Consecutive runs rotate the logs, so that they are not overwritten.
 
 * If pipeline fails, you can try to resume the pipeline with `-resume` command line option, it creates a new run but it tries to skip already finished tasks. See [details](https://www.nextflow.io/blog/2019/demystifying-nextflow-resume.html).
 
 * All runs (success or failed) will keep *workflow controller* pod visible in Rancher GUI, failed workers are also kept in Rancher GUI. You can delete them from GUI as needed.
+
+* For wome *workers*, log are not available in Rancher GUI, but the logs can be watched using the command:
+    ```
+kubectl logs POD -n NAMESPACE 
+    ```
+    where `POD` is the name of the *worker* (e.g., `nf-81dae79db8e5e2c7a7c3ad5f6c7d59c6`) and `NAMESPACE` is used namespace.
 
 ## nf-core/sarek pipeline
 
@@ -218,6 +224,8 @@ the PVC.
 * The pipeline run ends with stacktrace and `No signature of method: java.lang.String.toBytes()` error. This is normal and it is result of not specifying email address to send final email. Nothing to be worried about.
 
 * The pipeline run does not clean workDir, it is up to user to clean/remove it.
+
+* Manual resuming of Sarek is possible using different `--input` spec. See [here](https://nf-co.re/sarek/2.7.1/usage#troubleshooting).
 
 
 ## vib-singlecell-nf/vsn-pipelines pipeline
