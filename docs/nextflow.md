@@ -11,7 +11,7 @@ sidebar:
 
 The following text describes how to run Nextflow pipelines in CERIT-SC Kubernetes cluster.
 
-You need to install Nextflow on your local computer or any computer that you will run the Nextflow. 
+You need to install Nextflow on your local computer or any computer that you will start the Nextflow, the pipeline will not run on that computer it will run in Kubernetes cluster and the computer serves only for starting it. The computer does not need to be online while the pipeline is still running.
 
 ## Nextflow Installation
 
