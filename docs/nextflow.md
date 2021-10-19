@@ -248,7 +248,7 @@ mentioned bug.
 
 On the PVC you need to prepare data into directories specified in the `nextflow.config` see all occurrences of `/mnt/data1` in the config and change them accordingly.
 
-Consult [documentation](https://vsn-pipelines.readthedocs.io/_/downloads/en/latest/pdf/) for further config options. 
+Consult [documentation](https://vsn-pipelines.readthedocs.io/en/latest/index.html) for further config options. 
 
 You can run the pipeline with the following command:
 ```
@@ -259,6 +259,6 @@ where `PVC` is the mentioned PVC, `scenic` is pipeline entry point, and `nextflo
 
 ### Caveats
 
-* For parallel run, you need to set `maxForks` in the `nextflow.config` together with `params.sc.scenic.numRuns` parameter. 
+* For parallel run, you need to set `maxForks` in the `nextflow.config` together with `params.sc.scenic.numRuns` parameter. Consult [documentation](https://vsn-pipelines-examples.readthedocs.io/en/latest/PBMC10k_multiruns.html).
 
 * `NUMBA_CACHE_DIR` variable pointing to `/tmp` or other writable directory is requirement otherwise execution fails on permission denied. It tries to update readonly parts of running container.
