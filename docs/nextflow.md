@@ -17,7 +17,7 @@ To install nextflow enter this command in your terminal:
 ```
 curl -s https://get.nextflow.io | bash
 ```
-You can install specific Nextflow version exporting NXF_VER environment
+You can install specific Nextflow version exporting `NXF_VER` environment
 variable before running the install command, e.g.:
 ```
 export NXF_VER=20.10.0
@@ -26,14 +26,15 @@ curl -s https://get.nextflow.io | bash
 
 ## Architecture of Nextflow 
 
-The Nextflow pipeline starts running the `nextflow` command, e.g.:
+The Nextflow pipeline starts by running the `nextflow` command, e.g.:
 
 ```
 nextflow run hello
 ```
 
-which starts running hello pipeline. The pipeline run consists of two parts:
-*workflow controller* and *workers*.
+which starts `hello` pipeline. The pipeline run consists of two parts:
+*workflow controller* and *workers*. The *workflow controller* manages
+pipeline run while *workers* run particular tasks. 
 
 Nextflow engine expects that the *workflow controller* and the *workers* have
 access to some shared storage. On a local computer, this is usually just a
@@ -46,6 +47,8 @@ used when running the Nextflow.
 In case of K8s, *workflow controller* is run as a
 [Pod](https://kubernetes.io/docs/concepts/workloads/pods/) in Kubernetes
 cluster. Its task is to run *worker* pods according to pipeline definition.
+The *workflow controller* pod has some generated name like *naughty-williams*.
+The *workers* have hashed names like *nf-81dae79db8e5e2c7a7c3ad5f6c7d59c6*.
 
 ### Requirements
 
