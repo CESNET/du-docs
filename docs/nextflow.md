@@ -11,9 +11,11 @@ sidebar:
 
 The following text describes how to run Nextflow pipelines in CERIT-SC Kubernetes cluster.
 
+You need to install Nextflow on your local computer or any computer that you will run the Nextflow. 
+
 ## Nextflow Installation
 
-To install nextflow enter this command in your terminal:
+To install Nextflow enter this command in your terminal:
 ```
 curl -s https://get.nextflow.io | bash
 ```
@@ -26,7 +28,7 @@ curl -s https://get.nextflow.io | bash
 
 ## Architecture of Nextflow 
 
-The Nextflow pipeline starts by running the `nextflow` command, e.g.:
+The Nextflow pipeline gets started by running the `nextflow` command, e.g.:
 
 ```
 nextflow run hello
@@ -47,8 +49,8 @@ used when running the Nextflow.
 In case of K8s, *workflow controller* is run as a
 [Pod](https://kubernetes.io/docs/concepts/workloads/pods/) in Kubernetes
 cluster. Its task is to run *worker* pods according to pipeline definition.
-The *workflow controller* pod has some generated name like *naughty-williams*.
-The *workers* have hashed names like *nf-81dae79db8e5e2c7a7c3ad5f6c7d59c6*.
+The *workflow controller* pod has some generated name like `naughty-williams`.
+The *workers* have hashed names like `nf-81dae79db8e5e2c7a7c3ad5f6c7d59c6`.
 
 ### Requirements
 
