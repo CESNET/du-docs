@@ -66,7 +66,7 @@ storage among pods.
 kubectl create -f pvc.yaml -n namespace
     ```
 
-    where `namespace` is user namespace as can be seen in rancher GUI, usually
+    where `namespace` is user namespace as can be seen in Rancher GUI, usually
     *surname-ns*. The ad-hoc pod does not contain any data in advance, the user
     needs to populate the data on his/her own. PVC name is the exactly the
     same you fill in the `name` value.
@@ -142,6 +142,18 @@ Bonjour world!
 Hello world!
 ```
 
+### Caveats
+
+* If pipeline runs for a long time (not the case of the `hello` pipeline), the `nextflow` command ends with connection terminated. This is normal and it does not mean that pipeline is not running anymore. It stops logging only. You can still find logs of the workflow controller in Rancher GUI.
+
+* Running pipeline can be terminated from Rancher GUI, hitting `ctrl-c` does not terminate the pipeline.
+
+* Pipeline debug log can be found on the PVC in `launcherDir/.nextflow.log`. Consecutive runs rotate the logs, so that they are not overwritten.
+
+* If pipeline fails, you can try to resume the pipeline with `-resume` command line option, it creates a new run but it tries to skip already finished tasks. See [details](https://www.nextflow.io/blog/2019/demystifying-nextflow-resume.html).
+
+* All runs (success or failed) will keep *workflow controller* pod visible in Rancher GUI, failed workers are also kept in Rancher GUI. You can delete them from GUI as needed.
+
 ## nf-core/sarek pipeline
 
 [nf-core/sarek](https://nf-co.re/sarek) is analysis pipeline to detect germline
@@ -194,10 +206,13 @@ the PVC.
 
 ### Caveats
 
-* It is recommended to download *igenome* from S3 Amazon location to local PVC. It rapidly speeds up `-resume` option in the case the pipeline run fails and you run it again to continue. It also mitigates Amazon overloading or network issues leading to pipeline fail. Once you download the *igenome*,  just add something like `--igenomes_base /mnt/igenome` to the command line options of `nextflow`.
+* It is recommended to download *igenome* from S3 Amazon location to local PVC. It rapidly speeds up `-resume` option in the case the pipeline run fails and you run it again to continue. It also mitigates Amazon overloading or network issues leading to pipeline fail. Once you download the *igenome*, just add something like `--igenomes_base /mnt/igenome` to the command line options of `nextflow`.
 
 * If you receive error about unknown `check_resource`, then you failed with the `nextflow-cfg.sh` and `nextflow.config.add` setup.
 
 * The pipeline run ends with stacktrace and `No signature of method: java.lang.String.toBytes()` error. This is normal and it is result of not specifying email address to send final email. Nothing to be worried about.
+
+* The pipeline run does not clean workDir, it is up to user to clean/remove it.
+
 
 ## vib-singlecell-nf/vsn-pipelines pipeline
