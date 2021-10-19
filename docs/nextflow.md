@@ -144,7 +144,7 @@ Hello world!
 
 ### Caveats
 
-* If pipeline runs for a long time (not the case of the `hello` pipeline), the `nextflow` command ends with connection terminated. This is normal and it does not mean that pipeline is not running anymore. It stops logging only. You can still find logs of the workflow controller in Rancher GUI.
+* If pipeline runs for a long time (not the case of the `hello` pipeline), the `nextflow` command ends with connection terminated. This is normal and it does not mean that pipeline is not running anymore. It stops logging to your terminal only. You can still find logs of the workflow controller in Rancher GUI.
 
 * Running pipeline can be terminated from Rancher GUI, hitting `ctrl-c` does not terminate the pipeline.
 
