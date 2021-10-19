@@ -117,9 +117,9 @@ care, if running Nextflow in parallel, always use different `launchDir` and
 `workDir` for the parallel runs.
 
 You need to keep the file in the current directory where the `nextflow`
-command is run.
+command is run and it has to be named `nextflow.config`.
 
-To instruct the Nextflow to run the pipeline in Kubernetes, you can run the
+To instruct the Nextflow to run the `hello` pipeline in Kubernetes, you can run the
 following command:
 ```
 nextflow kuberun hello -pod-image 'cerit.io/nextflow:21.09.1' -v PVC:/mnt 
@@ -143,4 +143,61 @@ Hello world!
 ```
 
 ## nf-core/sarek pipeline
+
+[nf-core/sarek](https://nf-co.re/sarek) is analysis pipeline to detect germline
+or somatic variants (pre-processing, variant calling and annotation) from WGS /
+targeted sequencing.
+
+### Kubernetes Run
+
+The Sarek requires specific
+[nextflow.config](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/nextflow-sarek.config),
+it sets more memory for a VEP process which is a part of the pipeline. With
+basic settings, VEP process will be killed most probably due to memory.
+It also requires specific
+[custom.config](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/custom.config)
+as the git version of the Sarek contains bug so that output stats will be
+written to wrong files.
+
+The Sarek pipeline uses functions in the pipeline configuration. However,
+functions in the pipeline configuration are not currently supported by
+`kuberun` executor. 
+
+To deal with this bug, you need Nextflow version 20.10.0,
+this is the only supported version.
+
+Download
+[nextflow-cfg.sh](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/nextflow-cfg.sh)
+and
+[nextflow.config.add](https://github.com/CERIT-SC/example-deployments/blob/master/nextflow/nextflow.config.add)
+and put both on the PVC (into its root). Do not rename the files and make
+`nextflow-cfg.sh` executable (`chmod a+x nextflow-cfg.sh`).
+
+On your local machine (or machine where you run Nextflow) run the following
+command (run this command **after and only if** you already installed Nextflow
+version 20.10.0):
+```
+cd /tmp; wget http://repo.cerit-sc.cz/misc/nextflow-20.10.0.jar -q && mv nextflow-20.10.0.jar ~/.nextflow/capsule/deps/io/nextflow/nextflow/20.10.0/
+```
+
+This command will install patched version of Nextflow to mitigate the
+mentioned bug.
+
+Now, if you have prepared your data on the PVC, you can start the Sarek
+pipeline with the following command:
+```
+nextflow kuberun nf-core/sarek -v PVC:/mnt --input /mnt/test.tsv --genome GRCh38 --tools HaplotypeCaller,VEP,Manta
+```
+
+where `PVC` is the mentioned PVC and `test.tsv` contains input data located on
+the PVC. 
+
+### Caveats
+
+* It is recommended to download *igenome* from S3 Amazon location to local PVC. It rapidly speeds up `-resume` option in the case the pipeline run fails and you run it again to continue. It also mitigates Amazon overloading or network issues leading to pipeline fail. Once you download the *igenome*,  just add something like `--igenomes_base /mnt/igenome` to the command line options of `nextflow`.
+
+* If you receive error about unknown `check_resource`, then you failed with the `nextflow-cfg.sh` and `nextflow.config.add` setup.
+
+* The pipeline run ends with stacktrace and `No signature of method: java.lang.String.toBytes()` error. This is normal and it is result of not specifying email address to send final email. Nothing to be worried about.
+
 ## vib-singlecell-nf/vsn-pipelines pipeline
