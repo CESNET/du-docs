@@ -72,7 +72,7 @@ Solutions:
 
 ## I've chosen wrong home! What now?!
 
-If notebook is already running, in the top left corner, go to `File &rarr; Hub Control Panel` and click red `Stop My Server`. In a couple of seconds, your container hub instance will be deleted (stop button disapperas) and you can again `Start Server` with different home. 
+If notebook is already running, in the top left corner, go to `File ` &rarr; `Hub Control Panel` and click red `Stop My Server`. In a couple of seconds, your container hub instance will be deleted (stop button disapperas) and you can again `Start Server` with different home. 
 
 Alternatively, you can create another named server. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
 
