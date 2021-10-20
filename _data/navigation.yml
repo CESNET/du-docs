@@ -9,6 +9,10 @@ docs:
         url: /docs/rancher-multiple.html
       - title: Applications
         url: /docs/rancher-applications.html
+  - title: Kubernetes
+    children:
+      - title: PVC
+        url: /docs/pvc.html
   - title: Kubectl
     children:
       - title: Overview
