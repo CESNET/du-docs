@@ -7,6 +7,8 @@ docs:
         url: /docs/rancher.html
       - title: Multiple Clusters
         url: /docs/rancher-multiple.html
+      - title: Namespaces
+        url: /docs/ns.html
       - title: Applications
         url: /docs/rancher-applications.html
   - title: Kubernetes

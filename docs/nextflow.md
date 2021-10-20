@@ -9,7 +9,7 @@ sidebar:
   nav: docs
 ---
 
-The following text describes how to run Nextflow pipelines in CERIT-SC Kubernetes cluster.
+The following text describes how to run [Nextflow](https://nextflow.io) pipelines in CERIT-SC Kubernetes cluster.
 
 You need to install Nextflow on your local computer or any computer that you will start the Nextflow, the pipeline will not run on that computer it will run in Kubernetes cluster and the computer serves only for starting it. The computer does not need to be online while the pipeline is still running.
 
@@ -55,6 +55,7 @@ The *workers* have hashed names like `nf-81dae79db8e5e2c7a7c3ad5f6c7d59c6`.
 ### Requirements
 
 * Installed [`kubectl`](https://cerit-sc.github.io/kube-docs/docs/kubectl.html) with configuration file.
+* Kubernetes [Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) to run in (see [here](ns.html) how to know your namespace).
 * Created [PVC](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) (see [here](pvc.html) how to do it).
 
 ### Running Nextflow
