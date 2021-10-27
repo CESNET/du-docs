@@ -103,7 +103,7 @@ kind: Ingress
 metadata:                                                                       
   name: hello-kubernetes-ingress                                                
   annotations:                                                                  
-    kuberentes.io/ingress.class: "nginx"                                        
+    kubernetes.io/ingress.class: "nginx"                                        
     kubernetes.io/tls-acme: "true"                                              
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     external-dns.alpha.kubernetes.io/target: k8s-public-u.cerit-sc.cz
