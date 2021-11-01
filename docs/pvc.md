@@ -31,7 +31,7 @@ kubectl create -f pvc.yaml -n namespace
     user needs to download [secret.yaml](deployments/secret.yaml),
     fill in proper `name` and the following two annotations: `cerit.io/storage`,
     `cerit.io/share`. Those values from the example work for *storage-brno12-cerit* as
-    they are, they make access to users home directory. For share `project` folders, `cerit.io/share` has to be set to: `cerit.io/share: 'export/nfs4/project/project_name'`.
+    they are, they make access to users home directory. For share `project` folders, `cerit.io/share` has to be set to: `cerit.io/share: 'export/nfs4/projects/project_name'`.
     User also needs to fill in `mount_flags`. The `mount_flags` is
     base64 encoded string that can be obtained using the following command:
     ```
