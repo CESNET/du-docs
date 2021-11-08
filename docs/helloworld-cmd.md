@@ -202,7 +202,7 @@ spec:
   resources:                                                                    
     requests:                                                                   
       storage: 1Gi                                                              
-  storageClassName: csi-nfs
+  storageClassName: nfs-csi
 ```
 The `spec.resources.requests` field has to be specified but doesn't really mean anything. Then perform `kubectl apply -f claim.yaml -n [namespace]`. You can check if everything went fine by running
 ```bash
