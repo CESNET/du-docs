@@ -62,4 +62,4 @@ kubectel create -f secret.yaml -n namespace
 * The last option is to request admins to create special PVC for you according
 to your needs. You can request it at [k8s@ics.muni.cz](mailto: k8s@ics.muni.cz).
 
-You see your PVCs in Rancher GUI in Volumes tab. ![Volumes](volumes.png)
+You see your PVCs in Rancher GUI in `Storage` &rarr; `PersistentVolumeClaims` ![Volumes](pvc.jpg)

@@ -11,11 +11,21 @@ sidebar:
 
 ## Rancher
 
-_Rancher_ instance is available on [rancher.cerit-sc.cz](https://rancher.cerit-sc.cz). Please login via CESNET or ELIXIR (EGI is not approved yet).
-After logging in, you shall see default dashboard. Right now, you do not have any default project but after 5 minutes, one will be assigned to you. Please refresh the page after such time. 
+_Rancher_ instance is available on [rancher.cloud.e-infra.cz](https://rancher.cloud.e-infra.cz). Please login via CESNET or ELIXIR (EGI is not approved yet).
+After logging in, you shall see default dashboard. You should see default cluster as shown below. If none cluster is shown, please, realod the page after few seconds.
 
-You can find assigned project in the upper left corner of the page under tab `Global` &rarr; `hdhu-cluster` &rarr; `Default project (your name)`
+World of Rancher and Kuberntes is organized into *clusters*, *projects*, and *namespaces*.
 
-![default project](default.png)
+You can find assigned clusters which you are allowed to access either in upper left corner:
+
+![clusters](cluster1.jpg)
+
+or just in the list on home page:
+
+![home page](cluster2.jpg)
+
+When you select a cluster, you can display your *projects and namespaces*
+
+![projects and namespaces](projects.jpg)
 
 It is possible to work to certain extent only with Rancher. However, command line tool `kubectl` allows more actions. You can utilize both ways but we do not recommend `kubectl` for users inexperienced with working in terminal.
