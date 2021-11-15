@@ -11,7 +11,7 @@ sidebar:
 
 ## Kubectl
 
-`Kubectl` is a powerful tool for interacting with Kubernetes clusters. For installation, see [official documentation](https://kubernetes.io/docs/tasks/tools/#kubectl). After installation, a `kube config` file is required to function. The file is located under tab `Global` &rarr; `hdhu-cluster` (click on the cluster name) in upper right corner.
+`Kubectl` is a powerful tool for interacting with Kubernetes clusters. For installation, see [official documentation](https://kubernetes.io/docs/tasks/tools/#kubectl). After installation, a `kube config` file is required to function. The file is located in cluster overview dashboard (click on the cluster name in the upper left dropdown menu).
 
 ![kube config](config.jpg)
 
