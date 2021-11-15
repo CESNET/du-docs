@@ -20,7 +20,7 @@ Web-based applications are those that communicate via `HTTP` protocol. These app
 
 This kind of applications require a service that binds a port with application and ingress rules that expose the service to the Internet.
 
-Suppose, we have an application that is ready to server on port 8080. We create a service:
+Suppose, we have an application that is ready to serve on port 8080. We create a service:
 
 ```yaml
 apiVersion: v1
