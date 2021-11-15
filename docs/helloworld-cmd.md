@@ -16,12 +16,9 @@ Here we provide a short tutorial on how to deploy a custom webserver in Kubernet
 We are going to deploy a simple web that runs from Docker image and displays "Hello world" together with `Pod` name and `node OS` information. 
 
 *IMPORTANT*
-The server could be run locally but our clusters are on private network and therefore can not be accessed locally. If you want to run a web server or anything that should be exposed on Internet, contact us for issuing a public DNS name for you. 
+Unless agreed beforehand, for personal projects and experiments you can use `kuba-cluster`. Here, you have to work in your namespace and its name is derived from your last name with added `-ns`. However, names are not unique and therefore we recommend to check yours on `Rancher` in the drop-down menu in the upper left corner `kuba-cluster` and `Project/Namespaces`.
 
-*IMPORTANT*
-Unless agreed beforehand, for personal projects and experiments you can use `hdhu-cluster`. Here, you have to work in your namespace and its name is derived from your last name with added `-ns`. However, names are not unique and therefore we recommend to check yours on `Rancher` site under  under tab `Global` &rarr; `hdhu-cluster` &rarr; `Default project (your name)` and under tab `Namespaces`
-
-![kube ns](ns.png)
+![kube ns](ns.jpg)
 
 ## Create files
 
@@ -93,7 +90,7 @@ Lastly, we have to create `Ingress` which exposes HTTP and HTTPS routes from out
 It is possible to expose your deployments in [2 ways](/docs/kubectl-expose.html) but here we will use cluster LoadBalancer with creation of just new DNS name.
 You can use whatever name you want but it has to fullfill 2 requirements:
 - name is composed only from letters, numbers and '-'
-- name ends with `.dyn.cerit-sc.cz`
+- name ends with `.dyn.cloud.e-infra.cz`
 
 The name is filled in `spec.rules.host` and in `spec.tls`. Before you use any name, check in browser it doesn't already exist. After creation, it takes a minute to create new DNS entry so your app will not be available right away at specified name, wait one minute.
 
@@ -106,14 +103,13 @@ metadata:
     kubernetes.io/ingress.class: "nginx"                                        
     kubernetes.io/tls-acme: "true"                                              
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    external-dns.alpha.kubernetes.io/target: k8s-public-u.cerit-sc.cz
 spec:                                                                           
   tls:                                                                          
     - hosts:                                                                    
-        - "test-hello.dyn.cerit-sc.cz"                                              
-      secretName: test-hello-dyn-cerit-sc-cz-tls                                    
+        - "test-hello.dyn.cloud.e-infra.cz"                                              
+      secretName: test-hello-dyn-clout-e-infra-cz-tls                                    
   rules:                                                                        
-  - host: "test-hello.dyn.cerit-sc.cz"                                          
+  - host: "test-hello.dyn.cloud.e-infra.cz"
     http:                                                                       
       paths:                                                                    
       - backend:                                                                
@@ -243,7 +239,7 @@ spec:
 ```
 
 ## Pod Security Policy
-For security reasons, not everything is allowed in `hdhu-cluster`. 
+For security reasons, not everything is allowed in `kuba-cluster`. 
 
 List of (dis)allowed actions:
 - Allow Privilege Escalation:  false
@@ -264,15 +260,15 @@ There are many useful `kubectl` commands that can be used to verify status of de
 ```bash
  kubectl get service hello-kubernetes-svc -n [namespace]
 NAME                   TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)        AGE
-hello-kubernetes-svc   LoadBalancer   10.43.124.251   147.251.253.171   80:31334/TCP   3h23m
+hello-kubernetes-svc   LoadBalancer   10.43.124.251   147.251.253.243   80:31334/TCP   3h23m
 ```
 - `kubectl describe [resource]` offers detailed information about resource (output is heavily trimmed)
 ```bash
-kubectl describe pod hello-kubernetes -n cerit23-ns
+kubectl describe pod hello-kubernetes -n test-ns
 Name:         hello-kubernetes-5547c96ddc-4hxnf
-Namespace:    cerit23-ns
+Namespace:    test-ns
 Priority:     0
-Node:         hdh-worker-u1.priv.cerit-sc.cz/192.168.4.49
+Node:         kub-a10.priv.cerit-sc.cz/10.16.62.19
 Start Time:   Tue, 23 Mar 2021 15:22:57 +0100
 Labels:       app=hello-kubernetes
               pod-template-hash=5547c96ddc
@@ -289,12 +285,12 @@ Controlled By:  ReplicaSet/hello-kubernetes-5547c96ddc
 - `kubectl get pods -n [namespace]` + `kubectl logs [pod_name] -n [namespace]` shows pod's logs if they were configured or any output occured. This combination is very useful for debugging.
 
 ```bash
-kubectl get pods -n cerit23-ns --context hdhu-cluster 
+kubectl get pods -n test-ns --context kuba-cluster 
 NAME                                READY   STATUS    RESTARTS   AGE
 hello-kubernetes-5547c96ddc-4hxnf   1/1     Running   0          3h19m
 hello-kubernetes-5547c96ddc-856pp   1/1     Running   0          3h19m
 hello-kubernetes-5547c96ddc-9dtxp   1/1     Running   0          3h19m
- astralmiau@vega  ~/work/test-psp  kubectl logs hello-kubernetes-5547c96ddc-4hxnf -n cerit23-ns 
+ astralmiau@vega  ~/work/test-psp  kubectl logs hello-kubernetes-5547c96ddc-4hxnf -n test-ns 
 
 > hello-kubernetes@1.9.0 start /usr/src/app
 > node server.js
