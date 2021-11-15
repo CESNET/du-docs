@@ -54,7 +54,7 @@ spec:
   tls:
     - hosts:
         - "application.dyn.cloud.e-infra.cz"
-      secretName: applicatoin-dyn-clout-e-infra-cz-tls
+      secretName: application-dyn-clout-e-infra-cz-tls
   rules:
   - host: "application.dyn.cloud.e-infra.cz"
     http:
