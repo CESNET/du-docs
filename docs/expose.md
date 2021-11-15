@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Rancher
+title: Kubectl
 permalink: /docs/kubectl-expose.html
 key: kubectl-expose
 aside:

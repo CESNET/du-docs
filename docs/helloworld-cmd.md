@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Kubectl Hello World
+title: Kubectl
 permalink: /docs/kubectl-helloworld.html
 key: kubectl-helloworld
 aside:
