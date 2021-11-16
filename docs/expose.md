@@ -106,6 +106,16 @@ The `secretref` must match tne metadata name of the `Secret`.
 *IMPORTANT* 
 The password protection is applied only on external traffic, i.e., user will be prompted for a password. However, traffic from other pods bypasses authentication if it communicates directly with the `Service` IP. This can be mitigated applying `Network Policy`. TBD.
 
+#### Big Data Upload
+
+If big data upload is expected, the following two `Ingress` annotations might be necessary to deal with upload size limit.
+```yaml
+nginx.ingress.kubernetes.io/proxy-body-size: "600m"
+nginx.org/client-max-body-size: "600m"
+```
+
+Replace the `600m` value with desired max value for upload data.
+
 ### Other Applications
 
 Applications that to not use `HTTP` protocol are exposed directly via `Service`.
