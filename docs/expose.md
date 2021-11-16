@@ -75,7 +75,7 @@ If `tls` section is used, TLS is terminated at system NGINX Ingress. Application
 TLS is terminated in NGINX Ingress at cluster boundary. Communication inside cluster is not encrypted, mainly not inside a single cluster node. If this is a problem, user needs to omit `tls` section and `anotations` section and provide a certificate and key on his/her own to the Pod. 
 
 *IMPORTANT*
-Some applications are confused that they are configured as `HTTP` but exposed as `HTTPS`. If an application generates absolute URLs, it must generate `HTTPS` URLs and not `HTTP`. Kubernetes Ingress sets `HTTP_X_SCHEME` header to `HTTPS` if it is TLS terminated. E.g., for *diango*, user must set: `SECURE_PROXY_SSL_HEADER = ("HTTP_X_SCHEME", "https")`. Common header used for this situation is `X_FORWARDED_PROTO` but this is not set by Kubernetes NGINX.
+Some applications are confused that they are configured as `HTTP` but exposed as `HTTPS`. If an application generates absolute URLs, it must generate `HTTPS` URLs and not `HTTP`. Kubernetes Ingress sets `HTTP_X_SCHEME` header to `HTTPS` if it is TLS terminated. E.g., for *django*, user must set: `SECURE_PROXY_SSL_HEADER = ("HTTP_X_SCHEME", "https")`. Common header used for this situation is `X_FORWARDED_PROTO` but this is not set by Kubernetes NGINX.
 
 #### Authentication
 
