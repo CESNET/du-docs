@@ -31,6 +31,8 @@ docs:
         url: /docs/matlab.html
       - title: RStudio Server 
         url: /docs/rstudio.html
+      - title: ShinySOM
+        url: /docs/shinysom.html
       - title: VMD
         url: /docs/vmd.html
       - title: Desktop Server
