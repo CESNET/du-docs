@@ -26,7 +26,7 @@ Now you can install the ShinySOM application. In most cases, keep both `Namespac
 
 ![appinst](ssom/appinst.png)
 
-In the first part of the form, you select access password. Username will be just `user`.
+In the first part of the form, you select access password, please avoid chars like `{`, `}`, non trivial password is strongly recommended, however, it is also strongly recommended not to use a password you already use somewhere else. Username will be just `user`.
 
 ![appform1](ssom/appform1.png)
 
