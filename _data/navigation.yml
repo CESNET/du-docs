@@ -13,6 +13,8 @@ docs:
     children:
       - title: PVC
         url: /docs/pvc.html
+      - title: Certificate
+        url: /docs/certificate.html
   - title: Kubectl
     children:
       - title: Overview
