@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Running Nextflow Pipelines in Kubernetes
+title: GitLab Kubernetes Agent
 permalink: /docs/agentk.html
 key: agentk
 aside:
