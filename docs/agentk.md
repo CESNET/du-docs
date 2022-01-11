@@ -29,6 +29,7 @@ gitops:
           paths:
               - glob: '/manifest/*.{yaml,yml,json}'
 ```
+
 **Note**: `<Your Project ID>` can be replaced by your project path.
 
 
@@ -42,6 +43,7 @@ gitops:
   Or by using kubectl: `kubectl create secret generic -n <Your Namespace> gitlab-kubernetes-agent-token --from-literal=token=<Your Token>`
 
 - Create deployment file `resources.yaml`:
+
 ```yaml
 ---
 apiVersion: v1
@@ -108,6 +110,7 @@ subjects:
   kind: ServiceAccount
 ---
 ```
+
 - Apply the deployment with the following command:
 `kubectl apply -n <Your Namespace> -f resoures.yaml`
 
@@ -126,6 +129,7 @@ metadata:
 data:
   key: value
 ```
+
 For the purpose of testing the agent we will make simple manifest file that will create ConfigMap in `<Your Namespace>`.
 If everything went smoothly, you should have a ConfigMap named test-map.
 
