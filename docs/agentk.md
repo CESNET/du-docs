@@ -1,4 +1,13 @@
-# GitLab Kubernetes Agent
+---
+layout: article
+title: Running Nextflow Pipelines in Kubernetes
+permalink: /docs/agentk.html
+key: agentk
+aside:
+  toc: true
+sidebar:
+  nav: docs
+---
 
 ## Prerequisites
 - Namespace on your cluster
@@ -81,9 +90,7 @@ kind: Role
 metadata:
   name: gitlab-kubernetes-agent-role
 rules:
-- resources:
-  - 'configmaps'
-  - 'secrets'   #treba specifikovat
+- resources: ["configmaps", "secrets"]  #need of specification
   apiGroups: 
   - ""
   verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
