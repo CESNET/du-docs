@@ -35,10 +35,17 @@ gitops:
 
 ## Connect to cluster
 
-- Register agent and get his token.
+- Register agent and get agent token.
   
   In your project go to: 
-  Infrastructure -> Kubernetes clusters -> Install a new agent -> Select an agent -> Register
+  
+  Infrastructure -> Kubernetes clusters -> Install a new agent 
+  ![agentk1](agentk1.png)
+  
+  Select an agent -> Register
+  ![agentk2](agentk2.png)
+  
+  An agent token will appear, copy it. Be careful, the token is not accessible twice.
   
 - Make an opaque secret named `gitlab-kubernetes-agent-token` with `key named token`, `value=<Your Agent Token>`
   
