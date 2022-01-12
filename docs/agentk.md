@@ -40,9 +40,9 @@ gitops:
   In your project go to: 
   Infrastructure -> Kubernetes clusters -> Install a new agent -> Select an agent -> Register
   
-- Make an opaque secret in your namespace named `gitlab-kubernetes-agent-token` with `key named token`, `value=<Your Agent Token>`
+- Make an opaque secret named `gitlab-kubernetes-agent-token` with `key named token`, `value=<Your Agent Token>`
   
-  Or by kubectl: `kubectl create secret generic -n <Your Namespace> gitlab-kubernetes-agent-token --from-literal=token=<Your Token>`
+  By kubectl: `kubectl create secret generic -n <Your Namespace> gitlab-kubernetes-agent-token --from-literal=token=<Your Token>`
 
 - Download deployment file [resources.yaml](deployments/resources.yaml).
   
