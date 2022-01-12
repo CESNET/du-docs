@@ -38,12 +38,11 @@ gitops:
 - Register agent and get his token.
   
   In your project go to: 
+  Infrastructure -> Kubernetes clusters -> Install a new agent -> Select an agent -> Register
   
-  Infrastructure -> Kubernetes clusters -> Actions -> Select an agent -> Register
+- Make an opaque secret in your namespace named `gitlab-kubernetes-agent-token` with `key named token`, `value=<Your Agent Token>`
   
-- Make a secret in your namespace named `gitlab-kubernetes-agent-token` with `key named token` and `value=<Your Agent Token>`
-  
-  Or by using kubectl: `kubectl create secret generic -n <Your Namespace> gitlab-kubernetes-agent-token --from-literal=token=<Your Token>`
+  Or by kubectl: `kubectl create secret generic -n <Your Namespace> gitlab-kubernetes-agent-token --from-literal=token=<Your Token>`
 
 - Download deployment file [resources.yaml](deployments/resources.yaml).
   
@@ -65,7 +64,7 @@ gitops:
   You can list all resources you have permission to by this command `kubectl api-resources --verbs=list -n <Your Namespace>`
 
 - Apply the deployment with the following command:
-`kubectl apply -n <Your Namespace> -f resoures.yaml`
+`kubectl apply -n <Your Namespace> -f resources.yaml`
 
 - Check if the agent is running. Either in rancher or using kubectl `kubectl get pods -n <Your Namespace>`
 
