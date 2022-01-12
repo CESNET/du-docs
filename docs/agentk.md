@@ -42,74 +42,21 @@ gitops:
   
   Or by using kubectl: `kubectl create secret generic -n <Your Namespace> gitlab-kubernetes-agent-token --from-literal=token=<Your Token>`
 
-- Create deployment file `resources.yaml`:
-
-```yaml
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: gitlab-kubernetes-agent
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: gitlab-kubernetes-agent
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: gitlab-kubernetes-agent
-  template:
-    metadata:
-      labels:
-        app: gitlab-kubernetes-agent  
-    spec:
-      serviceAccountName: gitlab-kubernetes-agent
-      containers:
-      - name: agent
-        image: "registry.gitlab.com/gitlab-org/cluster-integration/gitlab-agent/agentk:stable"
-        args:
-        - -n gitlab-kubernetes-agent
-        - --token-file=/config/token
-        - --kas-address
-        - wss://gitlab.ics.muni.cz/-/kubernetes-agent/
-        volumeMounts:
-        - name: token-volume
-          mountPath: /config
-      volumes:
-      - name: token-volume
-        secret:
-          secretName: gitlab-kubernetes-agent-token
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: gitlab-kubernetes-agent-role
-rules:
-- resources: ["configmaps", "secrets"]  #need of specification
-  apiGroups: 
-  - ""
-  verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: gitlab-kubernetes-agent-role-binding
-roleRef:
-  name: gitlab-kubernetes-agent-role
+- Download deployment file [resources](deployments/resources.yaml).
+  In the file, in this section:
+  ```
+  apiVersion: rbac.authorization.k8s.io/v1
   kind: Role
-  apiGroup: rbac.authorization.k8s.io
-subjects:
-- name: gitlab-kubernetes-agent
-  kind: ServiceAccount
----
-```
+  metadata:
+    name: gitlab-kubernetes-agent-role
+  rules:
+  - resources: ["configmaps", "secrets", "pods"]
+    apiGroups: 
+    - ""
+    verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
+  ```
+  You need to specify the resources to your choosing.. 
+  You can list all resources you have permission to by this command `kubectl api-resources --verbs=list -n <Your Namespace>`.
 
 - Apply the deployment with the following command:
 `kubectl apply -n <Your Namespace> -f resoures.yaml`
