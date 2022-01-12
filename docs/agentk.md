@@ -36,14 +36,19 @@ gitops:
 ## Connect to cluster
 
 - Register agent and get his token.
+  
   In your project go to: 
-  Infrastructure -> Kubernetes clusters -> Actions -> Select an agent 
+  
+  Infrastructure -> Kubernetes clusters -> Actions -> Select an agent -> Register
+  
 - Make a secret in your namespace named `gitlab-kubernetes-agent-token` with `key named token` and `value=<Your Agent Token>`
   
   Or by using kubectl: `kubectl create secret generic -n <Your Namespace> gitlab-kubernetes-agent-token --from-literal=token=<Your Token>`
 
-- Download deployment file [resources](deployments/resources.yaml).
+- Download deployment file [resources.yaml](deployments/resources.yaml).
+  
   In the file, in this section:
+  
   ```
   apiVersion: rbac.authorization.k8s.io/v1
   kind: Role
@@ -55,8 +60,9 @@ gitops:
     - ""
     verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
   ```
-  You need to specify the resources to your choosing.. 
-  You can list all resources you have permission to by this command `kubectl api-resources --verbs=list -n <Your Namespace>`.
+  
+  You need to specify the resources to your choosing. 
+  You can list all resources you have permission to by this command `kubectl api-resources --verbs=list -n <Your Namespace>`
 
 - Apply the deployment with the following command:
 `kubectl apply -n <Your Namespace> -f resoures.yaml`
@@ -67,6 +73,9 @@ gitops:
 
 - In your repository make manifest file: `/manifest/manifest.yaml`
  
+ 
+For the purpose of testing the agent, we will make simple manifest file that will create ConfigMap in `<Your Namespace>`.
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -77,7 +86,6 @@ data:
   key: value
 ```
 
-For the purpose of testing the agent we will make simple manifest file that will create ConfigMap in `<Your Namespace>`.
 If everything went smoothly, you should have a ConfigMap named test-map.
 
 ***
