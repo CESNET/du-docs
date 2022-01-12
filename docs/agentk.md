@@ -48,7 +48,7 @@ gitops:
   
   In the file, in this section:
   
-  ```
+  ```yaml
   apiVersion: rbac.authorization.k8s.io/v1
   kind: Role
   metadata:
@@ -60,7 +60,7 @@ gitops:
     verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
   ```
   
-  You need to specify the resources to your choosing. 
+  Specify the resources to your choosing. 
   You can list all resources you have permission to by this command `kubectl api-resources --verbs=list -n <Your Namespace>`
 
 - Apply the deployment with the following command:
