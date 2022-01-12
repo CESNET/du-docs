@@ -93,5 +93,4 @@ data:
 ```
 
 If everything went smoothly, you should have a ConfigMap named test-map.
-
 ***
