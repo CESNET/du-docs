@@ -60,7 +60,7 @@ gitops:
     verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
   ```
   
-  Specify the resources to your choosing. 
+  Specify the resources and verbs to your choosing. 
   You can list all resources you have permission to by this command `kubectl api-resources --verbs=list -n <Your Namespace>`
 
 - Apply the deployment with the following command:
