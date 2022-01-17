@@ -9,6 +9,10 @@ sidebar:
   nav: docs
 ---
 
+The following text describes how to install GitLab Kubernetes Agent step by step.
+
+Following the steps should leave you with functional agent and knowledge of making manifest files.
+
 ## Prerequisites
 - Namespace on your cluster
 - Gitlab repository
