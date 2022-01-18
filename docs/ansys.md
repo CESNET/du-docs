@@ -46,7 +46,7 @@ In the second part of the form, you select `password`. This password is used to 
 
 ![appform1](ansys/appform2.png)
 
-In the third part of the form, you select if you desire persitent home, i.e., home that will be preserved even if you uninstall the application. Note: persistent home is bound with application name from the very beginning of install form. It means, if you set name to `ansys`, persistent home will be bound with name `ansys`. If you select the name `ansys-0` next time, you get new home that is bound with the name `ansys-0`.
+In the third part of the form, you select if you desire persistent home, i.e., home that will be preserved even if you uninstall the application. Note: persistent home is bound with application name from the very beginning of install form. It means, if you set name to `ansys`, persistent home will be bound with name `ansys`. If you select the name `ansys-0` next time, you get new home that is bound with the name `ansys-0`.
 
 In this part, you can select **e-infra** storage to connect to the application. If you check `External Storage`, few more options appear. You can select storage and access credentials. Currently, only `storage-brno12-cerit.metacentrum.cz` is supported. Username is e-infra ([metacentrum](https://metavo.metacentrum.cz/)) login and password **is not** Metacentrum password, but different set by administrator.
 
@@ -57,3 +57,30 @@ In the fourth part  of the form, you can select requested resources. This step i
 Finally, you can hit install.
 
 ![appform1](ansys/appform4.png)
+
+### Wait for Application to Start
+
+When you hit `Install`, you will see installation log. Once you see `SUCCESS` (see screenshot below), the application is running. 
+
+#### Notes
+
+* It can take some time before application is ready as it downloads 20GB docker container, if it is not already cached, first start can tak up to 20 minutes.
+* If filled password was not correct, it will be pending indefinitely. In such a case, delete application and start over.
+
+![apphelm](ansys/apphelm.png)
+
+### Connect to the Running Instance
+
+Once the application is running, for *VNC* version, navigate through `Service Discovery` (1) and `Services` (2), hover with mouse over `Target` (3) and depending on used browser, you should see target URL (4). Chrome browser shows it in the lower left corner. This is IP and port you need to pass to your `vncviewer` application or fill into the Safari navigation bar, e.g., `vnc://147.251.253.246`.
+
+In case of *WEBRTC*, instead of `Services`, navigate to `Ingresses` (5) and you will see full URL to click on to start the *WEBRTC* connection.
+
+*VNC* client will ask for the password. Type the password from the form. *WEBRTC* connection will ask for the username and password, those **are not** metacentrum username and password but the ones from the beginning of the form.
+
+![apphelm](ansys/appservice.png)
+
+## Delete Running Instance
+
+If you feel you do not need the application anymore, you can delete it. Just navigate to `App & Marketplace` (1), `Installed Apps` (2), select the application (3) and hit `Delete` (4). The data in home directory is not deleted in case you check persistent home. Running the application again with the same `Name` restores access to the home directory folder.
+
+![appdel](ssom/appdel.png)

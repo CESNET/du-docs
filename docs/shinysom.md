@@ -52,6 +52,6 @@ You will see log in window, use `user` as login name and the selected password f
 
 ## Delete Running Instance
 
-If you feel you do not need the application anymore, you can delete it. Just navigate to `App & Marketplace` (1), `Installed Apps` (2), select the application (3) and hit `Delete` (4). The data in home directory are not deleted. Running the application again with the same `Name` restores access to the home directory folder.
+If you feel you do not need the application anymore, you can delete it. Just navigate to `App & Marketplace` (1), `Installed Apps` (2), select the application (3) and hit `Delete` (4). The data in home directory is not deleted. Running the application again with the same `Name` restores access to the home directory folder.
 
 ![appdel](ssom/appdel.png)
