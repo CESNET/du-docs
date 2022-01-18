@@ -9,6 +9,10 @@ sidebar:
   nav: docs
 ---
 
+The following text describes how to install GitLab Kubernetes Agent step by step.
+
+Following the steps should leave you with functional agent and knowledge of making manifest files.
+
 ## Prerequisites
 - Namespace on your cluster
 - Gitlab repository
@@ -35,10 +39,17 @@ gitops:
 
 ## Connect to cluster
 
-- Register agent and get his token.
+- Register agent and get agent token.
   
   In your project go to: 
-  Infrastructure -> Kubernetes clusters -> Install a new agent -> Select an agent -> Register
+  
+  Infrastructure -> Kubernetes clusters -> Install a new agent 
+  ![agentk1](agentk1.png)
+  
+  Select an agent -> Register
+  ![agentk2](agentk2.png)
+  
+  An agent token will appear, copy it. Be careful, the token is not accessible twice.
   
 - Make an opaque secret named `gitlab-kubernetes-agent-token` with `key named token`, `value=<Your Agent Token>`
   
@@ -86,5 +97,4 @@ data:
 ```
 
 If everything went smoothly, you should have a ConfigMap named test-map.
-
 ***
