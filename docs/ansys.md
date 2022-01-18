@@ -79,6 +79,13 @@ In case of *WEBRTC*, instead of `Services`, navigate to `Ingresses` (5) and you 
 
 ![apphelm](ansys/appservice.png)
 
+## Ansys
+
+On the first login, desktop will look like this:
+![app](ansys/app.png)
+
+You see `licence checker` that is made to check available Ansys licences. You can select which licences you want to use. If there are no free licences, it will check periodically and once the licence is free, it will start fluent. Alternatively, you can start other part of Ansys using icons on desktop or using terminal.
+
 ## Delete Running Instance
 
 If you feel you do not need the application anymore, you can delete it. Just navigate to `App & Marketplace` (1), `Installed Apps` (2), select the application (3) and hit `Delete` (4). The data in home directory is not deleted in case you check persistent home. Running the application again with the same `Name` restores access to the home directory folder.
