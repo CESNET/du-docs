@@ -48,19 +48,21 @@ If VNC is not selected, *WEBRTC* method is used. This option is still in beta ve
 
 In the second part of the form, you select `password`. This password is used to login through VNC. If VNC is not selected, you need to fill also `username`, these credentials will be used in the browser to attach to the *WEBRTC* session.
 
-![appform1](ansys/appform2.png)
+![appform2](ansys/appform2.png)
 
 In the third part of the form, you select if you desire persistent home, i.e., home that will be preserved even if you uninstall the application. Note: persistent home is bound with application name from the very beginning of install form. It means, if you set name to `ansys`, persistent home will be bound with name `ansys`. If you select the name `ansys-0` next time, you get new home that is bound with the name `ansys-0`.
 
 In this part, you can select **e-infra** storage to connect to the application. If you check `External Storage`, few more options appear. You can select storage and access credentials. Currently, only `storage-brno12-cerit.metacentrum.cz` is supported. Username is e-infra ([metacentrum](https://metavo.metacentrum.cz/)) login and password **is not** Metacentrum password, but different set by administrator, [ask](mailto:k8s@ics.muni.cz) if you need to set. We are preparing more convenient way. This storage is mounted to `/storage` directory.
 
-![appform1](ansys/appform3.png)
+![appform3](ansys/appform3.png)
 
 In the fourth part  of the form, you can select requested resources. This step is optional. `Minimum` CPU or RAM is guaranteed amount of CPU and RAM, system reserves these resources for the application. However, the application can exceed guaranteed resources up to `Maximum`. However, in this case, resources are not exclusive and can be shared among other applications. If the application exceeds `Maximum` CPU, it gets limited, if it exceeds `Maximum` RAM, it gets terminated (you will see OOMKill report) and restarted. See note above about maximum values.
 
-Finally, you can hit install.
+![appform4](ansys/appform4.png)
 
-![appform1](ansys/appform4.png)
+In the fifth part of the form, select timeout 1200 seconds, this is due to really large Ansys images. Finally, hit `Install`.
+
+![appform5](ansys/appform5.png)
 
 ### Wait for Application to Start
 
@@ -94,4 +96,4 @@ You see `licence checker` that is made to check available Ansys licences. You ca
 
 If you feel you do not need the application anymore, you can delete it. Just navigate to `App & Marketplace` (1), `Installed Apps` (2), select the application (3) and hit `Delete` (4). The data in home directory is not deleted in case you check persistent home. Running the application again with the same `Name` restores access to the home directory folder.
 
-![appdel](ssom/appdel.png)
+![appdel](ansys/appdel.png)
