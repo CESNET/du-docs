@@ -16,6 +16,10 @@ b.io/kube-docs/docs/rancher.html) section.
 
 Following the steps below, you can run Ansys application. This application has persistent home directory, it means, that if you delete the application and later install the application again preserving its name, content of home directory will be preserved. It also possible to connect some storage from e-infra.
 
+### Notes
+
+* Default project had quota limit for 12 guaranteed CPUs and quota for 16 CPUs limit. Do not select more than 10 guaranteed CPUs and more than 14 CPUs limit. If needed more just [ask](k8s@ics.muni.cz). This may be increased in future so request for more CPUs can be made. 
+
 ### Select Application to Run
 
 Ensure, you did not select any namespace and see `Only User Namespaces` (1) at the top of the Rancher page.
