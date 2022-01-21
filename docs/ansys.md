@@ -18,7 +18,7 @@ Following the steps below, you can run Ansys application. This application has p
 
 ### Notes
 
-* Default project had quota limit for 12 guaranteed CPUs and quota for 16 CPUs limit. Do not select more than 10 guaranteed CPUs and more than 14 CPUs limit. If needed more just [ask](k8s@ics.muni.cz). This may be increased in future so request for more CPUs can be made. 
+* Default project had quota limit for 12 guaranteed CPUs and quota for 16 CPUs limit. Do not select more than 10 guaranteed CPUs and more than 14 CPUs limit. If needed more just [ask](mailto:k8s@ics.muni.cz). This may be increased in future so request for more CPUs can be made. 
 
 ### Select Application to Run
 
