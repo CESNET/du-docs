@@ -20,6 +20,8 @@ Following the steps below, you can run Ansys application. This application has p
 
 * Default project had quota limit for 12 guaranteed CPUs and quota for 16 CPUs limit. Do not select more than 10 guaranteed CPUs and more than 14 CPUs limit. If needed more just [ask](mailto:k8s@ics.muni.cz). This may be increased in future so request for more CPUs can be made. 
 
+* If you do not select `Customize Helm options before install` in **Install the Application** step, installation appears to fail but actually it works after some longer time.
+
 ### Select Application to Run
 
 Ensure, you did not select any namespace and see `Only User Namespaces` (1) at the top of the Rancher page.
@@ -36,7 +38,7 @@ When you click on the chart, you can select version of application as shown belo
 
 ### Install the Application
 
-Now you can install the Ansys application. In most cases, keep both `Namespace` (1) and `Name` (2) intact, however, you can select namespace as desired except `default`. The `default` namespace is available but it is not meant to be used. The `Name` will be in URL to access the application. The `Name` must be unique in the `Namespace`, i.e., you cannot run two or more instances with the same `Name` in the same `Namespace`. If you delete the application and later install the application again preserving its `Name`, content of home directory will be preserved.
+Now you can install the Ansys application. In most cases, keep both `Namespace` (1) and `Name` (2) intact, but select `Customize Helm options before install` (3), however, you can select namespace as desired except `default`. The `default` namespace is available but it is not meant to be used. The `Name` will be in URL to access the application. The `Name` must be unique in the `Namespace`, i.e., you cannot run two or more instances with the same `Name` in the same `Namespace`. If you delete the application and later install the application again preserving its `Name`, content of home directory will be preserved. 
 
 ![appinst](ansys/appinst.png)
 
