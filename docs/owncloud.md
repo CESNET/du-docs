@@ -25,7 +25,7 @@ Following the steps below, you can run ownCloud client application. This applica
 
 Select your `Namespace` (1),  navigate through `Workload` (2), `Pods` (3), and name of the application (4), e.g., `ansys-0` -- click on the name. See screenshot below.
 
-![selectpod](owncloud/selectpod.png)
+![findpod](owncloud/findpod.png)
 
 Click on vertical dots (1) and select Execute Shell (2). 
 
