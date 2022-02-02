@@ -44,10 +44,10 @@ gitops:
   In your project go to: 
   
   Infrastructure -> Kubernetes clusters -> Install a new agent 
-  ![agentk1](agentk1.png)
+  ![agentk1](./gitops/git_agent/agentk1.png)
   
   Select an agent -> Register
-  ![agentk2](agentk2.png)
+  ![agentk2](./gitops/git_agent/agentk2.png)
   
   An agent token will appear, copy it. Be careful, the token is not accessible twice.
   
