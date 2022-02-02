@@ -21,7 +21,9 @@ After the notebook is spawned, a persistent volume is mounted to path `/home/{us
 Note: Pay attention to paths used in notebooks. Imagine you have two BinderHub running. In both, you write outputs to location `/home/{username}-nfs-pvc/test`. If both notebooks create file named `result.txt`, you would be overwriting the file. It is a good practice to create new directory in path `/home/{username}-nfs-pvc` for each BinderHub instance. 
 
 ## Resources
-TBD
+Each user on your JupyterHub can use certain amount of memory and CPU. You are guaranteed **1G of RAM** and **1 CPU**. Resource limits represent a hard limit on the resources available. There are **16G of RAM** and **8 CPU** limits placed which means you can't use more than 16G of RAM and 8 CPUs, no matter what other resources are being used on the machines. 
+
+If you need more resources, please contact us at <a href="mailto:k8s@ics.muni.cz">IT Service desk</a>.
 
 ## Where to find running notebooks
 Your running notebooks can be found at `https://bhub.cloud.e-infra.cz/`. Clicking on address redirects you to the notebook instance. Because redirection links include random strings it is advised to work in one browser where cookies can be stored and you don;t have to remember long notebook addresses. Also, avoid incognito windows because the session cookie won't save and when you close the tab, you will not find the instance in control panel. 
@@ -38,6 +40,8 @@ To spawn new instance, you have to delete one of your running instances.  This c
 ![projects_stop](binderhub-images/stop.png)
 
 ![projects_delete](binderhub-images/delete.png)
+
+❗️<ins>Notebooks are deleted automatically after one week of inactivity (inactivity = idle kernel or no connection to notebook).</ins>❗️
 
 ## Custom Dockerfile
 
