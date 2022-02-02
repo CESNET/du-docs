@@ -10,9 +10,34 @@ sidebar:
 ---
 # BinderHub
 
-BinderHub is a Binder instance working on Kubernetes located on [binderhub.cerit-sc.cz](https://binderhub.cerit-sc.cz). Binder turns a Git repo into collection of interactive notebooks. It is enough to fill the git repository name (optionally specific notebook or branch) and binderhub will turn it into a web notebook. 
+BinderHub is a Binder instance working on Kubernetes located on [binderhub.cloud.e-infra.cz](https://binderhub.cloud.e-infra.cz/). Binder turns a Git repo into collection of interactive notebooks. It is enough to fill the git repository name (optionally specific notebook or branch) and binderhub will turn it into a web notebook. 
 
-The notebook runs under anonymous user and if you close browser tab, you won't be able to run the same notebook (if you don't save the url). Furthermore, inactive (closed tab) notebooks are removed after 10 minutes of inactivity which is checked every 10 minutes. Currently, every notebook is assigned `0.2 CPU` and `512 MiB` of memory. 
+## Authentication
+To use CERIT-SC BinderHub instance, you have to authenticate. Authentication is performed via unified login. 
+
+## Persistence
+After the notebook is spawned, a persistent volume is mounted to path `/home/{username}-nfs-pvc`. The same persistent volume is mounted to mentioned path in each notebook you spawned. Therefore, if you want to use data generated in BinderHub instance *A* in instance of BinderHub *B*, you can write the data to path `/home/{username}-nfs-pvc` and they will be available for use. 
+
+Note: Pay attention to paths used in notebooks. Imagine you have two BinderHub running. In both, you write outputs to location `/home/{username}-nfs-pvc/test`. If both notebooks create file named `result.txt`, you would be overwriting the file. It is a good practice to create new directory in path `/home/{username}-nfs-pvc` for each BinderHub instance. 
+
+## Resources
+TBD
+
+## Where to find running notebooks
+Your running notebooks can be found at `https://bhub.cloud.e-infra.cz/`. Clicking on address redirects you to the notebook instance. Because redirection links include random strings it is advised to work in one browser where cookies can be stored and you don;t have to remember long notebook addresses. Also, avoid incognito windows because the session cookie won't save and when you close the tab, you will not find the instance in control panel. 
+
+## Limits
+Currently, every user is limited to spawn 5 projects. If you reach quota but you want to deploy new instance, an error will appear under loading bar of BinderHub index page.
+
+![projects_limit](binderhub-images/limit.png)
+
+To spawn new instance, you have to delete one of your running instances.  This can be done in JupyterHub control panel (JupyterHub is used underneath BinderHub). Navigate to `https://bhub.cloud.e-infra.cz/` and stop any instance you don't need. When red button `delete` appears, click on that one as well. After that, it should be possible to spawn new instance at [binderhub.cloud.e-infra.cz](https://binderhub.cloud.e-infra.cz/).
+
+![projects_panel](binderhub-images/hubpanel.png)
+
+![projects_stop](binderhub-images/stop.png)
+
+![projects_delete](binderhub-images/delete.png)
 
 ## Custom Dockerfile
 
