@@ -65,9 +65,13 @@ docs:
     children:
       - title: Storage
         url: /docs/benchmarks-volumes.html
+  - title: GitOps
+    children:
+      - title: GitLab Agent
+        url: /docs/agentk.html
+      - title: GitLab Containers
+        url: /docs/containers_build.html
   - title: Case Studies
     children:
-      - title: GitLab
-        url: /docs/agentk.html
       - title: Nextflow
         url: /docs/nextflow.html
