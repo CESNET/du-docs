@@ -21,6 +21,6 @@ End user can use this platform in the following three ways:
 
 1. Utilize prepared applications by infrastructure, see [Rancher Applications](/docs/rancherapps.html) in navigation on the left. 
 
-2. Utilize existing docker images from all over the world hosted at a *registry* such as [hub.docker.com](https://hub.docker.com), in this case, see [limitation](/docs/limitation.html). 
+2. Utilize existing docker images from all over the world hosted at a *registry* such as [hub.docker.com](https://hub.docker.com), in this case, see [limitations](/docs/limitations.html). 
 
 3. Skilled users can also prepare their own application by themselves, see [dockerfile](/docs/dockerfile.html) section.
