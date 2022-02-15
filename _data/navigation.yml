@@ -1,11 +1,13 @@
 header:
 
 docs:
-  - title: Rancher
+  - title: Platform
     children:
       - title: Overview
         url: /docs/overview.html
-      - title: Rancher Access
+  - title: Rancher
+    children:
+      - title: Introduction
         url: /docs/rancher.html
       - title: Multiple Clusters
         url: /docs/rancher-multiple.html
