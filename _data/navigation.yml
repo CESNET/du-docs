@@ -9,7 +9,7 @@ docs:
         url: /docs/hw.html
   - title: Rancher
     children:
-      - title: Introduction
+      - title: Rancher Introduction
         url: /docs/rancher.html
       - title: Multiple Clusters
         url: /docs/rancher-multiple.html
