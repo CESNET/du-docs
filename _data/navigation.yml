@@ -4,11 +4,17 @@ docs:
   - title: Rancher
     children:
       - title: Overview
+        url: /docs/overview.html
+      - title: Rancher Access
         url: /docs/rancher.html
       - title: Multiple Clusters
         url: /docs/rancher-multiple.html
       - title: Namespaces
         url: /docs/ns.html
+  - title: Docker
+    children:
+      - title: Dockerfile
+        url: /docs/dockerfile.html 
   - title: Kubernetes
     children:
       - title: PVC
