@@ -49,12 +49,20 @@ It is possible to utilize GPU in your notebook. Using GPU requires particular se
 ## Named servers
 In the top left corner, go to `File &rarr; Hub Control Panel`. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
 
+![add1](jupyterhub-images/add1.png)
+![add2](jupyterhub-images/add2.png)
+
 ## Conda environment
 Conda is supported in all provided images and we can assure its functionality. 
 
 New conda environment in hub's terminal is created with command `conda create -n tenv --yes python=3.8 ipykernel nb_conda_kernels` (`ipykernel nb_conda_kernels` part is required, alternatively irkernel). 
 
+![moveenv](jupyterhub-images/move_env.png)
+
 Check if environment is installed with `conda env list`. You can use the environment right away, either by creating new notebook or changing the kernel of existing one (tab `Kernel` → `Change Kernel...` and choose the one you want to use).
+
+![checkenv](jupyterhub-images/check_env.png)
+![selenv](jupyterhub-images/select_env.png)
 
 ## Install Conda packages
 To install conda packages you have to create new conda environment (as described above). Then, install new packages in terminal into newly created environment e.g. `conda install keyring -n myenv`. 
