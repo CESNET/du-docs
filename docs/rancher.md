@@ -11,7 +11,7 @@ sidebar:
 
 ## Rancher
 
-_Rancher_ instance is available on [rancher.cloud.e-infra.cz](https://rancher.cloud.e-infra.cz). Please login via CESNET or ELIXIR (EGI is not approved yet).
+_Rancher_ instance is available on [rancher.cloud.e-infra.cz](https://rancher.cloud.e-infra.cz). Please login via CESNET, ELIXIR or EGI.
 After logging in, you shall see default dashboard. You should see default cluster as shown below. If none cluster is shown, please, realod the page after few seconds.
 
 World of Rancher and Kuberntes is organized into *clusters*, *projects*, and *namespaces*.

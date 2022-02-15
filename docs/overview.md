@@ -15,6 +15,8 @@ In general, this platform can be used for almost anything starting with a simple
 
 This platform offers users to focus solely on their applications, so that required knowledge comprises of using the application or containerizing the application only. In the latter case, knowledge of creating dockerfiles is required (see [dockerfile](/docs/dockerfile.html) section. However, almost no knowledge of infrastructure is needed such as mounting `NFS` and so on.
 
+To be able to use this platform, academic affiliation or sponsored account is required. User can login via CESNET AAI, Elixir AAI or EGI AAI. No additional membership is required for *default* project with limited resources.
+
 End user can use this platform in the following three ways:
 
 1. Utilize prepared applications by infrastructure, see [Rancher Applications](/docs/rancherapps.html) in navigation on the left. 
