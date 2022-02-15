@@ -11,22 +11,23 @@ sidebar:
 
 # JupyterHub 
 
-We provide a JupyterHub running on Kubernetes for every MetaCentrum member. The hub can be accessed on `hub.cerit-sc.cz`. Sign in with meta username (do not use @META, only username). 
+We provide a JupyterHub running on Kubernetes for every MetaCentrum member. The hub can be accessed on [hub.cloud.e-infra.cz](https://hub.cloud.e-infra.cz/). Sign in with meta username (do not use @META, only username). 
 
 ## Choosing image
 
 Any Jupyter notebook image can be run, options already provided:
-- jupyter/minimal-notebook
-- jupyter/datascience-notebook
-- jupyter/scipy-notebook
-- jupyter/tensorflow-notebook
+- minimal-notebook ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-minimal-notebook))
+- datascience-notebook ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-datascience-notebook))
+- scipy-notebook ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-scipy-notebook))
+- tensorflow-notebook ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-tensorflow-notebook))
+- tensorflow-notebook with GPU support ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-tensorflow-notebook) but TF v. 2.7.0 and TensorBoard installed)
 
 If you choose custom, you have to provide image name together with its repo and optional tag - input text in format _repo/imagename:tag_.
 `minimal-notebook` is chosen as default image.
 
 
 ## Choosing storage
-By default, every notebook runs with persistent storage mounted to `/home/jovyan`. Therefore, we recommend to save the data to `/home/jovyan` directory to have them accessible every time notebook is spawned. 
+By default, every notebook runs with persistent storage mounted to `/home/jovyan`. Therefore, we recommend to save the data to `/home/jovyan` directory to have them accessible every time notebook is spawned. Same persistent storage is mounted to all your notebooks so you can share data across multiple instances. Furthermore, in case you delete all you JupyterHub notebook instances and spawn new one later, again same persistent storage is mounted. Therefore your data are preserved across instances and across spawns.
 
 
 Optionally, you can mount your MetaCentrum home - check the option and select the desired home. Now, it is possible to mount only one home per notebook. In hub, your home is located in `/home/meta/{meta-username}`.
@@ -39,7 +40,11 @@ brno1-cerit | brno2 | brno3-cerit | brno6  | praha1
 brno8 | brno9-ceitec | budejovice1 | du-cesnet | praha2-natur
 liberec3-tul | ostrava1 | ostrava2-archive | pruhonice1-ibot | praha5-elixir
 plzen1 | plzen4-ntis                   
- 
+
+## Resources
+Each user on JupyterHub can use certain amount of memory and CPU. You are guaranteed **1G of RAM** and **1 CPU**. Resource limits represent a hard limit on the resources available. There are **256G of RAM** and **32 CPU** limits placed which means you can't use more than 256G of RAM and 32 CPUs for that specific instance.
+
+It is possible to utilize GPU in your notebook. Using GPU requires particular setting (e.g. drivers, configuration) so it can be really used only in Tensorflow image with GPU support. You can request at most 2 whole GPUs. 
 
 ## Named servers
 In the top left corner, go to `File &rarr; Hub Control Panel`. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
@@ -72,7 +77,7 @@ Solutions:
 
 ## I've chosen wrong home! What now?!
 
-If notebook is already running, in the top left corner, go to `File ` &rarr; `Hub Control Panel` and click red `Stop My Server`. In a couple of seconds, your container hub instance will be deleted (stop button disapperas) and you can again `Start Server` with different home. 
+If notebook is already running, in the top left corner, go to `File ` &rarr; `Hub Control Panel` and click red `Stop My Server`. In a couple of seconds, your container notebook instance will be deleted (stop button disapperas) and you can again `Start Server` with different home. 
 
 Alternatively, you can create another named server. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
 
@@ -80,6 +85,6 @@ All of your named server are accessible under `Hub Control panel` where you can 
 
 
 ## Feature requests
-Any tips for features or new notebook types are welcomed in RT.
+Any tips for features or new notebook types are welcomed at <a href="mailto:k8s@ics.muni.cz">IT Service desk</a>.
 
 
