@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Overview
+title: Container Platform Overview
 permalink: /docs/overview.html
 key: matlab
 aside:
@@ -8,9 +8,8 @@ aside:
 sidebar:
   nav: docs
 ---
-## Container Platform Overview
 
-Our container platform is based on [Kubernetes orchestrator](https://kubernetes.io/) and [docker](https://hub.docker.com/) container images. Currently, the platform is built on Linux and x86\_64 binary architecture (no Arm or Microsoft Windows is possible), we provide GPU accelerators (currently NVIDIA only), and SSD storage. Soon, we will provide also InifniBand 100Gbps interconnect fabrics.
+Our container platform is based on [Kubernetes orchestrator](https://kubernetes.io/) and [docker](https://hub.docker.com/) container images. We addopted [rancher](https://rancher.com) Kubernetes distribution so our platform UI is available through [Rancher Dashboard](https://rancher.cloud.e-infra.cz). Currently, the platform is built on Linux and x86\_64 binary architecture (no Arm or Microsoft Windows is possible), we provide GPU accelerators (currently NVIDIA only), and SSD storage. Soon, we will provide also InifniBand 100Gbps interconnect fabrics.
 
 In general, this platform can be used for almost anything starting with a simple web application, see [hello world](/docs/kubectl-helloworld.html) example, continuing to running whole remote desktop, see e.g., [ansys](/docs/ansys.html) application, or running complex workflow pipeline, see e.g., [nextflow](/docs/nextflow.html). 
 
