@@ -5,6 +5,8 @@ docs:
     children:
       - title: Overview
         url: /docs/overview.html
+      - title: Available Hardware
+        url: /docs/hw.html
   - title: Rancher
     children:
       - title: Introduction
