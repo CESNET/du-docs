@@ -38,8 +38,9 @@ docs:
       - title: MPI Job
         url: /docs/mpi.html
   - title: Rancher Applications
-    url: /docs/rancher-applications.html
     children:
+      - title: Overview
+        url: /docs/rancher-applications.html
       - title: Ansys
         url: /docs/ansys.html
       - title: Bioconductor

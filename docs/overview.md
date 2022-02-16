@@ -19,7 +19,7 @@ To be able to use this platform, academic affiliation or sponsored account is re
 
 End user can use this platform in the following three ways:
 
-1. Utilize prepared applications by infrastructure, see [Rancher Applications](/docs/rancherapps.html) in navigation on the left. 
+1. Utilize prepared applications by infrastructure, see [Rancher Applications](/docs/rancher-applications.html) in navigation on the left. 
 
 2. Utilize existing docker images from all over the world hosted at a *registry* such as [hub.docker.com](https://hub.docker.com), in this case, see [limitations](/docs/limitations.html). 
 
