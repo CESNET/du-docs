@@ -19,6 +19,8 @@ docs:
     children:
       - title: Dockerfile
         url: /docs/dockerfile.html 
+      - title: Limitations
+        url: /docs/limitations.html
   - title: Kubernetes
     children:
       - title: PVC
