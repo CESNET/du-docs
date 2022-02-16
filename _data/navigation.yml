@@ -29,6 +29,8 @@ docs:
         url: /docs/kubectl-expose.html
       - title: Storage
         url: /docs/pvc.html
+      - title: GPU and other Resources
+        url: /docs/resources.html
   - title: Examples
     children:
       - title: Hello World

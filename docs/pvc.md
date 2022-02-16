@@ -23,7 +23,7 @@ The table below describes performance characteristics of each storage class, in 
 
 |:---|:---:|:---:|:---:|:---:|
 |Storage type|Read IOPS|Write IOPS|Read Linear|Write Linear|
-|:---|:---:|:---:|:---:|:---:|
+|:---|---:|---:|---:|---:|
 |Local SSD|98800|82800|1000MiB/s|947MiB/s|
 |nfs-csi|30700|22000|755MiB/s|1093MiB/s|
 |csi-ceph-rbd-du|496|814|224MiB/s|188MiB/s|
@@ -90,3 +90,38 @@ kubectl create -f secret.yaml -n namespace
 to your needs. You can request it at [k8s@ics.muni.cz](mailto: k8s@ics.muni.cz).
 
 You see your PVCs in Rancher GUI in `Storage` &rarr; `PersistentVolumeClaims` ![Volumes](pvc.jpg)
+
+## Ephemeral Storage
+
+Ephemeral kind of storage is allocated from node's local storage. Allocation is done through resource requests, see [resources](/docs/resources.html) and through volume mounts.
+
+Ephemeral storage can be allocated from local disk or local memory. If a Pod is evicted or moved to another node, content of ephemeral storage is lost.
+
+Ephemeral storage from local disk:
+
+```yaml
+volumes:
+- name: eph
+  emptyDir:
+    sizeLimit: 10Gi
+
+volumeMounts:
+- name: eph
+  mountPath: /data
+```
+
+Ephemeral storage from local memory:
+
+```yaml
+volumes:
+- name: mem
+  emptyDir:
+    medium: Memory
+    sizeLimit: 1Gi
+
+volumeMounts:
+- name: mem
+  mountPath: /tmp
+```
+
+In case of local memory, see requirements on [memory resources](/docs/resources.html).
