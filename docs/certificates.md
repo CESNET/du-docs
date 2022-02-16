@@ -13,9 +13,11 @@ Kubernetes can issue and manage custom trusted certificates using ACME protocol.
 
 This is especially important for enabling TLS when exposing non-web applications, therefore without ingress.
 
-Currently, there are two issuers available:
-* **letsencrypt-prod** issuer is web-only and automatically checks the web on provided domain name during issuing process. It is automatically used when exposing application through [ingress](kubectl-expose.html#web-based-applications).
-* **letsencrypt-prod-dns** issuer is for other applications. The difference is checking through dns. However, the dns checking is slower, because the dns change must be propagated first.
+Currently, there are four issuers available:
+* `letsencrypt-prod` issuer is web-only and automatically checks the web on provided domain name during issuing process. It is automatically used when exposing application through [ingress](kubectl-expose.html#web-based-applications).
+* `letsencrypt-prod-dns` issuer is for other applications. The difference is checking through dns. However, the dns checking is slower, because the dns change must be propagated first.
+* `letsencrypt-stage` is the same as `letsencrypt-prod` but it uses staging servers suitable for testing.
+* `letsencrypt-stage-dns` is the same as `letsencrypt-prod-dns` but it uses staging servers suitable for testing.
 
 To issue a kubernetes-managed certificate, the following configuration can be used.
 ```yaml
