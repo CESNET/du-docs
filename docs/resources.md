@@ -79,16 +79,16 @@ resources:
     nvidia.com/gpu: 1
 ```
 
-The following example requests 2 GB of GPU memory, 2 CPUs and 4GB of memory guaranteed and also as hard limit.
+The following example requests 2 GB of GPU memory, 0.5 CPU and 4GB of memory guaranteed and also as hard limit.
 
 ```yaml
 resources:
   requests:
-    cpu: 2
+    cpu: 500m
     memory: 4Gi
     cerit.io/gpu-mem: 2
   limits:
-    cpu: 2
+    cpu: 500m
     memory: 4Gi
     cerit.io/gpu-mem: 2
 ```
