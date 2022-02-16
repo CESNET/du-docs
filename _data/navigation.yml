@@ -35,6 +35,8 @@ docs:
     children:
       - title: Hello World
         url: /docs/kubectl-helloworld.html
+      - title: MPI Job
+        url: /docs/mpi.html
   - title: Rancher Applications
     children:
       - title: Ansys
