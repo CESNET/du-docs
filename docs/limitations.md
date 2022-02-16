@@ -37,14 +37,17 @@ On the other hand, you have full root capability during docker image building.
 * You cannot bind port below 1024. It means that services needs to listen on higher ports, e.g., 8080 and so on. This does not mean you cannot create a service, that listens on port 443 or 80 for outside world. Just follow [Exposing applications](/docs/kubectl-expose.html). This issue is mostly related to web servers (like nginx and apache, for nginx there is prepared non-privileged container: `nginxinc/nginx-unprivileged:latest`), ssh server, samba server. All these server can be reconfigured to listen on higher ports.
 
 * You cannot write to e.g., `/run` or `/var/log/` directories. In this case, you do not need to rebuild image and change rights. There is workaround mounting `emptyDir` volume into those directories. Just merge the following two fragments in deployment YAML:
+
 ```yaml
   volumes:
     - name: log
       emptyDir: {}
 ```
+
 ```yaml
   volumeMounts:
      - name: log
        mountPath: /var/log
 ```
+
 If there are `volumes` and `volumeMounts` sections already, just add these items without the `volumes` and `volumeMounts` lines.
