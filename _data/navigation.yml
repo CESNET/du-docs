@@ -38,6 +38,7 @@ docs:
       - title: MPI Job
         url: /docs/mpi.html
   - title: Rancher Applications
+    url: /docs/rancher-applications.html
     children:
       - title: Ansys
         url: /docs/ansys.html
