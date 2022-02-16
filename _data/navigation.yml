@@ -75,10 +75,6 @@ docs:
         url: /docs/snakemake.html
       - title: CWL
         url: /docs/cwl.html       
-  - title: Benchmarks
-    children:
-      - title: Storage
-        url: /docs/benchmarks-volumes.html
   - title: GitOps
     children:
       - title: GitLab Agent
