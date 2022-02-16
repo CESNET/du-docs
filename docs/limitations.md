@@ -39,12 +39,12 @@ On the other hand, you have full root capability during docker image building.
 * You cannot write to e.g., `/run` or `/var/log/` directories. In this case, you do not need to rebuild image and change rights. There is workaround mounting `emptyDir` volume into those directories. Just merge the following two fragments in deployment YAML:
 ```yaml
   volumes:
-    - name: log
-      emptyDir: {}
+  - name: log
+    emptyDir: {}
 
   volumeMounts:
-     - name: log
-       mountPath: /var/log
+  - name: log
+    mountPath: /var/log
 ```
 
   If there are `volumes` and `volumeMounts` sections already, just add these items without the `volumes` and `volumeMounts` lines.
