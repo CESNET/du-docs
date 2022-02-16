@@ -21,18 +21,18 @@ docs:
         url: /docs/limitations.html
   - title: Kubernetes
     children:
-      - title: PVC
-        url: /docs/pvc.html
+      - title: Kubectl
+        url: /docs/kubectl.html
       - title: Certificate
         url: /docs/certificate.html
-  - title: Kubectl
-    children:
-      - title: Overview
-        url: /docs/kubectl.html
-      - title: Hello World
-        url: /docs/kubectl-helloworld.html
       - title: Exposing applications
         url: /docs/kubectl-expose.html
+      - title: Storage
+        url: /docs/pvc.html
+  - title: Examples
+    children:
+      - title: Hello World
+        url: /docs/kubectl-helloworld.html
   - title: Rancher Applications
     children:
       - title: Ansys

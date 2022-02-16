@@ -28,13 +28,13 @@ spec:
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
-    name: <ISSUER-NAME>
+    name: letsencrypt-prod-dns
   dnsNames:
   - "application.dyn.cloud.e-infra.cz"
   usages:
   - digital signature
   - key encipherment
 ```
-Where ```metadata.name```, ```spec.secretName``` refer to the name of generated certificate. The ```spec.dnsNames``` items are the target dns names of the certificate. Issuer is specified in the ```spec.issuerRef.name```.
+Where `metadata.name`, `spec.secretName` refer to the name of generated certificate. The `spec.dnsNames` items are the target dns names of the certificate. Issuer is specified in the `spec.issuerRef.name` and should be set to `letsencrypt-prod-dns`.
 
-The configuration generates an secret specified in ```spec.secretName```, containing certificate and private key pair.
+The configuration generates an secret specified in `spec.secretName`, containing certificate and private key pair.
