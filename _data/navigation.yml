@@ -11,10 +11,8 @@ docs:
     children:
       - title: Rancher Introduction
         url: /docs/rancher.html
-      - title: Multiple Clusters
-        url: /docs/rancher-multiple.html
-      - title: Namespaces
-        url: /docs/ns.html
+      - title: Projects, Namespaces, and Quotas
+        url: /docs/quotas.html
   - title: Docker
     children:
       - title: Dockerfile
