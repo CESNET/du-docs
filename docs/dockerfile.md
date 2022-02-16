@@ -47,13 +47,31 @@ CMD /bin/bash -c "tail -f /dev/null"
 RUN addgroup --gid 1000 group && adduser --gid 1000 --uid 1000 --disable-password --gecos User user
 ```
 
-* Container defaults to UTC time zone. If it not desired, it should be set to proper default, e.g. `RUN echo 'Europe/Prague' > /etc/timezone`.
+* Container defaults to UTC time zone. If it not desired, it should be set to proper default, e.g. 
+```dockerfile
+RUN echo 'Europe/Prague' > /etc/timezone
+```
 
-* Packaging tools must not be interactive. E.g., for `deb` systems: `RUN DEBIAN_FRONTEND=noniteractive apt-get install -y curl`. Do not forget to add `-y` to most of packaging tools.
+* Packaging tools must not be interactive. E.g., for `deb` systems: 
+```dockerfile
+RUN DEBIAN_FRONTEND=noniteractive apt-get install -y curl
+``` 
+Do not forget to add `-y` to most of packaging tools.
 
-* Debian family systems usually install recommended packages by default which is not desired here, disable it: `RUN apt-get install -y --no-install-recommends curl`.
+* Debian family systems usually install recommended packages by default which is not desired here, disable it: 
+```dockerfile
+RUN apt-get install -y --no-install-recommends curl
+```
 
-* Keep resulting image as small as possible. It is needed to clean temporary files. E.g. for `deb`: `RUN apt-get update && apt-get -y install curl && apt-get clean && rm -rf /var/lib/apt/lists/*`, for `conda`: `RUN conda install package && conda clean --all -f -y && rm -rf "~/.cache`. **Cleaning must be done within a single `RUN` command.** 
+* Keep resulting image as small as possible. It is needed to clean temporary files. E.g. for `deb`: 
+```dockerfile
+RUN apt-get update && apt-get -y install curl && apt-get clean && rm -rf /var/lib/apt/lists/*
+``` 
+for `conda`: 
+```dockerfile
+RUN conda install package && conda clean --all -f -y && rm -rf "~/.cache
+```
+**Cleaning must be done within a single `RUN` command.** 
 
 * Each `RUN` command creates a new docker image layer. It is recommended to merge related commands into a single `RUN` command, e.g., install all required packages at once, not one by one.
 
