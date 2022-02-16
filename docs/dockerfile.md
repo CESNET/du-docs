@@ -42,9 +42,10 @@ CMD /bin/bash -c "tail -f /dev/null"
 
 ## Dockerfile Tips
 
-* Container usually does not have any created user in `/etc/passwd`. In this case, you can see 'I have no name` prompt. Also in this case, there is no `home` directory which defaults to `/`, many applications fail here as `/` will not be writable. It is recommended to create some default user that the container run as. Name of the user is not important. The following command will create group named `group` and user named `user`, double `user` at the end of the command is not an error. 
+* Container usually does not have any created user in `/etc/passwd`. In this case, you can see `I have no name` prompt. Also in this case, there is no `home` directory which defaults to `/`, many applications fail here as `/` will not be writable. It is recommended to create some default user that the container run as. Name of the user is not important. The following command will create group named `group` and user named `user`, double `user` at the end of the command is not an error. 
 ```dockerfile
-RUN addgroup --gid 1000 group && adduser --gid 1000 --uid 1000 --disable-password --gecos User user
+RUN addgroup --gid 1000 group && \
+    adduser --gid 1000 --uid 1000 --disable-password --gecos User user
 ```
 
 * Container defaults to UTC time zone. If it not desired, it should be set to proper default, e.g. 
