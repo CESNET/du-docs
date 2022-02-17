@@ -31,6 +31,8 @@ docs:
         url: /docs/pvc.html
       - title: GPU and other Resources
         url: /docs/resources.html
+      - title: Security and Network Policy
+        url: /docs/security.html
   - title: Examples
     children:
       - title: Hello World

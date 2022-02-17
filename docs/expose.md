@@ -104,7 +104,7 @@ The following two annotations are required in the `Ingress`.
 The `secretref` must match tne metadata name of the `Secret`.
 
 *IMPORTANT* 
-The password protection is applied only on external traffic, i.e., user will be prompted for a password. However, traffic from other pods bypasses authentication if it communicates directly with the `Service` IP. This can be mitigated applying `Network Policy`. TBD.
+The password protection is applied only on external traffic, i.e., user will be prompted for a password. However, traffic from other pods bypasses authentication if it communicates directly with the `Service` IP. This can be mitigated applying `Network Policy`. See [Security](/docs/security.html).
 
 #### Big Data Upload
 
