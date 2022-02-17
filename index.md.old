@@ -1,8 +1,8 @@
 ---
 layout: article
 title: Kubernetes Docs
-permalink: /index.html
-key: index
+permalink: /index2.html
+key: index2
 aside:
   toc: true
 sidebar:
