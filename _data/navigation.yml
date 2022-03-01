@@ -13,6 +13,8 @@ docs:
         url: /docs/rancher.html
       - title: Projects, Namespaces, and Quotas
         url: /docs/quotas.html
+      - title: Requesting a Project, Access Control
+        url: /docs/reqproj.html
   - title: Docker
     children:
       - title: Dockerfile
