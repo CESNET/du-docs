@@ -10,7 +10,7 @@ sidebar:
 ---
 
 _Rancher_ instance is available on [rancher.cloud.e-infra.cz](https://rancher.cloud.e-infra.cz). Please login via CESNET, ELIXIR or EGI.
-After logging in, you shall see default dashboard. You should see default cluster as shown below. If none cluster is shown, please, realod the page after few seconds.
+After logging in, you shall see default dashboard. You should see default cluster as shown below. If none cluster is shown, please, realod the page, it can take up to one minute before a cluster is shown.
 
 World of Rancher and Kuberntes is organized into *clusters*, *projects*, and *namespaces*. *Clusters* correspond to sets of physical nodes. *Projects* are created within the *cluster* and *namespaces* are created within the *Projects*. The *Projects* are purely Rancher concept and they are not Kubernetes native concept. [Namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) provides a mechanism for isolating groups of resources within a single cluster. Names of resources need to be unique within a namespace, but not across namespaces. Names of namespaces need to be unique within a cluster. I.e., it is usually not a good idea to create namespace called *test* and so on.
 
