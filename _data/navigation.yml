@@ -87,6 +87,8 @@ docs:
         url: /docs/agentk.html
       - title: GitLab Containers
         url: /docs/containers_build.html
+      - title: Securely Storing Secrets in Git
+        url: /docs/gitsecrets.html
   - title: Case Studies
     children:
       - title: Nextflow
