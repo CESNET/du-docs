@@ -20,7 +20,7 @@ Following the steps below, you can install RStudio web application. This applica
 
 ### Select Application to Run
 
-Navigate through `Only User Namespaces` (1), `App & Marketplace` (2), `Charts` (3), `cerit-cs` (4),  and select `RStudio` (5). See screenshot below.
+Navigate through `Only User Namespaces` (1), `App & Marketplace` (2), `Charts` (3), `cerit-sc` (4),  and select `RStudio` (5). See screenshot below.
 
 ![selectapp](rstudio/selectapp.png)
 
