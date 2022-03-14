@@ -93,3 +93,7 @@ docs:
     children:
       - title: Nextflow
         url: /docs/nextflow.html
+  - title: Debugging
+    children:
+      - title: Add shell to an image without one
+        url: /docs/addshell.html
