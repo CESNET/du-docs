@@ -52,7 +52,11 @@ Může se stát, že po přihlášení není viditelný žádný cluser, zejmén
 
 Dále je třeba pokračovat kliknutím na `kuba-cluster`.
 
-![dashboard1](cluster2.png)
+![dashboard1](cluster2.jpg)
+
+Tím se dostáváte k ploše konkrétního clusteru, kde lze zobrazit přehledy, pouštět předpřipravené aplikace, atd.
+
+![dashboard2](kuba-cluster.png)
 
 ### Rstudio
 
