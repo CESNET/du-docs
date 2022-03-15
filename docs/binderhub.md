@@ -25,6 +25,11 @@ Each user on your JupyterHub can use certain amount of memory and CPU. You are g
 
 If you need more resources, please contact us at <a href="mailto:k8s@ics.muni.cz">IT Service desk</a>.
 
+## SSH key inside the instance
+To ensure more flexibility, we generate SSH keypair for everyohe who spawns at least one Jupyter notebook via BinderHub. This SSH keypair is mounted to notebook instance (`/home/jovyan/.ssh/ssh.priv` and `/home/jovyan/.ssh/ssh.pub`) and can be used e.g. to import public key to GitHub account. That way you can update and work with your Git repositories directly from notebook.
+
+Same SSH keypair is mounted to all your BinderHub notebooks.
+
 ## Where to find running notebooks
 Your running notebooks can be found at `https://bhub.cloud.e-infra.cz/`. Clicking on address redirects you to the notebook instance. Because redirection links include random strings it is advised to work in one browser where cookies can be stored and you don;t have to remember long notebook addresses. Also, avoid incognito windows because the session cookie won't save and when you close the tab, you will not find the instance in control panel. 
 
