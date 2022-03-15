@@ -48,7 +48,11 @@ Po úspešném přihlášení se zobrazí úvodní plocha.
 
 ![dashboard](cluster.png)
 
-Může se stát, že po přihlášení není viditelný žádný cluser, zejména `kuba-cluster`. V tomto případě počkejte cca 1 minutu a dejte obnovit stránku prohlížeče (Reload).
+Může se stát, že po přihlášení není viditelný žádný cluser, zejména `kuba-cluster`. V tomto případě počkejte cca 1 minutu a dejte obnovit stránku prohlížeče (Reload). Přebytečná okna jako `Getting Started` nebo `What do you want to see when you log in?` křížkem zavřít. 
+
+Dále je třeba pokračovat kliknutím na `kuba-cluster`.
+
+![dashboard1](cluster2.png)
 
 ### Rstudio
 
