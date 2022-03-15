@@ -44,11 +44,11 @@ Pro pokračování je třeba odsouhlasit předání údajů jako je např. vaše
 
 ### Dashboard
 
-Po úspešném přihlášení se zobrazí úvodní plocha. 
+Po úspěšném přihlášení se zobrazí úvodní plocha. 
 
 ![dashboard](cluster.png)
 
-Může se stát, že po přihlášení není viditelný žádný cluser, zejména `kuba-cluster`. V tomto případě počkejte cca 1 minutu a dejte obnovit stránku prohlížeče (Reload). Přebytečná okna jako `Getting Started` nebo `What do you want to see when you log in?` křížkem zavřít. 
+Může se stát, že po přihlášení není viditelný žádný cluster, zejména `kuba-cluster`. V tomto případě počkejte cca 1 minutu a dejte obnovit stránku prohlížeče (Reload). Přebytečná okna jako `Getting Started` nebo `What do you want to see when you log in?` křížkem zavřít. 
 
 Dále je třeba pokračovat kliknutím na `kuba-cluster`.
 
@@ -58,7 +58,36 @@ Tím se dostáváte k ploše konkrétního clusteru, kde lze zobrazit přehledy,
 
 ![dashboard2](kuba-cluster.png)
 
+---
+
+## Aplikace
+
+Následují ukázky spuštění předpřipravených aplikací jako jsou RStudio server a Matlab. Pro Matlab je nutné mít fungujícího `vnc` klienta, na Linuxu např. `vncviewer`, na Mac OS stačí *Safari* prohlížeč.
+
+Na úvod upozornění, pro aplikace se zadávají požadavky na zdroje. Jak bylo zmíněno v prezentaci, je limit 20 CPU a 40GB Memory, zadání vyšších požadavků způsobí nespuštění aplikace.
+
 ### Rstudio
+
+V předchozí sekci bylo ukázáno jak se dostat na hlavní plochu `kuba-cluster`. Pro úspěšný začátek spuštění je nutné začít na táto ploše.
+
+![dashboard2](kuba-cluster.png)
+
+#### Výběr Aplikace
+
+Prvně je třeba se ujistit, že není zvolený žádný *Namespace* (viz šipka číslo 1). Jde o dočasnou chybu Rancheru, kdy při zvoleném *Namespace* neukazuje některé položky v Menu vlevo. Následně se pokračuje v navigaci přes `Apps & Marketplace` (šipka 2) a pak `Charts` (šipka 3). Dle šipky 4 je třeba vybrat pouze `cerit-sc`, jinak se nepřehledně ukazují i ostatní nerelevantní aplikace. A nakonec se vybere samotná aplikace `rstudio-server` (viz šipka 5, skutečná poloha ikony aplikace se liší, jak aplikace přibývají). 
+
+![selectapp](rstudio/selectapp.png)
+
+#### Instalace Aplikace
+
+Pod `Chart Versions` lze vybrat verzi instalační šablony. Vybereme verzi 1.3. Tato verze nijak nesouvisí s verzí RStudio serveru. Následně pokračujeme `Install`.
+
+![selectapp](rstudio/selectversion.png)
+
+Nyní začínáme parametrizovat instalaci a spuštění aplikace. Ve většině případů necháme vybraný *Namespace* ve tvaru `příjmení-ns` (šipka 1). Rovněž jméno aplikace lze nechat výchozí (šipka 2).
+
+![appinst](rstudio/appinst.png)
+
 
 ### Matlab
 
