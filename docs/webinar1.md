@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Webinar
+title: Webinář - Úvod do Kubernetes
 permalink: /docs/webinar1.html
 key: webinar
 aside:
@@ -8,4 +8,20 @@ aside:
 sidebar:
   nav: docs
 ---
-# TBD
+# Praktické ukázky
+
+## Jupyterhub
+
+TBD
+
+## Binderhub
+
+TBD
+
+## Rancher
+
+### Rstudio
+
+### Matlab
+
+## Vlastní aplikace
