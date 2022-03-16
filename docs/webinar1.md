@@ -42,6 +42,11 @@ Pro pokračování je třeba odsouhlasit předání údajů jako je např. vaše
 
 ![login5](webinar1/login5.png)
 
+
+Může se stát, že se zobrazí tato chybová stránka, k tomu dojde v případě, že přihlašovací proces byl příliš pomalý (např. přepínání mezi návodem a přihlašováním). Pak stačí celý proces jen zopakovat a přihlášení se již povede.
+
+![login6](webinar1/rancher-fail.png)
+
 ### Dashboard
 
 Po úspěšném přihlášení se zobrazí úvodní plocha. 
