@@ -185,7 +185,7 @@ Zobrazí se následující překryv, kde je nutné počkat na oznámení `SUCCES
 
 V levém menu přejdeme přes `Workload` (šipka 1) do `Pods` (šipka 2) a je třeba vyčkat, než uvidíme označení `Running` (šipka 3), až v této chvíli aplikace běží.
 
-![apprunning]((matlab/apprunning.png)
+![apprunning](matlab/apprunning.png)
 
 Nyní se lze do aplikace přihlásit. K tomu je zapotřebí získat IP adresu, na kterou se má připojit VNC klient. Tu získáme navigací na `Service Discovery` v levém menu (šipka 1), následně `Services` (šipka 2) a konečně najetí myší nad `5900/TCP` (šipka 3) by mělo ukázat v dolním rohu prohlížeče cílovou IP adresu (šipka 4). Variantně, pokud to prohlížeč dovolí, lze kliknout pravým tlačítkem myši nad `5900/TCP` a dát kopírovat odkaz. Adresa bude vždy začínat `147.251.253.` a je nutné tedy zjistit jen poslední 3 číslice.
 
