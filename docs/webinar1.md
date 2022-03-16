@@ -238,7 +238,7 @@ Na této ploše je k dispozici konfigurace (viz šipka). Tu je potřeba uložit.
 
 ![config](config.jpg)
 
-Zároveň je nutné zjistit *Namespace*, který budete používat. Ten je rovněž k zobrazení na základní ploše, níže na obrázku jde o `hejtmanek-ns`. Obecně je název odvozován od příjmení uživatele. 
+Zároveň je nutné zjistit *Namespace*, který budete používat, kliknutím na `Only User Namespaces` (šipka 1) a následně je vidět jméno *Namespace* (šipka 2). Obecně je název odvozován od příjmení uživatele. 
 
 ![nsselect](ns-select.png)
 
@@ -274,7 +274,7 @@ Pokud si tento deployment uložíme pod názvem `hello-deployment.yaml`, tak jej
 
 ![hellocr1](hello-cr1.png)
 
-Tímto krokem se spustil kontejner z *docker hubu* s názvem a tagem `paulbouwer/hello-kubernetes:1.9`. V rancheru jej lze zobrazit.
+Tímto krokem se spustil kontejner z *docker hubu* s názvem a tagem `paulbouwer/hello-kubernetes:1.9`. V rancheru jej lze zobrazit přes `Workload` (šipka 1) a `Pods` (šipka 2).
 
 ![hellocrr1](hello-cr-r1.png)
 
@@ -336,7 +336,7 @@ Soubor opět uložíme např. do `hello-ingress.yaml` a aplikujeme po úpravě p
 
 ![hellocr1](hello-cr3.png)
 
-Pokud se vše povedlo, vrátíme se k rancheru a jeho ploše, kde přes `Service Discover` a `Ingresses` uvidíme klikací URL na běžící aplikaci.
+Pokud se vše povedlo, vrátíme se k rancheru a jeho ploše, kde přes `Service Discovery` (šipka 1) a `Ingresses` (šipka 2) uvidíme klikací URL na běžící aplikaci.
 
 ![hellocr1](hello-cr3-r1.png)
 
