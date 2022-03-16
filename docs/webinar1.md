@@ -218,3 +218,138 @@ Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy R
 ---
 
 ## Vlastní aplikace
+
+V této části si ukážeme, jak pustit vlastní aplikaci v Kubernetes z příkazové řádky. Pro tento krok je potřeba mít nainstalovaný nástroj `kubectl`. Pro hlavní platformy je k dispozici ke stažení:
+
+ * [Linux](https://dl.k8s.io/release/v1.22.0/bin/linux/amd64/kubectl)
+ * [MacOS](https://dl.k8s.io/release/v1.22.0/bin/darwin/arm64/kubectl)
+ * [Windows](https://dl.k8s.io/release/v1.23.0/bin/windows/amd64/kubectl.exe)
+
+Variantně se lze přihlásit na uzel `zuphux.cerit-sc.cz` pomocí metacentrového účtu a využít nainstalovaného `kubectl` nástroje.
+
+Poznámka: Je nutné použít verzi `kubectl` nejvýše **1.22.0** a alespoň **1.20.0**. Výše uvedené odkazy a instalace na `zuphux.cerit-sc.cz` tuto podmínku splňují.
+
+Dále je nutné stáhnout konfiguraci. Tato se nachází na základní ploše rancheru.
+
+
+![dashboard2](kuba-cluster.png)
+
+Na této ploše je k dispozici konfigurace (viz šipka). Tu je potřeba uložit. Na Linuxu a MacOS lze uložit do home do `~/.kube/config`. Na Windows se nachází v `%USERPROFILE%\.kube\config`. Variantně lze pri každém použití příkazu `kubectl` specifikovat místo uložení `config` pomocí parametru `--kubeconfig='/cesta/config'`. Ve většině případů bude potřeba složku `~/.kube` předem vytvořit.
+
+![config](config.jpg)
+
+Zároveň je nutné zjistit *Namespace*, který budete používat. Ten je rovněž k zobrazení na základní ploše, níže na obrázku jde o `hejtmanek-ns`. Obecně je název odvozován od příjmení uživatele. 
+
+![nsselect](ns-select.png)
+
+### Manifest
+
+Začneme vytvořením několika manifestů. Začneme definicí kontejneru, lze stáhnout [zde](deployments/hello-deployment.yaml). Zarovnání jednotlivých částí je důležité a musí zůstat, jak je.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-kubernetes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-kubernetes
+  template:
+    metadata:
+      labels:
+        app: hello-kubernetes
+    spec:
+      securityContext:
+        runAsUser: 1000
+      containers:
+      - name: hello-kubernetes
+        image: paulbouwer/hello-kubernetes:1.9
+        ports:
+        - containerPort: 8080
+```
+
+Pokud si tento deployment uložíme pod názvem `hello-deployment.yaml`, tak jej aplikujeme pomocí příkazu: `kubectl create -f hello-deployment.yaml -n namespace`, kde místo namespace uvedeme vlastní *Namespace*. Příkaz předpokládá, že aktuální adresář je ten, ve kterém je soubor `hello-deployment.yaml` uložen.
+
+![hellocr1](hello-cr1.png)
+
+Tímto krokem se spustil kontejner z *docker hubu* s názvem a tagem `paulbouwer/hello-kubernetes:1.9`. V rancheru jej lze zobrazit.
+
+![hellocrr1](hello-cr-r1.png)
+
+### Vystavení do Internetu
+
+K vystavení do Internetu je nutné vytvořit objekt `Service`. Opět ke stažení [zde](deployments/hello-service.yaml).
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-kubernetes-svc
+spec:
+  type: ClusterIP
+  ports:
+  - name: hello-kubernetes-port
+    port: 80
+    targetPort: 8080
+  selector:
+    app: hello-kubernetes
+```
+
+Pokud si tento manifest uložíme pod názvem `hello-service.yaml`, tak jej aplikujeme pomocí příkazu: `kubectl create -f hello-service.yaml -n namespace`, kde místo namespace uvedeme vlastní *Namespace*. Příkaz předpokládá, že aktuální adresář je ten, ve kterém je soubor `hello-service.yaml` uložen.
+
+![hellocr1](hello-cr2.png)
+
+Druhým krokem k vystavení do Internetu je vytvoření objektu `Ingress`. Opět ke stažení [zde](deployments/hello-ingress.yaml).
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-kubernetes-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - "test-hello-$namespace.dyn.cloud.e-infra.cz"
+      secretName: test-hello-dyn-clout-e-infra-cz-tls
+  rules:
+  - host: "test-hello-$namespace.dyn.cloud.e-infra.cz"
+    http:
+      paths:
+      - backend:
+          service:
+            name: hello-kubernetes-svc
+            port:
+              number: 80
+        pathType: ImplementationSpecific
+```
+
+V tomto případě je nutné soubor drobně upravit. Na místo `$namespace` je nutné napsat skutečný název používaného *Namespace*. Pokud tento krok přeskočíme vznikne aplikací chyba. 
+
+![hellocr1](hello-cr3-err.png)
+
+Soubor opět uložíme např. do `hello-ingress.yaml` a aplikujeme po úpravě podobně jako ostatní: `kubectl create -f hello-ingress.yaml -n namespace`, kde místo namespace uvedeme vlastní *Namespace*. Příkaz předpokládá, že aktuální adresář je ten, ve kterém je soubor `hello-ingress.yaml` uložen.
+
+![hellocr1](hello-cr3.png)
+
+Pokud se vše povedlo, vrátíme se k rancheru a jeho ploše, kde přes `Service Discover` a `Ingresses` uvidíme klikací URL na běžící aplikaci.
+
+![hellocr1](hello-cr3-r1.png)
+
+A po kliknutí na *Target* se zobrazí samotná aplikace.
+
+![hellocr1](hello-cr3-r2.png)
+
+
+### Smazání aplikace
+
+Po skončení ukázky je vhodné aplikaci smazat. To se provede pomocí následujících tří příkazů, kde za `-n` se dosadí vlastní *Namespace*.
+```
+kubectl delete -f -f hello-ingress.yaml -n hejtmanek1-ns
+kubectl delete -f -f hello-service.yaml -n hejtmanek1-ns
+kubectl delete -f -f hello-deployment.yaml -n hejtmanek1-ns
+```

@@ -107,7 +107,7 @@ spec:
   tls:                                                                          
     - hosts:                                                                    
         - "test-hello.dyn.cloud.e-infra.cz"                                              
-      secretName: test-hello-dyn-clout-e-infra-cz-tls                                    
+      secretName: test-hello-dyn-cloud-e-infra-cz-tls                                    
   rules:                                                                        
   - host: "test-hello.dyn.cloud.e-infra.cz"
     http:                                                                       
