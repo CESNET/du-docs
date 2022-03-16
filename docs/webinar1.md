@@ -84,10 +84,47 @@ Pod `Chart Versions` lze vybrat verzi instalační šablony. Vybereme verzi 1.3.
 
 ![selectapp](rstudio/selectversion.png)
 
-Nyní začínáme parametrizovat instalaci a spuštění aplikace. Ve většině případů necháme vybraný *Namespace* ve tvaru `příjmení-ns` (šipka 1). Rovněž jméno aplikace lze nechat výchozí (šipka 2).
+Nyní začínáme parametrizovat instalaci a spuštění aplikace. Ve většině případů necháme vybraný *Namespace* ve tvaru `příjmení-ns` (šipka 1). Rovněž jméno aplikace lze nechat výchozí (šipka 2). Pokračujeme Next (šipka 3).
 
 ![appinst](rstudio/appinst.png)
 
+Nyní se dostáváme k samotné parametrizaci aplikace. V první odrážce vybereme verzi R, pro vyzkoušení vybereme `R 4.0.5/Ubuntu 20.04` bez `Full` přípony. 
+
+![appinst](rstudio/appform1.png)
+
+V další záložce s názvem `Security` vyplníme heslo. Je vhodné se vyvarovat jednoduchých hesel a zároveň z technických důvodů je nutné nepoužívat znaky `{` a `}`. Zároveň je doporučeno zvolit heslo, které není běžně použité jinde. `Network policy` zůstane nezatrhnutá.
+
+![appform1](rstudio/appform2.png)
+
+V třetí záložce necháme pouze zatrženou volbu `Enable persistent home`. 
+
+![appinst](rstudio/appform3.png)
+
+Poslední záložku se zdroji necháme pro demo s předvyplněnými hodnotami. A pokračujeme volbou Install. 
+
+![appform2](rstudio/appform4.png)
+
+Zobrazí se následující překryv, kde je nutné počkat na oznámení `SUCCESS`. Tímto se aplikace nainstalovala a je připravena k použití.
+
+![apphelm](rstudio/apphelm.png)
+
+#### Přihlášení do běžící instance
+
+Předchozí výpis s instalací končící oznámením `SUCCESS` zavřeme křížkem a projdeme přes menu vlevo `Service Discovery` (šipka 1) do `Ingresses` (šipka 2). Pokud uvidíme řádek s názvem `cm-acme-http-solver...` (šipka 3), je třeba chvíli vyčkat dokud nezmizí (v tomto momentě se získává SSL certifikát). Následně se pokračuje kliknutím na odkaz u šipky 4. Každý uživatel má vlastní podobu odkazu. Obsahuje zvolené jméno (typicky `rstudio`) a zvolený *Namespace*. 
+
+![appacme](rstudio/appacme.png)
+
+Pokud vše šlo dobře, po kliknutí na zmíněný odkaz se zobrazí přihlašovací obrazovka. Zde se vyplní jméno **`rstudio`** (to je fixně přednastavené) a heslo, které bylo zadáno do formuláře při parametrizaci (to, co nemělo obsahovat znaky `{` a `}`).
+
+![applogin](rstudio/applogin.png)
+
+#### Použití aplikace
+
+#### Smazání aplikace
+
+Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy Rancheru se pokračuje do `App & Marketplace` (šipka 1) přes `Installed Apps` (špika 2), vybereme aplikaci (šipka 3) a následně přes `Delete` (šipka 4) smažeme. 
+
+![appdel](rstudio/appdel.png)
 
 ### Matlab
 
