@@ -120,6 +120,10 @@ Pokud vše šlo dobře, po kliknutí na zmíněný odkaz se zobrazí přihlašov
 
 #### Použití aplikace
 
+Po spuštění lze aplikaci začít používat např. jednoduchým `print` příkazem nebo `barplot` příkazem (červené upozornění nemá na demo vliv, při použití `Full` verze R by se nemělo zobrazit). 
+
+![appuse](rstudio/rstudio-w2.png)
+
 #### Smazání aplikace
 
 Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy Rancheru se pokračuje do `App & Marketplace` (šipka 1) přes `Installed Apps` (špika 2), vybereme aplikaci (šipka 3) a následně přes `Delete` (šipka 4) smažeme. 
