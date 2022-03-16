@@ -134,7 +134,7 @@ Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy R
 
 ### Matlab
 
-Další ukázkovou aplikací je Matlab. Doporučujeme před zkoušením Matlabu smazat předchozí aplikaci - RStudio dle posledního bodu postupu. Stejně jako u RStudia začneme na úvodní ploše. Návrat na ni lze provést Kliknutím vlevo nahoře na symbol menu `≡` a následně na `kuba-cluster`.
+Další ukázkovou aplikací je Matlab. Pro vyzkoušení této aplikace je nutný *VNC* prohlížeč na počítači, ze kterého pracujete, nez něj nelze apliaci zobrazit. Doporučujeme před zkoušením Matlabu smazat předchozí aplikaci - RStudio dle posledního bodu postupu. Stejně jako u RStudia začneme na úvodní ploše. Návrat na ni lze provést Kliknutím vlevo nahoře na symbol menu `≡` a následně na `kuba-cluster`.
 
 ![dashboard3](cluster1.jpg)
 
