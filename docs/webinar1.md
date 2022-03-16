@@ -5,8 +5,6 @@ permalink: /docs/webinar1.html
 key: webinar
 aside:
   toc: true
-sidebar:
-  nav: docs
 ---
 # Praktické ukázky
 
@@ -69,6 +67,8 @@ Tím se dostáváte k ploše konkrétního clusteru, kde lze zobrazit přehledy,
 
 Následují ukázky spuštění předpřipravených aplikací jako jsou RStudio server a Matlab. Pro Matlab je nutné mít fungujícího `vnc` klienta, na Linuxu např. `vncviewer`, na Mac OS stačí *Safari* prohlížeč.
 
+Žádný kroků uvedených níže nelze vynechat, jde o nezbytné minimum.
+
 Na úvod upozornění, pro aplikace se zadávají požadavky na zdroje. Jak bylo zmíněno v prezentaci, je limit 20 CPU a 40GB Memory, zadání vyšších požadavků způsobí nespuštění aplikace.
 
 ### Rstudio
@@ -109,13 +109,13 @@ Poslední záložku se zdroji necháme pro demo s předvyplněnými hodnotami. A
 
 ![appform2](rstudio/appform4.png)
 
-Zobrazí se následující překryv, kde je nutné počkat na oznámení `SUCCESS`. Tímto se aplikace nainstalovala a je připravena k použití.
+Zobrazí se následující překryv, kde je nutné počkat na oznámení `SUCCESS` (šipka 1). Tímto se aplikace nainstalovala a je připravena k použití. Předchozí výpis s instalací zavřeme křížkem (šipka 2).
 
 ![apphelm](rstudio/apphelm.png)
 
 #### Přihlášení do běžící instance
 
-Předchozí výpis s instalací končící oznámením `SUCCESS` zavřeme křížkem a projdeme přes menu vlevo `Service Discovery` (šipka 1) do `Ingresses` (šipka 2). Pokud uvidíme řádek s názvem `cm-acme-http-solver...` (šipka 3), je třeba chvíli vyčkat dokud nezmizí (v tomto momentě se získává SSL certifikát). Následně se pokračuje kliknutím na odkaz u šipky 4. Každý uživatel má vlastní podobu odkazu. Obsahuje zvolené jméno (typicky `rstudio`) a zvolený *Namespace*. 
+Projdeme přes menu vlevo `Service Discovery` (šipka 1) do `Ingresses` (šipka 2). Pokud uvidíme řádek s názvem `cm-acme-http-solver...` (šipka 3), je třeba chvíli vyčkat dokud nezmizí (v tomto momentě se získává SSL certifikát). Následně se pokračuje kliknutím na odkaz u šipky 4. Každý uživatel má vlastní podobu odkazu. Obsahuje zvolené jméno (typicky `rstudio`) a zvolený *Namespace*. 
 
 ![appacme](rstudio/appacme.png)
 
@@ -139,7 +139,7 @@ Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy R
 
 ### Matlab
 
-Další ukázkovou aplikací je Matlab. Pro vyzkoušení této aplikace je nutný *VNC* prohlížeč na počítači, ze kterého pracujete, nez něj nelze apliaci zobrazit. Doporučujeme před zkoušením Matlabu smazat předchozí aplikaci - RStudio dle posledního bodu postupu. Stejně jako u RStudia začneme na úvodní ploše. Návrat na ni lze provést Kliknutím vlevo nahoře na symbol menu `≡` a následně na `kuba-cluster`.
+Další ukázkovou aplikací je Matlab. Pro vyzkoušení této aplikace je nutný *VNC* prohlížeč na počítači, ze kterého pracujete, bez něj nelze aplikaci zobrazit. Doporučujeme před zkoušením Matlabu smazat předchozí aplikaci - RStudio dle posledního bodu postupu. Stejně jako u RStudia začneme na úvodní ploše. Návrat na ni lze provést Kliknutím vlevo nahoře na symbol menu `≡` a následně na `kuba-cluster`.
 
 ![dashboard3](cluster1.jpg)
 
@@ -179,8 +179,42 @@ Objeví se poslední část formuláře, kam je potřeba vyplnit `Timeout` na ho
 
 ![appform5](matlab/appform5.png)
 
-Zobrazí se následující překryv, kde je nutné počkat na oznámení `SUCCESS`. Tímto se aplikace nainstalovala, ale na rozdíl od RStudia ještě není připravena k použití.
+Zobrazí se následující překryv, kde je nutné počkat na oznámení `SUCCESS` (šipka 1). Tímto se aplikace nainstalovala, ale na rozdíl od RStudia ještě není připravena k použití. Zavřeme překryv křížkem (šipka 2). 
 
 ![apphelm](matlab/apphelm.png)
+
+V levém menu přejdeme přes `Workload` (šipka 1) do `Pods` (šipka 2) a je třeba vyčkat, než uvidíme označení `Running` (šipka 3), až v této chvíli aplikace běží.
+
+![apprunning]((matlab/apprunning.png)
+
+Nyní se lze do aplikace přihlásit. K tomu je zapotřebí získat IP adresu, na kterou se má připojit VNC klient. Tu získáme navigací na `Service Discovery` v levém menu (šipka 1), následně `Services` (šipka 2) a konečně najetí myší nad `5900/TCP` (šipka 3) by mělo ukázat v dolním rohu prohlížeče cílovou IP adresu (šipka 4). Variantně, pokud to prohlížeč dovolí, lze kliknout pravým tlačítkem myši nad `5900/TCP` a dát kopírovat odkaz. Adresa bude vždy začínat `147.251.253.` a je nutné tedy zjistit jen poslední 3 číslice.
+
+![appservice](matlab/appservice.png)
+
+Tuto IP adresu použijeme ve VNC klientu např. takto. Do přihlašovacího okna je nutné vyplnit heslo z formuláře výše (to, co nemělo obsahovat znaky `{` a `}`. V případě Safari prohlížeče stačí napsat do URL `vnc://147.251.253.x` kde `x` je konkrétní adresa z předchozího bodu.
+
+![vnc1](matlab/vncstart.png)
+
+Pokud je vše správně připojí se vzdálená plocha.
+
+![vnc2](matlab/vncrunning.png)
+
+Zde je potřeba vybrat požadovanou licenci a pokračovat kliknutím na `Perform licence check and run`. 
+
+![vnc3](matlab/vncrunning1.png)
+
+Pak se již spustí samotný Matlab.
+
+![vnc4](matlab/matlabrunning.png)
+
+Ukázka práce v Matlabu je již nad rámec tohoto webináře. Zbytek desktopu je však funkční také.
+
+#### Smazání aplikace
+
+Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy Rancheru se pokračuje do `App & Marketplace` (šipka 1) přes `Installed Apps` (šipka 2), vybereme aplikaci (šipka 3) a následně přes `Delete` (šipka 4) smažeme. Je vhodné před smazáním ukončit VNC klienta.
+
+![appdel](matlab/appdel.png)
+
+---
 
 ## Vlastní aplikace
