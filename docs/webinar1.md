@@ -56,15 +56,17 @@ Notebooky přirozeně ukládáme postupně do gitu (zpravidla github).
 
 [Binder](http://mybinder.org/) je software pro pohodlné spouštění notebooku přímo z gitového repository. 
 - veřejně dostupná služba (s velmi omezenými zdroji)
-- instance e-Infra.cz na https://binderhub.cloud.e-infra.cz/ -- autentizovaná služba, větší dostupné zdroje
+- [instance e-Infra.cz](https://binderhub.cloud.e-infra.cz/) -- autentizovaná služba, větší dostupné zdroje
 
 ![jupyter hub](webinar1/jupyter-binder.jpg)
 
 Demo:
-1. jednoduchý notebook se standardními závislostmi, pouze je vyjmenujeme a Binder se o vše postará: http://github.com/ljocha/binder-demo1
-1. notebook postavený nad image NVidia NGC s vyladěným Tensoflow nad GPU: http://github.com/ljocha/binder-demo2
+1. jednoduchý notebook se standardními závislostmi, pouze je vyjmenujeme a Binder se o vše postará: [http://github.com/ljocha/binder-demo1](http://github.com/ljocha/binder-demo1)
+1. notebook postavený nad image NVidia NGC s vyladěným Tensoflow nad GPU: [http://github.com/ljocha/binder-demo2](http://github.com/ljocha/binder-demo2)
 
-Více na https://mybinder.readthedocs.io
+
+
+Více viz [oficiální dokumentace](https://mybinder.readthedocs.io/)
 
 
 ### Hardcore
