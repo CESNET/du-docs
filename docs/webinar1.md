@@ -61,8 +61,8 @@ Notebooky přirozeně ukládáme postupně do gitu (zpravidla github).
 ![jupyter hub](webinar1/jupyter-binder.jpg)
 
 Demo:
-1. jednoduchý notebook se standardními závislostmi, pouze je vyjmenujeme a Binder se o vše postará
-1. notebook postavený nad image NVidia NGC s vyladěným Tensoflow nad GPU
+1. jednoduchý notebook se standardními závislostmi, pouze je vyjmenujeme a Binder se o vše postará: http://github.com/ljocha/binder-demo1
+1. notebook postavený nad image NVidia NGC s vyladěným Tensoflow nad GPU: http://github.com/ljocha/binder-demo2
 
 Více na https://mybinder.readthedocs.io
 
