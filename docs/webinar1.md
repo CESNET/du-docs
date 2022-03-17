@@ -349,7 +349,7 @@ A po kliknutí na *Target* se zobrazí samotná aplikace.
 
 Po skončení ukázky je vhodné aplikaci smazat. To se provede pomocí následujících tří příkazů, kde za `-n` se dosadí vlastní *Namespace*.
 ```
-kubectl delete -f -f hello-ingress.yaml -n hejtmanek1-ns
-kubectl delete -f -f hello-service.yaml -n hejtmanek1-ns
-kubectl delete -f -f hello-deployment.yaml -n hejtmanek1-ns
+kubectl delete ingress/hello-kubernetes-ingress  -n [namespace]
+kubectl delete service/hello-kubernetes-svc  -n [namespace]
+kubectl delete deployment/hello-kubernetes -n [namespace]
 ```
