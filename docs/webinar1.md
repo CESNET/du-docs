@@ -20,10 +20,57 @@ Tento tutoriál není pro opravdové vědce. Nechme je bádat a neobtěžujme zb
 
 ### Děláme si pořádek
 
+[Jupyter notebook](http://jupyter.org/) je interaktivní webové prostředí, kombinuje kód a text, představuje rozumný kompromis mezi flexibilitou a důsleným záznámem výpočtu.
+
+Lze instalovat a vše spouštět na svém počítači:
+
+![jupyter local](webinar1/jupyter-local.jpg)
+
+`debian$ sudo apt install python3-notebook`
+
+`macOS$ brew install jupyterlab`
+
+- + nezávislost na síti, vše pod kontrolou
+- - omezené zdroje, probematická správa knihoven
+
+![chiken-and-egg dependencies](webinar1/fancyshit.png)
+
+
 ### Chceme více zdrojů
+
+Podporovaná instalace na https://hub.cloud.e-infra.cz/
+
+- volitelně až 32 jader CPU, 256 GB RAM, sdílená nebo dedikovaná GPU
+- uživateli může běžet i několik serveu současně
+- připravené image s nejčastěji používaným software (numerické kninovny, tensorflow, ...)
+- připojitelná úložiště metacentra
+
+![jupyter hub](webinar1/jupyter-hub.jpg)
+
+
+
 
 ### Verzujeme a sdílíme
 
+Notebooky přirozeně ukládáme postupně do gitu (zpravidla github). 
+
+[Binder](http://mybinder.org/) je software pro pohodlné spouštění notebooku přímo z gitového repository. 
+- veřejně dostupná služba (s velmi omezenými zdroji)
+- instance e-Infra.cz na https://binderhub.cloud.e-infra.cz/ -- autentizovaná služba, větší dostupné zdroje
+
+![jupyter hub](webinar1/jupyter-binder.jpg)
+
+Demo:
+1. jednoduchý notebook se standardními závislostmi, pouze je vyjmenujeme a Binder se o vše postará
+1. notebook postavený nad image NVidia NGC s vyladěným Tensoflow nad GPU
+
+Více na https://mybinder.readthedocs.io
+
+
+### Hardcore
+
+Binderem možnosti notebooků v K8s nekončí, lze implementovat komplexní aplikace. Např. https://pmcvff-correction.cerit-sc.cz/ z notebooku spouští další
+kontejnery s rozsáhlým software (Gromacs, Orca).
 
 
 ## Rancher
