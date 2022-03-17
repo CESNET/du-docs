@@ -8,13 +8,23 @@ aside:
 ---
 # Praktické ukázky
 
-## Jupyterhub
+## Jupyter notebooky
 
-TBD
+### Bylo nebylo ...
 
-## Binderhub
+Opravdový vědec zvládne chaos. Svá data má rozmístěna po několika počítačích a vždy ví, kde co je.
+Když je zpracovává, píše programy zásadně bez komentářů, skripty pojmenovává ne delšími než tříznakovými zkratkami.
+Bez promblémů si vše pamatuje, když se k experimentu vrátí i po deseti letech, je schopen všechny své výsledky bez problému reprodukovat.
 
-TBD: ljocha
+Tento tutoriál není pro opravdové vědce. Nechme je bádat a neobtěžujme zbytečnostmi. 
+
+### Děláme si pořádek
+
+### Chceme více zdrojů
+
+### Verzujeme a sdílíme
+
+
 
 ## Rancher
 
