@@ -48,12 +48,35 @@ To spawn new instance, you have to delete one of your running instances.  This c
 
 ❗️<ins>Notebooks are deleted automatically after one week of inactivity (inactivity = idle kernel or no connection to notebook).</ins>❗️
 
-## Custom Dockerfile
-
+## Customomizations
+### Custom Dockerfile
 The hub spawns notebook instances with default image not conatining any special libraries. However, you can create custom `Dockerfile` with all dependencies and it will be used as base image. The `Dockerfile` must be located in the repository you are going to launch in Binder. 
 
 When creating the `Dockerfile` bear in mind it has to be runnable under *user*. Furthermore, it is important to `chown` all used directories to user, e.g. :
 ```
 RUN chown -R 1000:1000 /work /home/jovyan
 ```
+
+### Install Various Libraries and Software
+Creating custom Dockerfile might be an overkill for your needs so there are several other ways of installing e.g. `conda` environment, `Python` packages or some `Debian` packages (e.g. vim). 
+
+See [all possible file types](https://repo2docker.readthedocs.io/en/latest/config_files.html) with complete description and intended usage that can be included in repository. These files are resolved at startup. You can include multiple files in repo so if you need to install `Python` packages as well as a couple of `Debian` packages, both `apt.txt` and `requirements.txt` can be present.
+
+Brief list of files:
+- `environment.yml` - conda env, [example](https://github.com/binder-examples/python-conda_pip/tree/3b7126f39253f92bb13ce7ea155fd8a121082afe)
+- `Pipfile` - Python env, [example](https://github.com/binder-examples/pipfile)
+- `setup.py` - Python packages, [example](https://github.com/binder-examples/setup.py)
+- `requirements.txt` - Python packages, [example](https://github.com/binder-examples/requirements)
+- `Project.toml` - Julia env, [example](https://github.com/binder-examples/demo-julia)
+- `apt.txt` - Debian packages, [example](https://github.com/binder-examples/apt_install)
+- `install.R` - R packages, [example](https://github.com/binder-examples/r)
+
+See [binder examples repository](https://github.com/orgs/binder-examples/repositories?page=1&type=all) for plenty types of repositories, file combinations and interesting usages.
+
+## Unknown Error While Spawning
+If you experience any unknown error while spawning notebook (or your notebook is not spawned at all), please email <a href="mailto:k8s@ics.muni.cz">IT Service desk</a>.
+
+
+
+
 
