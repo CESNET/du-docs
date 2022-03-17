@@ -71,7 +71,7 @@ Více viz [oficiální dokumentace](https://mybinder.readthedocs.io/)
 
 ### Hardcore
 
-Binderem možnosti notebooků v K8s nekončí, lze implementovat komplexní aplikace. Např. https://pmcvff-correction.cerit-sc.cz/ z notebooku spouští další
+Binderem možnosti notebooků v K8s nekončí, lze implementovat komplexní aplikace. Např. [https://pmcvff-correction.cerit-sc.cz/](https://pmcvff-correction.cerit-sc.cz/) z notebooku spouští další
 kontejnery s rozsáhlým software (Gromacs, Orca).
 
 
