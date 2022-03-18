@@ -38,7 +38,7 @@ Lze instalovat a vše spouštět na svém počítači:
 
 ### Chceme více zdrojů
 
-Podporovaná instalace na https://hub.cloud.e-infra.cz/
+Podporovaná instalace na [https://hub.cloud.e-infra.cz/](https://hub.cloud.e-infra.cz/)
 
 - volitelně až 32 jader CPU, 256 GB RAM, sdílená nebo dedikovaná GPU
 - uživateli může běžet i několik serveu současně
@@ -55,6 +55,9 @@ Podporovaná instalace na https://hub.cloud.e-infra.cz/
 Notebooky přirozeně ukládáme postupně do gitu (zpravidla github). 
 
 [Binder](http://mybinder.org/) je software pro pohodlné spouštění notebooku přímo z gitového repository. 
+
+Mj. výhoda startu od čistého stolu -- reprodukovatelnější výsledky.
+
 - veřejně dostupná služba (s velmi omezenými zdroji)
 - [instance e-Infra.cz](https://binderhub.cloud.e-infra.cz/) -- autentizovaná služba, větší dostupné zdroje
 
