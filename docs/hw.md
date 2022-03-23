@@ -21,7 +21,7 @@ This cluster comprises 2560 *hyperthreaded* CPU cores, 2530 available to users, 
 | :--- | :--- |
 | Disk: | 2x 3.5TB SSD SATA |
 | :--- | :--- |
-| GPU: | none or 1 or 2 NVIDIA A40 per node |
+| GPU: | kub-a5 -- kub-a9 none, kub-a10 -- kub-a14 2x NVIDIA A40 per node, kub-a15 -- kub-a24 1x NVIDIA A20 per node |
 | :--- | :--- |
 | Network: | 2x 10Gbps NIC |
 | :--- | :--- |
