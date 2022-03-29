@@ -97,3 +97,7 @@ docs:
     children:
       - title: Add shell to an image without one
         url: /docs/addshell.html
+  - title: Other Services
+    children:
+      - title: VPN
+        url: /docs/other/vpn.html
