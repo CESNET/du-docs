@@ -19,11 +19,11 @@ Following the steps below, you can run personal Minio server application. This a
 ### Notes
 
 * Important prerequisite: application pod needs to use [PVC](pvc.html) in order to Minio server can access data from the pod. If no PVC is used, no data access is possible.
-  * For most applications here it is possible to select *persistent home* which implies using *PVC*.
+* For most applications here it is possible to select *persistent home* which implies using *PVC*.
 
 ### Check your Application
 
-Select your `Namespace` (1),  navigate through `Workload` (2), `Pods` (3), and name of the application (4), e.g., `ansys-0` -- click on the name. See screenshot below.
+Select your `Namespace` (1) (remember this `Namespace`, you must select the **same** `Namespace` when installing Minio below),  navigate through `Workload` (2), `Pods` (3), and name of the application (4), e.g., `ansys-0` -- click on the name. See screenshot below.
 
 ![findpod](minio/findpod.png)
 
