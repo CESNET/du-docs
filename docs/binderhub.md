@@ -48,7 +48,7 @@ To spawn new instance, you have to delete one of your running instances.  This c
 
 ❗️<ins>Notebooks are deleted automatically after one week of inactivity (inactivity = idle kernel or no connection to notebook).</ins>❗️
 
-## Customomizations
+## Customizations
 ### Custom Dockerfile
 The hub spawns notebook instances with default image not conatining any special libraries. However, you can create custom `Dockerfile` with all dependencies and it will be used as base image. The `Dockerfile` must be located in the repository you are going to launch in Binder. 
 
