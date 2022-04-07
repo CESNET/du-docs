@@ -51,6 +51,8 @@ docs:
         url: /docs/bioconductor.html
       - title: Matlab
         url: /docs/matlab.html
+      - title: Minio
+        url: /docs/minio.html
       - title: ownCloud
         url: /docs/owncloud.html
       - title: RStudio Server 

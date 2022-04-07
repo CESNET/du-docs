@@ -51,7 +51,7 @@ When you click on the chart, hit `Install` to continue.
 
 ### Install the Application
 
-Now you can install the ownCloud application. In most cases, keep both `Namespace` (1) and `Name` (2) intact, however, you can select namespace as desired except `default`. The `default` namespace is available but it is not meant to be used. The `Name` will be in URL to access the application. The `Name` must be unique in the `Namespace`, i.e., you cannot run two or more instances with the same `Name` in the same `Namespace`. If you delete the application and later install the application again preserving its `Name`, content of home directory will be preserved. 
+Now you can install the ownCloud application. In most cases, keep both `Namespace` (1) and `Name` (2) intact, however, you must select the same namespace as the Pod, from which you want transfer data, is running. The `Name` will be in URL to access the application. The `Name` must be unique in the `Namespace`, i.e., you cannot run two or more instances with the same `Name` in the same `Namespace`.  
 
 ![appinst](owncloud/appinst.png)
 
