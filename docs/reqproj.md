@@ -36,7 +36,7 @@ We need the name of responsible person for project access control. It is up to y
 As a part of the process, we prepare *a resource* in Identity Management System Perun. However, there exist multiple instances of Perun - MU Perun and CESNET Perun. Information about which Perun you use is crucial for ensuring functionality of the whole setup. Once we prepare the Perun resource, a responsible person is assigned an administrator role at this resource. This means that the person can add another people as administrators, assign allowed groups on the resource or add members. In order to enable access for specific Perun group, a responsible person (=an administrator) must assign desired group on the resource. 
 
 ### Assigning Group
-1. Log into either [MU Perun](perun.aai.muni.cz) or [CESNET Perun](perun.aai.cesnet.cz).
+1. Log into either [MU Perun](https://perun.aai.muni.cz) or [CESNET Perun](https://perun.aai.cesnet.cz).
 2. Scroll on the home page until you see table `Manager in Resources`.
 ![manager](request-project-images/manager.png)
 3. Click on the resource with same name as the requested project name.
