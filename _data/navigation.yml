@@ -97,6 +97,8 @@ docs:
         url: /docs/nextflow.html
   - title: Debugging
     children:
+      - title: FAQ
+        url: /docs/faq.html
       - title: Add shell to an image without one
         url: /docs/addshell.html
   - title: Other Services

@@ -2,7 +2,7 @@
 layout: article
 title: Projects, Namespaces, and Quotas
 permalink: /docs/quotas.html
-key: snakemake
+key: quotas
 aside:
   toc: true
 sidebar:
