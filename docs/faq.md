@@ -26,6 +26,8 @@ resources:
 
 ```
 
+---
+
 **Question:** Deployment returns message simmilar to:
 ```
 pods cz-iocb-nextprot-loader-loaderspark-1649322652207-driver" is forbidden: 
@@ -35,6 +37,8 @@ limited:limits.cpu=0,limits.memory=0,requests.cpu=0,requests.memory=0.
 ```
 
 **Answer:** Deployment is done to a *Namespace* that is running out of quotas or even has quota set to zero. You need to increase *Namespace* quota which may need to decrease your other *Namespaces* quotas or request explicit *Project*. See [Projects, Namespaces, and Quotas](/docs/quotas.html).
+
+---
 
 **Question:** No GPU found, `nvidia-smi` returns `command not found`.
 
