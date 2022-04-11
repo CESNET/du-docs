@@ -67,12 +67,14 @@ FIO is single node test and has been focused on IOPS using random 4k reads and w
 
 |---|---|---|
 |Read|Write|
+|---|---|---|
 |131k|188k|
 
 ### GPFS
 
 |---|---|---|
 |Type|Read|Write|
+|---|---|---|
 |Mirror|21.1k|17.3k|
 |Raid|23.4k|14.2k|
 
@@ -80,12 +82,14 @@ FIO is single node test and has been focused on IOPS using random 4k reads and w
 
 |---|---|---|
 |Read|Write|
+|---|---|---|
 |30.7k|22.0k|
 
 ## Database Tests
 
 |---|---|---|
 |Type|Tool|Result|
+|---|---|---|
 |Local NVME|`pgbench -i -s 10000`|Duration: 14m25.6s|
 |Local NVME|`pgbench -T 300 -c100 -j20 -r`|21199 TPS|
 |GPFS RAID 4 Nodes|`pgbench -i -s 10000`|Duration: 147m54.1s|
