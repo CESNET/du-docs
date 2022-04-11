@@ -78,5 +78,5 @@ FIO is single node test and has been focused on IOPS using random 4k reads and w
 |GPFS RAID 18 Nodes|`pgbench -T 300 -c100 -j20 -r`|2061 TPS|
 |GPFS Mirror 18 Nodes|`pgbench -i -s 10000`|Duration: 115m0.5s|
 |GPFS Mirror 18 Nodes|`pgbench -T 300 -c100 -j20 -r`|3164 TPS|
-|NFS + GPFS + All-flash Array||`pgbench -i -s 10000`|Duration: 27m12s|
-|NFS + GPFS + All-flash Array||`pgbench -T 300 -c100 -j20 -r`|5633 TPS|
+|NFS + GPFS + All-flash Array|`pgbench -i -s 10000`|Duration: 27m12s|
+|NFS + GPFS + All-flash Array|`pgbench -T 300 -c100 -j20 -r`|5633 TPS|
