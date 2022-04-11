@@ -19,6 +19,16 @@ Without requesting explicit project, user is given a *Personal* project with lim
 1. Request explicit project.
 2. Decrease quotas for the default *Namespaces* and give spare resources to a new *Namespace*.
 
+### Changing Namespace Quotas
+
+To change resource quotas for existing namespace, navigate through `Cluster` (1), `Projects/Namespaces` (2), select the `Namespace` (3) context menu and `Edit Config`.
+
+![quotaedit1](quotaedit1.png)
+
+Then you can change `Resource Quotas` for the *Namespace* as desired and `Save` them.
+
+![quotaedit2](quotaedit2.png)
+
 ### Creating New Namespaces
 
 To make things work properly, do not create a *Namespace* using `kubectl` or `helm` or any other tools. It is possible but you will not see this *Namespace* in Rancher UI. Instead, use the Rancher UI to create the *Namespace*. Most tools like `helm`, `kustomize` should deal with already existing *Namespaces* just fine.
