@@ -25,7 +25,7 @@ aside:
 
 Two volumes, Mirror as 4-way mirror configuration, RAID as 8+3 erasure coding. Pagepool limited to 32GB RAM only. All 144 NVME disks in, in case of 18 nodes.
 
-## IOZone testing
+## IOZone Testing
 
 Iozone command: `iozone -Mce -t[number] -s256G -r256k -i0 -i1 -i2 -+m nodesiozone`
 
@@ -38,11 +38,15 @@ Local test has been done on top of local RAID 0 of all 8 NVME disks
 |---|---|---|---|---|---|---|
 |Nodes|Threads|Type|Read Linear|Write Linear|Read Random|Write Random|
 |---|---|---|---:|---:|---:|---:|
-|4|4|Raid 0|||||
-
-TBD
+|1|4|Raid 0|9665804.50 kB/s|3226065.56 kB/s|3045126.25 kB/s|3046522.88 kB/s|
+|2|8|Raid 0|18300435.75 kB/s|6375165.94 kB/s|6135955.69 kB/s|6329714.56 kB/s|
+|4|16|Raid 0|38564588.25 kB/sec|12869716.81 kB/s|12728638.88 kB/s|12715692.50 kB/s|
+|8|32|Raid 0|75051993.50 kB/sec|25754270.88 kB/s|25002526.31 kB/s|26225202.44 kB/s|
+|18|72|Raid 0|169444818.12 kB/s|58596866.62 kB/s|56726668.94 kB/s|61578058.00 kB/s|
 
 ### GPFS Test
+
+`iozone` is running on all nodes in the table, i.e., 4, 8, and 18. The same number of nodes create the cluster.
 
 |---|---|---|---|---|---|---|
 |Nodes|Threads|Type|Read Linear|Write Linear|Read Random|Write Random|
@@ -55,14 +59,28 @@ TBD
 |18|72|Raid|43554656.69 kB/s|31707739.09 kB/s|15119176.98 kB/s|5047413.12 kB/s|
 
 
-## FIO GPFS Test
+## FIO Test
 
 FIO is single node test and has been focused on IOPS using random 4k reads and writes.
+
+### Local NVME RAID 0
+
+|---|---|---|
+|Read|Write|
+|131k|188k|
+
+### GPFS
 
 |---|---|---|
 |Type|Read|Write|
 |Mirror|21.1k|17.3k|
 |Raid|23.4k|14.2k|
+
+### NFS+GPFS+All-flash array
+
+|---|---|---|
+|Read|Write|
+|30.7k|22.0k|
 
 ## Database Tests
 
