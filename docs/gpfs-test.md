@@ -44,7 +44,7 @@ Local test has been done on top of local RAID 0 of all 8 NVME disks
 |8|32|Raid 0|75051993.50 kB/s|25754270.88 kB/s|25002526.31 kB/s|26225202.44 kB/s|
 |18|72|Raid 0|169444818.12 kB/s|58596866.62 kB/s|56726668.94 kB/s|61578058.00 kB/s|
 
-### GPFS Test
+### GPFS Test All-to-All
 
 `iozone` is running on all nodes in the table, i.e., 4, 8, and 18. The same number of nodes create the cluster.
 
@@ -58,6 +58,19 @@ Local test has been done on top of local RAID 0 of all 8 NVME disks
 |18|72|Mirror|47467272.62 kB/s|17169190.23 kB/s|16466901.61 kB/s|6712180.77 kB/s|
 |18|72|Raid|43554656.69 kB/s|31707739.09 kB/s|15119176.98 kB/s|5047413.12 kB/s|
 
+### GPFS Test Client-to-Server
+
+`iozone` is running on dedicated nodes that do not export disks.
+
+|---|---|---|---|---|---|---|---|
+|Servers|Clients|Threads|Type|Read Linear|Write Linear|Read Random|Write Random|
+|---|---|---|---|---:|---:|---:|---:|
+|4|1|1|Mirror|9948759.00 kB/s|5433856.00 kB/s|168381.44 kB/s|1829260.00 kB/s|
+|4|1|1|Raid|10624699.00 kB/s|8441799.00 kB/s|167091.83 kB/s|1579134.75 kB/s|
+|4|1|4|Mirror|10317783.00 kB/s|6253592.38 kB/s|817474.12 kB/s|3148068.56 kB/s|
+|4|1|4|Raid|11276012.50 kB/s|11567366.75 kB/s|810613.59 kB/s|1652378.53 kB/s|
+|4|2|8|Mirror|20004521.00 kB/s|6486557.88 kB/s|1834332.94 kB/s|2445335.72 kB/s|
+|4|2|8|Raid|19664908.75 kB/s|10777041.75 kB/s|1816458.12 kB/s|1730533.78 kB/s|
 
 ## FIO Test
 
