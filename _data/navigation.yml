@@ -41,6 +41,8 @@ docs:
         url: /docs/kubectl-helloworld.html
       - title: MPI Job
         url: /docs/mpi.html
+      - title: Postgres Database
+        url: /docs/postgres.html
   - title: Rancher Applications
     children:
       - title: Overview

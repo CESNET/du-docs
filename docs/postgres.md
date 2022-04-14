@@ -1,0 +1,138 @@
+---
+layout: article
+title: Postgres Database
+permalink: /docs/postgres.html
+key: postgres
+aside:
+  toc: true
+sidebar:
+  nav: docs
+---
+
+We offer cluster-wide Postgres operator for easy deployment of Postgres SQL database servers. You can find [full documentation here](https://opensource.zalando.com/postgres-operator/docs/reference/cluster_manifest.html). For convenience, we provide some working examples below divided into sections. See below comparison of all variants.
+
+## Deploying Single Instance 
+
+You can start with minimal instance suitable for testing only, it uses NFS storage as backend and uses only limited resources, but also performance is low. You can [download](postgres/minimal-nfs-postgres-manifest.yaml) manifest. 
+
+```yaml
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: acid-test-cluster  ## name of our cluster
+spec:
+  teamId: "acid-test"
+  numberOfInstances: 1     ## single instance
+  users:
+    zalando:               ## create user to db
+    - superuser
+    - createdb
+  databases:            
+    testdb: zalando        ## create db 'testdb' and add access to 'zalando' user
+  postgresql:
+    version: "13"          ## deploy postgres version 13
+  volume:
+    size: 1Gi            
+    storageClass: nfs-csi  ## use nfs-csi class for backend storage
+  spiloRunAsUser: 101      ## security context for db deployment
+  spiloRunAsGroup: 103
+  spiloFSGroup: 103
+  resources:               ## give some resources
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi
+  patroni:
+    initdb:                ## setup db for utf-8
+      encoding: "UTF8"
+      locale: "en_US.UTF-8"
+      data-checksums: "true"
+```
+
+Issue `kubectl create -f minimal-nfs-postgres-manifest.yaml -n [namespace]` to run, you should see pod called `acid-test-cluster1-0` (if `metadata.name` has not been changed from the example) running in your namespace.
+
+TBD: password for zalando user
+
+This kind of setup is resilient to node failure, if a node running this instance fails, database is recreated on a different node, data is attached again from NFS storage and operations are resumed, on the other hand, even if adding resources, this setup is not speed superior.
+
+## Deploying Cluster Instance
+
+For better availability, cluster deployment can be used. In this case, there are multiple instances running, one is a leader, others are following and syncing data from the leader.
+
+To deploy cluster version, you can [download](postgres/cluster-nfs-postgres-manifest.yaml) cluster manifest. The only difference is on line:
+
+```yaml
+numberOfInstances: 3
+```
+
+That requests 3 node cluster.
+
+## Utilizing Local Storage
+
+It is possible to use a local storage (SSD) instead of NFS or any network-backed PVC. While it is not possible to directly request local storage in `volume` section, it is still possible to use local storage. You can [download](postgres/minimal-local-postgres-manifest.yaml) single instance manifest, it can be used also for the cluster instance setting desired `numberOfInstances`.
+
+```yaml
+volume:
+  size: 1Gi
+  storageClass: nfs-csi
+additionalVolumes:
+- name: data
+  mountPath: /home/postgres/pgdata/pgroot
+  targetContainers:
+  - all
+  volumeSource:
+    emptyDir:
+      sizeLimit: 10Gi
+```
+
+You need to add the `additionalVolumes` that mounts to `/home/postgres/pgdata/pgroot` and use `emptyDir` as backend storage. The `sizeLimit` value is very important in this case, if database storage exceeds this value, Pod will be evicted. `size` for `volume` is not enforced like this.
+
+## Database Access 
+
+To access the database from other Pods, you can use as host `acid-test-cluster1` (following `metadata.name` from the deployment) within the same namespace, port is standard `5432`. Username and password is based on the deployment above. 
+
+To increase security, one can deploy *Network policy* to allow network access to database from particular pods only. See [Network Policy](/docs/security.html). External access, i.e., access from public internet, is disabled by default. It is possible to expose the database via [Load Balancer](/docs/kubectl-expose.html#other-applications) though.
+
+## Variants Comparison
+
+We did some benchmarks utilizing standard `pgbench` tool. There were two benchmarks, `pgbench -i -s 1000` (**Create** column) which creates a table with 100M rows -- lower value is better, the second `pgbench -T 300 -c10 -j20 -r` (**TPS** column) which runs for 5 minutes and result is number of transactions per second -- higher value is better. 
+
+Low resources means Limits: CPU 0.5, Memory 500MB, Requests: CPU 0.01, Memory 100MB. High resources means Limits: CPU 8, Memory 5000MB, Requests: CPU 1, Memory 1000MB. Extreme resources means Limits and Requests: CPU 16, Memory 32GB.
+
+**Fail Safe** column denotes whether deployment is resilient to a single node failure meaning data loss will occur if a node fails.
+
+### Single Instance
+
+|---|---|---|---|---|
+|Storage|Resources|Create|TPS|Fail Safe|
+|---|---|---:|---:|---|
+|Local SSD|Low|628 sec|561|No|
+|Local SSD|High|263 sec|6745|No|
+|Local SSD|Extreme|244 sec|10567|No|
+|NFS|Low|586 sec|602|Yes|
+|NFS|High|314 sec|4432|Yes|
+
+### Cluster Instances
+
+|---|---|---|---|---|
+|Storage|Resources|Create|TPS|Fail Safe|
+|---|---|---:|---:|---|
+|Local SSD|Low|704 sec|460|Yes|
+|Local SSD|High|277 sec|6550|Yes|
+|Local SSD|Extreme|246 sec|10447|Yes|
+|NFS|Low|1027 sec|347|Yes|
+|NFS|High|389 sec|2310|Yes|
+
+## Caveats
+
+### Deploy Errors
+
+1. If you encounter an error in deployment and want to delete and create again, **you must** ensure that running instance is deleted before creating again. If you create a new instance too early, the instance will not be ever created and you need to use a different name. 
+
+2. If starting instance encounters error in `initContainer` (which is disabled by default, so no error should be here), it cannot be deleted via removing the deployment above. You must delete the `StatefulSet` manually. Also in this case, new deployment with the same name will not be possible most probably. We recommend to use some testing names such as `test1`, `test2` for test deployments to mitigate this issue.
+
+3. If you run out of quotas during the *Cluster* deployment, only instances within quotas are deployed. Unfortunately, also in this case you cannot remove/redeploy database using these deployments.
+
+4. If you run out of `sizeLimit`, Pods will be evicted, i.e., terminated. TBD: what to do? Update specs?
