@@ -115,6 +115,7 @@ Low resources means Limits: CPU 0.5, Memory 500MB, Requests: CPU 0.01, Memory 10
 |Local SSD|Extreme|244 sec|10567|No|
 |NFS|Low|586 sec|602|Yes|
 |NFS|High|314 sec|4432|Yes|
+|Ceph RBD|Low|2457 sec|142|Yes|
 
 ### Cluster Instances
 
@@ -127,6 +128,12 @@ Low resources means Limits: CPU 0.5, Memory 500MB, Requests: CPU 0.01, Memory 10
 |NFS|Low|1027 sec|347|Yes|
 |NFS|High|389 sec|2310|Yes|
 
+## Data Backups
+
+Operator offers automatic backups to S3 storage implemented via cronjobs.
+
+TBD
+
 ## Caveats
 
 ### Deploy Errors
@@ -138,3 +145,5 @@ Low resources means Limits: CPU 0.5, Memory 500MB, Requests: CPU 0.01, Memory 10
 3. If you run out of quotas during the *Cluster* deployment, only instances within quotas are deployed. Unfortunately, also in this case you cannot remove/redeploy database using these deployments.
 
 4. If you run out of `sizeLimit`, Pods will be evicted, i.e., terminated. TBD: what to do? Update specs?
+
+5. Local SSD variant is not resilient to whole cluster failure. Data can be lost in this case (e.g., if cluster is restored from backup, local data might not be available). It is strongly recommended to backup regularly.
