@@ -107,7 +107,7 @@ Low resources means Limits: CPU 0.5, Memory 500MB, Requests: CPU 0.01, Memory 10
 
 |---|---|---|---|---|
 |Storage|Resources|Create|TPS|Fail Safe|
-|---|---|---:|---:|---|
+|---|---|---:|---:|:---:|
 |Local SSD|Low|628 sec|561|No|
 |Local SSD|High|263 sec|6745|No|
 |Local SSD|Extreme|244 sec|10567|No|
@@ -118,7 +118,7 @@ Low resources means Limits: CPU 0.5, Memory 500MB, Requests: CPU 0.01, Memory 10
 
 |---|---|---|---|---|
 |Storage|Resources|Create|TPS|Fail Safe|
-|---|---|---:|---:|---|
+|---|---|---:|---:|:---:|
 |Local SSD|Low|704 sec|460|Yes|
 |Local SSD|High|277 sec|6550|Yes|
 |Local SSD|Extreme|246 sec|10447|Yes|
