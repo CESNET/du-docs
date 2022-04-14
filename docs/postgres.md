@@ -69,6 +69,8 @@ numberOfInstances: 3
 
 That requests 3 node cluster.
 
+Note: Cluster instances consume more resources and you must conside how much resources you have available. Cluster instance consumes `numberOfInstances` multiply `limits` of resources.
+
 ## Utilizing Local Storage
 
 It is possible to use a local storage (SSD) instead of NFS or any network-backed PVC. While it is not possible to directly request local storage in `volume` section, it is still possible to use local storage. You can [download](postgres/minimal-local-postgres-manifest.yaml) single instance manifest, it can be used also for the cluster instance setting desired `numberOfInstances`.
