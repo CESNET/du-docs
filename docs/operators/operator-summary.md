@@ -1,7 +1,7 @@
 ---
 layout: article
 title: Operator Summary
-permalink: /docs/operatorsummary.html
+permalink: /docs/operator-summary.html
 key: operatorsummary
 aside:
   toc: true
