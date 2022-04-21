@@ -35,14 +35,18 @@ docs:
         url: /docs/resources.html
       - title: Security and Network Policy
         url: /docs/security.html
+  - title: Operators
+    children:
+      - title: MPI Operator
+        url: /docs/mpi.html
+      - title: Postgres Operator
+        url: /docs/postgres.html
+      - title: Spark Operator
+        url: /docs/spark.html
   - title: Examples
     children:
       - title: Hello World
         url: /docs/kubectl-helloworld.html
-      - title: MPI Job
-        url: /docs/mpi.html
-      - title: Postgres Database
-        url: /docs/postgres.html
   - title: Rancher Applications
     children:
       - title: Overview
@@ -75,8 +79,6 @@ docs:
         url: /docs/binderhub.html
       - title: MagicForceField 
         url: /docs/magicforcefield.html
-      - title: Kubeflow
-        url: /docs/kubeflow.html
   - title: Task/Workflow execution services
     children:
       - title: TESK/WES 
