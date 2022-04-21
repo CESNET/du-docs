@@ -1,7 +1,7 @@
 ---
 layout: article
 title: Postgres Operator
-permalink: /docs/postgres.html
+permalink: /docs/operators/postgres.html
 key: postgres
 aside:
   toc: true

@@ -1,7 +1,7 @@
 ---
 layout: article
 title: Spark Operator
-permalink: /docs/spark.html
+permalink: /docs/operators/spark.html
 key: spark
 aside:
   toc: true

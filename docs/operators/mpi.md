@@ -1,7 +1,7 @@
 ---
 layout: article
 title: MPI Operator
-permalink: /docs/mpi.html
+permalink: /docs/operators/mpi.html
 key: mpi
 aside:
   toc: true
