@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Postgres Database
+title: Postgres Operator
 permalink: /docs/postgres.html
 key: postgres
 aside:
@@ -9,11 +9,11 @@ sidebar:
   nav: docs
 ---
 
-We offer cluster-wide Postgres operator for easy deployment of Postgres SQL database servers. You can find [full documentation here](https://opensource.zalando.com/postgres-operator/docs/reference/cluster_manifest.html). For convenience, we provide some working examples below divided into sections. See below comparison of all variants.
+The [Postgres Operator](https://opensource.zalando.com/postgres-operator/) delivers easy to run PostgreSQL cluster on Kubernetes. We have deployed cluster-wide Postgres operator for easy deployment of Postgres SQL database servers. The Postgres Operator defines kind `postgresql` that ensures existence of databse or database cluster, full documentation on kind's structure is available [here](https://postgres-operator.readthedocs.io/en/latest/reference/cluster_manifest/). The official user guide to creating a minimal PostgreSQl cluster can be found [here](https://postgres-operator.readthedocs.io/en/latest/user/). For convenience, we provide some working examples below divided into sections. Furthermore, we added comparison of deployments that used different underlying storage.
 
 ## Deploying Single Instance 
 
-You can start with minimal instance suitable for testing only, it uses NFS storage as backend and uses only limited resources, but also performance is low. You can [download](postgres/minimal-nfs-postgres-manifest.yaml) manifest. 
+You can start with minimal instance suitable for testing only, it uses NFS storage as backend and uses only limited resources, but also performance is low. You can download [minimal manifest](postgres/minimal-nfs-postgres-manifest.yaml). 
 
 ```yaml
 apiVersion: "acid.zalan.do/v1"
@@ -55,13 +55,13 @@ Issue `kubectl create -f minimal-nfs-postgres-manifest.yaml -n [namespace]` to r
 
 TBD: password for zalando user
 
-This kind of setup is resilient to node failure, if a node running this instance fails, database is recreated on a different node, data is attached again from NFS storage and operations are resumed, on the other hand, even if adding resources, this setup is not speed superior.
+This kind of setup is resilient to node failure --- if a node running this instance fails, database is recreated on a different node, data is attached again from NFS storage and operations are resumed. On the other hand, this setup is not speed superior even if resources are added.
 
 ## Deploying Cluster Instance
 
-For better availability, cluster deployment can be used. In this case, there are multiple instances running, one is a leader, others are following and syncing data from the leader.
+For better availability, cluster deployment can be used. In this case, multiple instances run in the cluster where one of them is a leader and others follow and sync data from the leader.
 
-To deploy cluster version, you can [download](postgres/cluster-nfs-postgres-manifest.yaml) cluster manifest. The only difference is on line:
+To deploy cluster version, you can download [cluster manifest](postgres/cluster-nfs-postgres-manifest.yaml). The only difference is on line:
 
 ```yaml
 numberOfInstances: 3
@@ -69,11 +69,11 @@ numberOfInstances: 3
 
 That requests 3 node cluster.
 
-Note: Cluster instances consume more resources and you must conside how much resources you have available. Cluster instance consumes `numberOfInstances` multiply `limits` of resources.
+Note: Cluster instances consume more resources and you must conside how much resources you have available. Cluster instance consumes `numberOfInstances * limits` of resources.
 
 ## Utilizing Local Storage
 
-It is possible to use a local storage (SSD) instead of NFS or any network-backed PVC. While it is not possible to directly request local storage in `volume` section, it is still possible to use local storage. You can [download](postgres/minimal-local-postgres-manifest.yaml) single instance manifest, it can be used also for the cluster instance setting desired `numberOfInstances`.
+It is possible to use a local storage (SSD) instead of NFS or any network-backed PVC. While it is not possible to directly request local storage in `volume` section, it is still possible to use local storage. You can download [single instance manifest](postgres/minimal-local-postgres-manifest.yaml) which can be used for the cluster instance as well (setting desired `numberOfInstances`).
 
 ```yaml
 volume:
@@ -89,11 +89,11 @@ additionalVolumes:
       sizeLimit: 10Gi
 ```
 
-You need to add the `additionalVolumes` that mounts to `/home/postgres/pgdata/pgroot` and use `emptyDir` as backend storage. The `sizeLimit` value is very important in this case, if database storage exceeds this value, Pod will be evicted. `size` for `volume` is not enforced like this.
+You need to add the `additionalVolumes` that mounts to `/home/postgres/pgdata/pgroot` and use `emptyDir` as backend storage. The `sizeLimit` value is very important in this case, if database storage exceeds this value, database Pod will be evicted. `size` for `volume` is not enforced like this.
 
 ## Database Access 
 
-To access the database from other Pods, you can use as host `acid-test-cluster1` (following `metadata.name` from the deployment) within the same namespace, port is standard `5432`. Username and password is based on the deployment above. 
+To access the database from other Pods, you can use `acid-test-cluster1` as host (following `metadata.name` from the deployment) within the same namespace, port is standard `5432`. Username and password is based on the deployment above. 
 
 To increase security, one can deploy *Network policy* to allow network access to database from particular pods only. See [Network Policy](/docs/security.html). External access, i.e., access from public internet, is disabled by default. It is possible to expose the database via [Load Balancer](/docs/kubectl-expose.html#other-applications) though.
 

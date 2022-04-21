@@ -1,6 +1,6 @@
 ---
 layout: article
-title: MPI Job
+title: MPI Operator
 permalink: /docs/mpi.html
 key: mpi
 aside:
@@ -9,7 +9,7 @@ sidebar:
   nav: docs
 ---
 
-While [MPI](https://www.open-mpi.org/) jobs are traditional domain if High Performance Computing, our platform is capable of running MPI Jobs easily using mpi-operator from [kubeflow](https://www.kubeflow.org/).
+While [MPI](https://www.open-mpi.org/) jobs are traditional domain in High Performance Computing, our platform is capable of running MPI Jobs easily using MPI Operator from [kubeflow](https://www.kubeflow.org/). The [MPI Operator](https://github.com/kubeflow/mpi-operator) makes it easy to run allreduce-style distributed training on Kubernetes. We have deployed cluster-wide MPI Operator which allpws you to create an MPI job by defining a Kuberntes kind `MPIJob`, full documentation on kind's structure is available [here](https://github.com/kubeflow/mpi-operator/blob/master/v2/crd/kubeflow.org_mpijobs.yaml). Some documentation on MPI Operator can be found at [kubeflow site](https://www.kubeflow.org/docs/components/training/mpi/#creating-an-mpi-job) or [this blogpost](https://medium.com/kubeflow/introduction-to-kubeflow-mpi-operator-and-industry-adoption-296d5f2e6edc).
 
 To be able to run MPI job, there are two steps required: prepare specific Docker image and create MPIJob manifest.
 

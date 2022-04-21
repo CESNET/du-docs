@@ -37,12 +37,14 @@ docs:
         url: /docs/security.html
   - title: Operators
     children:
+      - title: Operator Summary
+        url: /docs/operators/operator-summary.html
       - title: MPI Operator
-        url: /docs/mpi.html
+        url: /docs/operators/mpi.html
       - title: Postgres Operator
-        url: /docs/postgres.html
+        url: /docs/operators/postgres.html
       - title: Spark Operator
-        url: /docs/spark.html
+        url: /docs/operators/spark.html
   - title: Examples
     children:
       - title: Hello World
