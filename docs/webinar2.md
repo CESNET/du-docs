@@ -132,7 +132,7 @@ Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy R
 
 ![docker](webinar2/docker-logo.png)[https://hub.docker.com](https://hub.docker.com)
 
-### Naše vlastní registry přístupné přes e-INFRA AAI, lze použít z Kubernetes
+### Naše vlastní registry přístupné přes e-INFRA AAI
 
 ![hub](webinar2/harbor.png)[https://hub.cerit.io](https://hub.cerit.io)
 
@@ -143,3 +143,26 @@ Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy R
 ### Samotné registry s možností CI/CD
 
 ![gitlab](webinar2/gitLab-logo.png)[https://gitlab.ics.muni.cz](https://gitlab.ics.muni.cz)
+
+
+## Spuštění
+
+Spuštění existujícího image z docker hubu:
+```
+kubectl run -it --rm  alpine --image=alpine -n hejtmanek1-ns --overrides='{ "spec": { "securityContext": { "runAsUser": 1000 } } }'
+```
+
+Spuštění pomocí `yaml` definice, ke [stažení](webinar2/pod.yaml):
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpine
+spec:
+  containers:
+  - name:  alpine
+    command: [sleep, infinity]
+    image: alpine
+    securityContext:
+      runAsUser: 1000
+```
