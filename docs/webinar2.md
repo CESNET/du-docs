@@ -130,16 +130,16 @@ Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy R
 
 ### Veřejné registry docker images
 
-![<img src="https://logos-world.net/wp-content/uploads/2021/02/Docker-Logo-700x394.png" width="100"/>](https://logos-world.net/wp-content/uploads/2021/02/Docker-Logo-700x394.png)[https://hub.docker.com](https://hub.docker.com)
+![docker](webinar2/docker-logo.png)[https://hub.docker.com](https://hub.docker.com)
 
 ### Naše vlastní registry přístupné přes e-INFRA AAI, lze použít z Kubernetes
 
-![hub](https://hub.cerit.io/images/harbor-logo.svg)[https://hub.cerit.io](https://hub.cerit.io)
+![hub](webinar2/harbor.png)[https://hub.cerit.io](https://hub.cerit.io)
 
 ### Nvidia containers
 
-![nvidia](https://seeklogo.com/images/N/NVIDIA-logo-BA019CBFAA-seeklogo.com.png)[https://catalog.ngc.nvidia.com/containers](https://catalog.ngc.nvidia.com/containers)
+![nvidia](webinar2/nvidia.png)[https://catalog.ngc.nvidia.com/containers](https://catalog.ngc.nvidia.com/containers)
 
 ### Samotné registry s možností CI/CD
 
-![gitlab](https://upload.wikimedia.org/wikipedia/commons/e/e1/GitLab_logo.svg)[https://gitlab.ics.muni.cz](https://gitlab.ics.muni.cz)
+![gitlab](webinar2/gitLab-logo.png)[https://gitlab.ics.muni.cz](https://gitlab.ics.muni.cz)
