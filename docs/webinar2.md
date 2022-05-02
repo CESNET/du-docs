@@ -130,7 +130,7 @@ Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy R
 
 ### Veřejné registry docker images
 
-![docker](https://logos-world.net/wp-content/uploads/2021/02/Docker-Logo-700x394.png)[https://hub.docker.com](https://hub.docker.com)
+![<img src="https://logos-world.net/wp-content/uploads/2021/02/Docker-Logo-700x394.png" width="100"/>](https://logos-world.net/wp-content/uploads/2021/02/Docker-Logo-700x394.png)[https://hub.docker.com](https://hub.docker.com)
 
 ### Naše vlastní registry přístupné přes e-INFRA AAI, lze použít z Kubernetes
 
