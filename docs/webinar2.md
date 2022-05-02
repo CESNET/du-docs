@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Webinář - Úvod do Kubernetes
+title: Sitola - Úvod do Kubernetes
 permalink: /docs/webinar2.html
 key: webinar
 aside:
@@ -125,3 +125,21 @@ Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy R
 
 ![appdel](rstudio/appdel.png)
 
+
+## Docker Image
+
+### Veřejné registry docker images
+
+![docker](https://logos-world.net/wp-content/uploads/2021/02/Docker-Logo-700x394.png)[https://hub.docker.com](https://hub.docker.com)
+
+### Naše vlastní registry přístupné přes e-INFRA AAI, lze použít z Kubernetes
+
+![hub](https://hub.cerit.io/images/harbor-logo.svg)[https://hub.cerit.io](https://hub.cerit.io)
+
+### Nvidia containers
+
+![nvidia](https://seeklogo.com/images/N/NVIDIA-logo-BA019CBFAA-seeklogo.com.png)[https://catalog.ngc.nvidia.com/containers](https://catalog.ngc.nvidia.com/containers)
+
+### Samotné registry s možností CI/CD
+
+![gitlab](https://upload.wikimedia.org/wikipedia/commons/e/e1/GitLab_logo.svg)[https://gitlab.ics.muni.cz](https://gitlab.ics.muni.cz)
