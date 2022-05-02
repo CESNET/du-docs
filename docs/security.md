@@ -63,9 +63,8 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-+   nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
-+   nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
-+   oauth2-proxy.github.io/users: "email1@ics.muni.cz, email2@ics.muni.cz, email3@ics.muni.cz"
++   nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth?allowed_emails=email1@ics.muni.cz, email2@ics.muni.cz, email3@ics.muni.cz"
++   nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$scheme%3A%2F%2F$host$escaped_request_uri"
 spec:
   tls:
     - hosts:
@@ -84,11 +83,13 @@ spec:
         pathType: Prefix
 ```
 
-The `oauth2-proxy.github.io/users` annotation holds a list of emails of users
-that should be able to access the website.
+The `nginx.ingress.kubernetes.io/auth-url` annotation contains a query string
+which specifies a list of users that should be able to access the website,
+only change the list of emails in this field, do not change the URL in any
+way.
 
-The other two annotations simply tell the ingress that it needs to authenticate
-via an authentication endpoint.
+The other annotation simply tells the ingress that it should redirect back
+to the webpage after the user authenticates.
 
 Now that the ingress is configured to use an SSO enpoint, we must configure
 the SSO endpoint itself. To do this we must apply the following YAML file:
@@ -135,8 +136,8 @@ spec:
 
 Note that the `hosts` and `secretName` are the same as in the original ingress.
 The only thing that needs to be changed in the file is all occurences of
-`ingress-name`, replace them with the name of your ingress and apply the
-file.
+`ingress-name` and `hostname`, replace them with the name of your ingress
+and web page URL and apply the file.
 
-With all the changes applied your webiste is now secured with the
+With all the changes applied, your webiste is now secured with the
 e-infra's SSO service.
