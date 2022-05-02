@@ -91,6 +91,63 @@ to your needs. You can request it at [k8s@ics.muni.cz](mailto: k8s@ics.muni.cz).
 
 You see your PVCs in Rancher GUI in `Storage` &rarr; `PersistentVolumeClaims` ![Volumes](pvc.jpg)
 
+## Custom PVC Classes
+
+In our infrastructure we provide a few custom PVC storage classes for use
+with storage services we provide. In this section we list these classes
+and explain how to use them.
+
+### WebDAV
+
+This storage class allows you to access a WebDAV storage. For example some
+cloud storage providers have this feature. WebDAV accesses file storage via
+HTTP protocol and is therefore rather slow, if you have a different option
+to access your data, we would advise to use that for performance sake.
+
+To access a WebDAV storage, you will need:
+  - WebDAV URL
+  - directory to mount
+  - username
+  - password
+
+There are 2 ways to provide the password. Either add the password directly
+to PVC specification (STRONGLY discouraged) or save the password in a secret
+and then specify the secret name in PVC specification. We will show an
+example of the second approach.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-webdav-secret
+  namespace: my-ns
+type: Opaque
+stringData:
+  password: SuperSecretPassword
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-webdav-pvc
+  namespace: my-ns
+  annotations:
+    url: "https://my.webdav.url/remote.php/dav/files/123456789"
+    dir: "directory_to_mount"
+    user: "my_username"
+    passwordSecret: "my-webdav-secret" # this is the name of the secret created a few lines above
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: webdav
+```
+
+Replace `password`, `url`, `dir`, `user`, `passwordSecret` and all names and namespaces
+with your values. With this yaml file you should be able to successfuly create a PVC
+that can be mounted inside your pods.
+
 ## Ephemeral Storage
 
 Ephemeral kind of storage is allocated from node's local storage. Allocation is done through resource requests, see [resources](/docs/resources.html) and through volume mounts.
