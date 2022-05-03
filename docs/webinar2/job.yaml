@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: caverdock
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: caverdock
+        image: cerit.io/sitola/hejtmanek-caverdock
+        command:
+         - "mpirun"
+         - "-np"
+         - "4" 
+         - "/opt/caverdock/bin/caverdock"
+         - "--config"
+         - "caverdock.conf"
+         - "--out"
+         - "test"
+         - "--log"
+         - "log"
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        resources:
+          limits:
+            cpu: 4
+            memory: 8192Mi

@@ -1,0 +1,11 @@
+FROM ubuntu:18.04
+
+RUN apt-get update && apt-get -y install wget python xz-utils libopenmpi2 libboost-serialization1.65.1 libboost-thread1.65.1 libboost-program-options1.65.1 python-pip && pip install pylatex numpy sklearn && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /root/.cache
+
+RUN mkdir /opt/caverdock && cd /opt/caverdock && wget https://www.fi.muni.cz/~xfilipov/caverdock/caverdock-1.1-ubuntu-18.04.tar.xz -O - | tar xJf - && chown -R 1000:1000 /opt/caverdock
+
+RUN wget http://repo.cerit-sc.cz/misc/rsh -O /usr/bin/rsh && chmod a+rx /usr/bin/rsh
+
+USER 1000
+
+WORKDIR /opt/caverdock/example

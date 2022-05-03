@@ -229,3 +229,67 @@ Je-li sestavení úspěšné, je potřeba vzniklý image nahrát do registry: `d
 Následně lze image zkráceně spustit pomocí: `kubectl run -it --rm test --image=cerit.io/sitola/hejtmanek -n hejtmanek1-ns`
 
 Další tipy na naší dokumentaci [https://docs.cerit.io](https://docs.cerit.io) -- sekce: Docker, GitOps.
+
+## Vytvoření nového kontejneru
+
+Reálně jde skoro vždy o modifikaci základního kontejneru.
+
+### Příklad s [caverdock](https://loschmidt.chemi.muni.cz/caverdock/)
+
+[Dockerfile](webinar2/Dockerfile-caverdock)
+
+```
+FROM ubuntu:18.04
+
+RUN apt-get update && apt-get -y install wget python xz-utils libopenmpi2 libboost-serialization1.65.1 libboost-thread1.65.1 libboost-program-options1.65.1 python-pip && pip install pylatex numpy sklearn && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /root/.cache
+
+RUN mkdir /opt/caverdock && cd /opt/caverdock && wget https://www.fi.muni.cz/~xfilipov/caverdock/caverdock-1.1-ubuntu-18.04.tar.xz -O - | tar xJf - && chown -R 1000:1000 /opt/caverdock
+
+RUN wget http://repo.cerit-sc.cz/misc/rsh -O /usr/bin/rsh && chmod a+rx /usr/bin/rsh
+
+USER 1000
+
+WORKDIR /opt/caverdock/example
+```
+
+`docker build -t cerit.io/sitola/hejtmanek-caverdock - < Dockerfile-caverdock`
+
+`docker push cerit.io/sitola/hejtmanek-caverdock`
+
+#### Spuštění
+
+Vytvoříme `Job` deployment, ke stažení [zde](webinar2/job.yaml).
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: caverdock
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: caverdock
+        image: cerit.io/sitola/hejtmanek-caverdock
+        command:
+         - "mpirun"
+         - "-np"
+         - "4"
+         - "/opt/caverdock/bin/caverdock"
+         - "--config"
+         - "caverdock.conf"
+         - "--out"
+         - "test"
+         - "--log"
+         - "log"
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        resources:
+          limits:
+            cpu: 4
+            memory: 8192Mi
+```
+
+Spustíme: `kubectl create -f job.yaml -n hejtmanek-ns` a úloha běží. 
