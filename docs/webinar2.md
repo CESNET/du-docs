@@ -16,19 +16,19 @@ Přihlášení do webového rozhraní rancher je na adrese [https://rancher.clou
 
 Následně zvolte `e-INFRA CZ AAI`
 
-![login2](webinar1/login2.png)
+![login2](webinar2/login2.png)
 
 Dále pak `e-INFRA CZ password`. Abyste nemuseli v dlouhém seznamu hledat, doporučujeme do políčka `Log in with` napsat `infra`. A následně vybrat `e-INFRA CZ password`.
 
-![login3](webinar1/login3.png)
+![login3](webinar2/login3.png)
 
 Zobrazí se výzva pro zadání jména a hesla do Metacentra. V případě, že nemáte účet v Metacentru, lze zvolit vaši domovskou instituci.
 
-![login4](webinar1/login4.png)
+![login4](webinar2/login4.png)
 
 Pro pokračování je třeba odsouhlasit předání údajů jako je např. vaše e-mailová adresa.
 
-![login5](webinar1/login5.png)
+![login5](webinar2/login5.png)
 
 
 Může se stát, že se zobrazí tato chybová stránka, k tomu dojde v případě, že přihlašovací proces byl příliš pomalý (např. přepínání mezi návodem a přihlašováním). Pak stačí celý proces jen zopakovat a přihlášení se již povede.
@@ -166,3 +166,9 @@ spec:
     securityContext:
       runAsUser: 1000
 ```
+
+```
+kubectl create -f pod.yaml -n xhejtmanek1-ns
+```
+
+Tentokrát ke kontejneru nemáme terminál.
