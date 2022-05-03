@@ -232,7 +232,7 @@ Další tipy na naší dokumentaci [https://docs.cerit.io](https://docs.cerit.io
 
 ## Vytvoření nového kontejneru
 
-Prerekvizita: přístup k dockeru a docker registry, fungující `kubectl`.
+**Prerekvizita:** přístup k dockeru a docker registry, fungující `kubectl`.
 
 Reálně jde skoro vždy o modifikaci základního kontejneru.
 
