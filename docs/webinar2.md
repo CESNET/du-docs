@@ -12,7 +12,7 @@ aside:
 
 CLI nástroj na manipulaci s kubernetes: [kubectl](https://kubernetes.io/docs/tasks/tools/). Pozor, je nutné najít verzi vyšší než 1.19 a nižší než 1.23.
 
-Přímé linky pro [windows](https://dl.k8s.io/release/v1.21.0/bin/windows/amd64/kubectl.exe), [linux](https://dl.k8s.io/release/v1.21.0/bin/linux/amd64/kubectl), [macos intel](https://dl.k8s.io/release/v1.21.0/bin/darwin/amd64/kubectl), [macos Apple Silicon -- M1](https://dl.k8s.io/release/v1.21.0/bin/darwin/arm64/kubectl).
+Přímé linky pro [Windows](https://dl.k8s.io/release/v1.21.0/bin/windows/amd64/kubectl.exe), [Linux](https://dl.k8s.io/release/v1.21.0/bin/linux/amd64/kubectl), [MacOS Intel](https://dl.k8s.io/release/v1.21.0/bin/darwin/amd64/kubectl), [MacOS Apple Silicon -- M1](https://dl.k8s.io/release/v1.21.0/bin/darwin/arm64/kubectl).
 
 ### docker
 
@@ -71,7 +71,7 @@ Dle obrázku výše je pro zpřístupnění příkazové řádky potřeba stáhn
 
 ## Aplikace
 
-Následují ukázky spuštění předpřipravených aplikací jako jsou RStudio server a Matlab. Pro Matlab je nutné mít fungujícího `vnc` klienta, na Linuxu např. `vncviewer`, na Mac OS stačí *Safari* prohlížeč.
+Následují ukázka spuštění předpřipravených aplikací jako je RStudio server.
 
 Žádný kroků uvedených níže nelze vynechat, jde o nezbytné minimum.
 
@@ -188,3 +188,18 @@ kubectl create -f pod.yaml -n xhejtmanek1-ns
 ```
 
 Tentokrát ke kontejneru nemáme terminál.
+
+Do běžícího kontejneru se lze dostat z UI Rancher. Kliknutím postupně na Workspace (1), Pods (2) a šipku 3.
+
+![shell1](webinar2/shell1.png)
+
+![shell2](webinar2/shell2.png)
+
+![shell3](webinar2/shell3.png)
+
+Druhá možnost přístupu do bežícího kontejneru z CLI pomocí příkazu:
+```
+kubectl exec --tty --stdin alpine -n hejtmanek1-ns -- /bin/sh
+```
+
+Celá tato ukázka předpokládá, že v kontejneru je nainstalovaný `shell`, což není vždy zaručené.
