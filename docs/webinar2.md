@@ -6,6 +6,18 @@ key: webinar
 aside:
   toc: true
 ---
+## Instalace
+
+### kubectl
+
+CLI nástroj na manipulaci s kubernetes: [kubectl](https://kubernetes.io/docs/tasks/tools/). Pozor, je nutné najít verzi vyšší než 1.19 a nižší než 1.23.
+
+Přímé linky pro [windows](https://dl.k8s.io/release/v1.21.0/bin/windows/amd64/kubectl.exe), [linux](https://dl.k8s.io/release/v1.21.0/bin/linux/amd64/kubectl), [macos intel](https://dl.k8s.io/release/v1.21.0/bin/darwin/amd64/kubectl), [macos Apple Silicon -- M1](https://dl.k8s.io/release/v1.21.0/bin/darwin/arm64/kubectl).
+
+### docker
+
+[Instrukce pro instalaci](https://docs.docker.com/get-docker/)
+
 ## Rancher
 
 ### Přihlášení
@@ -47,9 +59,13 @@ Dále je třeba pokračovat kliknutím na `kuba-cluster`.
 
 ![dashboard1](cluster2.jpg)
 
-Tím se dostáváte k ploše konkrétního clusteru, kde lze zobrazit přehledy, pouštět předpřipravené aplikace, atd.
+Tím se dostáváte k ploše konkrétního clusteru, kde lze zobrazit přehledy, pouštět předpřipravené aplikace, atd. Šipky odkazují na stažení `kube-config` (2) a na `kubectl` konzoli (1).
 
-![dashboard2](kuba-cluster.png)
+![dashboard2](webinar2/rancher-kubectl.png)
+
+### Kube-config
+
+Dle obrázku výše je pro zpřístupnění příkazové řádky potřeba stáhnout a uložit `kube-config` soubor. Tento je potřeba na Linuxu a MacOS umístit do `HOME` do `~/.kube/config`. Na Windows do `%USERPROFILE%\.kube\config`.  Variantně lze `kube-config` uložit kamkoliv a odkazovat ho pomocí volby `--kubeconfig`, tj. např. `kubectl --kubeconfig /tmp/kube-config get pods`.
 
 ---
 
