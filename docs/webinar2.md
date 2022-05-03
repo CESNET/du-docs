@@ -71,7 +71,7 @@ Dle obrázku výše je pro zpřístupnění příkazové řádky potřeba stáhn
 
 ## Aplikace
 
-Následují ukázka spuštění předpřipravených aplikací jako je RStudio server.
+Následuje ukázka spuštění předpřipravených aplikací jako je RStudio server.
 
 Žádný kroků uvedených níže nelze vynechat, jde o nezbytné minimum.
 
@@ -163,6 +163,8 @@ Pokud aplikace již není potřeba, je vhodné ji smazat. Ze základní plochy R
 
 ## Spuštění
 
+**Prerekvizita:** nainstalované `kubectl` a stažený `kube-config`.
+
 Spuštění existujícího image z docker hubu:
 ```
 kubectl run -it --rm  alpine --image=alpine -n hejtmanek1-ns --overrides='{ "spec": { "securityContext": { "runAsUser": 1000 } } }'
@@ -203,3 +205,27 @@ kubectl exec --tty --stdin alpine -n hejtmanek1-ns -- /bin/sh
 ```
 
 Celá tato ukázka předpokládá, že v kontejneru je nainstalovaný `shell`, což není vždy zaručené.
+
+## Modifikace existujícího kontejneru
+
+**Prerekvizita:** přístup k dockeru a docker registry.
+
+### Dockerfile
+
+Je třeba vytvořit [Dockerfile](webinar2/Dockerfile).
+
+```
+FROM ubuntu:20.04
+
+RUN apt-get update && apt-get -y install python3 python3-pip
+
+USER 1000
+```
+
+A následně sestavit image pomocí příkazu `docker build -t cerit.io/sitola/hejtmanek - < Dockerfile`. 
+
+Je-li sestavení úspěšné, je potřeba vzniklý image nahrát do registry: `docker push cerit.io/sitola/hejtmanek`.
+
+Následně lze image zkráceně spustit pomocí: `kubectl run -it --rm test --image=cerit.io/sitola/hejtmanek -n hejtmanek1-ns`
+
+Další tipy na naší dokumentaci [https://docs.cerit.io](https://docs.cerit.io) -- sekce: Docker, GitOps.
