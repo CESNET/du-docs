@@ -26,13 +26,18 @@ If you want to use Spark UI, you have to include following code snippet in spark
       cert-manager.io/cluster-issuer: letsencrypt-prod
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: 'true'
-    ingressTLS:
-      - hosts:
-          - spark.cloud.e-infra.cz
-        secretName: spark-cloud-e-infra-cz-tls
+      nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
+    ingressTLS: (optional section)
+        - secretName: [appname]-tls
+          hosts:
+            - spark-[namespace].dyn.cloud.e-infra.cz
 ```
 
-The snippet ensures application will be reachable (while running) on `spark.cloud.e-infra.cz/<namespace-of-spark-application>/<spark-application-name>`. The address is also visible in Rancher UI, follow the steps to see its final form. When you copy the address into the browser, omit the last character group `(/|$)(.*)` (a Rancher related issue). 
+The snippet ensures application will be reachable (while running) on `https://spark-<namespace-of-spark-application>-ns.dyn.cloud.e-infra.cz/<namespace-of-spark-application>/<spark-application-name>`. If you would like to expose the application on `https`, add section `ingressTLS` with `secretName` set to any string you want and `hosts` to `spark-[namespace].dyn.cloud.e-infra.cz`. However, we suggest setting it to `[metadata.name]-tls`. The final address can look like:
+```
+https://spark-spisakova1-ns.dyn.cloud.e-infra.cz/spisakova1-ns/pyspark-pi2
+```
+but is also visible in Rancher UI, follow the steps to see its final form. When you copy the address into the browser, omit the last character group `(/|$)(.*)` (a Rancher related issue). 
 
 ![sparkaddress](sparkaddress.png)  
 
