@@ -28,9 +28,9 @@ If you want to use Spark UI, you have to include following code snippet in spark
       kubernetes.io/tls-acme: 'true'
       nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
     ingressTLS: (optional section)
-        - secretName: [appname]-tls
-          hosts:
-            - spark-[namespace].dyn.cloud.e-infra.cz
+      - secretName: [appname]-tls
+        hosts:
+          - spark-[namespace].dyn.cloud.e-infra.cz
 ```
 
 The snippet ensures application will be reachable (while running) on `https://spark-<namespace-of-spark-application>-ns.dyn.cloud.e-infra.cz/<namespace-of-spark-application>/<spark-application-name>`. If you would like to expose the application on `https`, add section `ingressTLS` with `secretName` set to any string you want and `hosts` to `spark-[namespace].dyn.cloud.e-infra.cz`. However, we suggest setting it to `[metadata.name]-tls`. The final address can look like:
