@@ -162,9 +162,9 @@ Uložíme a pomocí
 
 ```kubectl create -f pod.yaml -n prijmeni-ns``` spustíme aplikaci.
 
-Vrátíme se do `rancheru`. Pod `Workload` -> `Pods` bychom měli vidět aplikaci `sitola`, která běží.
+Vrátíme se do `rancheru`. Pod `Workload` -> `Pods` bychom měli vidět aplikaci `sitola`, která běží. Pokud vidíme `acme...` tak počkáme, dokud nezmizí.
 
-`Service Discovery` -> `Ingresses` bude k dispozici odkas `https://sitola`. 
+`Service Discovery` -> `Ingresses` bude k dispozici odkaz `https://sitola`. 
 
 Klikneme na něj a následně na `img-classifier.ipynb`. Tím jsme v jupyter aplikaci. 
 
