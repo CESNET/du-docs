@@ -64,6 +64,8 @@ Zobrazí se překryv, kde je nutné počkat na oznámení `SUCCESS`. Tímto se a
 
 Projdeme přes menu vlevo `Service Discovery` do `Ingresses`. Pokud uvidíme řádek s názvem `cm-acme-http-solver...`, je třeba chvíli vyčkat dokud nezmizí (v tomto momentě se získává SSL certifikát). Následně se pokračuje kliknutím na modrý odkaz v němž je `minio` (a nikoli `s3`). 
 
+Rstudio necháme zatím běžet.
+
 ### Práce s daty
 
 Stáhneme vzorový příklad [sla.csv](http://botanika.prf.jcu.cz/fibich/bash/sla.csv). V `minio` webu klikneme na `Buckets` a následně `Root`. Vpravo nahoře je ikona upload, pomocí ní nahrajeme stažený `sla.csv`. 
