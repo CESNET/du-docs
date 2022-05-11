@@ -68,13 +68,13 @@ Rstudio necháme zatím běžet.
 
 ### Práce s daty
 
-Stáhneme vzorový příklad [sla.csv](http://botanika.prf.jcu.cz/fibich/bash/sla.csv). V `minio` webu klikneme na `Buckets` a následně `Root`. Vpravo nahoře je ikona upload, pomocí ní nahrajeme stažený `sla.csv`. 
+Stáhneme vzorový příklad [sla.csv](http://botanika.prf.jcu.cz/fibich/bash/sla.csv). V `minio` webu klikneme na `Buckets` a následně `Root` `Browse` uplně vpravo. Vpravo nahoře je ikona upload, pomocí ní nahrajeme stažený `sla.csv`. 
 
 Přepneme se do R studio. V něm vložíme postupně následující kód:
 
 ```
 sla<-read.csv("sla.csv")
-slaspe<-table(sla$species))
+slaspe<-table(sla$species)
 boxplot(LEAFAREA_mm2~species,data=sla[sla$species %in% names(slaspe[slaspe>6]), ])
 write.table(slaspe, file = "sla1.tab")
 ```
