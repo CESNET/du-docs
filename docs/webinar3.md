@@ -154,6 +154,8 @@ Tímto končí dockerová část.
 
 Zde je potřeba mít stažený a funkční program `kubectl` a jeho konfiguraci `kube-config`. 
 
+**Pro Windows:** kubectl bude ve složce `Downloads` jako soubor `kubectl.exe`. Je tedy nutné příkazy spojené s `kubectl` spouštět z této složky.
+
 Následně [stáhneme](webinar3/pod.yaml) manifest na běžící aplikaci.
 
 V ní vyměníme všechny výskyty `[prijmeni]` za své vlastní příjmení (bez diakritiky malými písmeny, celkem 4x)
