@@ -71,3 +71,7 @@ You will see log in window, use **`rstudio`** as login name and the selected pas
 If you feel you do not need the application anymore, you can delete it. Just navigate to `App & Marketplace` (1), `Installed Apps` (2), select the application (3) and hit `Delete` (4). The data in home directory is not deleted. Running the application again with the same `Name` restores access to the home directory folder.
 
 ![appdel](rstudio/appdel.png)
+
+## Install Additional Packages
+
+As of chart version **1.4**, it is possible to use `conda` or `mamba` tool to install additional packages. They are instaled into `/opt/conda` directory. E.g., in `rstudio` `terminal`, type: `mamba install mc` to install the `mc` package. If you see `(base)` in the beginning of prompt, all paths are set correctly to use `conda` installed packages.
