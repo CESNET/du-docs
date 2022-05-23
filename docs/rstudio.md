@@ -42,7 +42,11 @@ In the second part of the form, you select access password, please avoid chars l
 
 ![appform1](rstudio/appform2.png)
 
-In the third part of the form, you can select **e-infra** storage to connect to the application. If you check `External Storage`, few more options appear. You can select storage and access credentials. Currently, only `storage-brno12-cerit.metacentrum.cz` and `ha-bay.ics.muni.cz` are supported. Username is e-infra ([metacentrum](https://metavo.metacentrum.cz/)) login and password **is not** Metacentrum password, but different set by administrator, [ask](mailto:k8s@ics.muni.cz) if you need to set. We are preparing more convenient way. For `ha-bay.ics.muni.cz` use UČO and secondary password, however, creating service account and using it is recommended. This storage is mounted to `/home/rstudio/data` directory.
+In the third part of the form, you can select **e-infra** storage (3) to connect to the application. If you check `External Storage`, few more options appear. You can select storage and access credentials. Currently, only `storage-brno12-cerit.metacentrum.cz` and `ha-bay.ics.muni.cz` are supported. Username is e-infra ([metacentrum](https://metavo.metacentrum.cz/)) login and password **is not** Metacentrum password, but different set by administrator, [ask](mailto:k8s@ics.muni.cz) if you need to set. We are preparing more convenient way. For `ha-bay.ics.muni.cz` use UČO and secondary password, however, creating service account and using it is recommended. This storage is mounted to `/home/rstudio/data` directory. 
+
+You can also select persistent `/opt` volume (2) that is used for installed packages via `conda` installer, see below. Persistent `/opt` preservers installed packages across `rstudio` restart.
+
+Persistent `home` (1) enables preserving content of the home directory across `rstudio` restart.
 
 ![appinst](rstudio/appform3.png)
 
@@ -74,4 +78,6 @@ If you feel you do not need the application anymore, you can delete it. Just nav
 
 ## Install Additional Packages
 
-As of chart version **1.4**, it is possible to use `conda` or `mamba` tool to install additional packages. They are instaled into `/opt/conda` directory. E.g., in `rstudio` `terminal`, type: `mamba install mc` to install the `mc` package. If you see `(base)` in the beginning of prompt, all paths are set correctly to use `conda` installed packages.
+As of chart version **1.4**, it is possible to use `conda` or `mamba` tool to install additional packages. They are instaled into `/opt/conda` directory. E.g., in `rstudio` `terminal` (1), type: `mamba install mc` (3) to install the `mc` package. If you see `(base)` (2) in the beginning of prompt, all paths are set correctly to use `conda` installed packages. If you do not see the `(base)`, type: `/opt/conda/bin/conda init`, close the `terminal` and run  a new one. This action is required once only.
+
+![terminal](rstudio/terminal.png)
