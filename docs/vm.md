@@ -58,10 +58,10 @@ Replace `[namespace]` with name of your *namespace* from Rancher. If you generat
 ### Docker Image
 
 We created 4 base images for public use:
-1. `cerit.io/pub/ssh-base:d10`
-2. `cerit.io/pub/ssh-base:d11`
-3. `cerit.io/pub/ssh-base:ubuntu20.04`
-4. `cerit.io/pub/ssh-base:ubuntu22.04`
+1. `cerit.io/pub/ssh-base:d10` -- Debian 10 (Buster) based image
+2. `cerit.io/pub/ssh-base:d11` -- Debian 11 (Bullseye) based image
+3. `cerit.io/pub/ssh-base:ubuntu20.04` -- Ubuntu 20.04 (Focal) based image
+4. `cerit.io/pub/ssh-base:ubuntu22.04` -- Ubuntu 22.04 (Jellyfish) based image
 
 These images can be directly used or can be used as base images for creating own more advanced images, see below.
 
@@ -105,3 +105,79 @@ Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
 permitted by applicable law.
 user@vm-example-0:~$ 
 ```
+
+At this point, you have running your VM for general purpose.
+
+## Delete Running VM
+
+If you VM is not needed any more, we kindly request to delete it. It can be deleted issuing:
+```
+kubectl delete -f vm-simple.yaml -n [namespace]
+```
+Where `vm-simple.yaml` is the file used for create and `[namespace]` is your *namespace* from Rancher.
+
+## Installing Additional Software
+
+There are two options, how to install additional packages to the VM. You can either rebuild the docker image or you can use existing one, install `conda` package manager for further package installation. Using docker, you can install all standard packages from the base system, i.e., Debian or Ubuntu, these packages will be part of the new image and will be always (even after container restart) available. 
+
+**Note**: You cannot install any system package in the running container.
+
+However, using `conda`, installation of `conda` packages is possible even in running container. See caveats below.
+
+### Rebuilding Image
+
+If you are not familiar with docker build. Check our [documentation](/docs/dockerfile.html). For docker image, docker registry is needed. You can use our [https://hub.cerit.io](https://hub.cerit.io) registry, that can store your docker image. Images can be referred as: `cerit.io/[project]/[image]:[tag]`. TBD: hub docs
+
+To rebuild one of the images above, use the following `Dockerfile` example:
+```
+FROM cerit.io/pub/ssh-base:d10
+
+RUN apt-get update && apt-get -t install vim less && apt-get clean && rm -rf /var/lib/apt/lists/
+```
+
+This `Dockerfile` creates new version of the docker image with installed `vim` and `less` packages. Store the example into the file `Dockerfile`, change the list of installed packages as desired. You can build the docker image using:
+```
+docker build -t cerit.io/[login]/[image]:[tag] - < Dockerfile
+```
+Replace `[login]` with our *project* name in `hub.cerit.io`, `[image]:[tag]` with image name and tag.
+
+To store the image into registry, you need to login to the registry first using:
+```
+docker login cerit.io
+```
+with credentials you can get on [https://hub.cerit.io](https://hub.cerit.io).
+
+After login, you can *push* your new image using:
+```
+docker push cerit.io/[login]/[image]:[tag]
+```
+
+Replace `image` in the manifest above with this new name `cerit.io/[login]/[image]:[tag]` and delete and run the manifest again.
+
+### Conda Package Manager
+
+Using [conda](https://docs.conda.io/en/latest/) or `mamba` tool, you can install new packages even in the running container. First, installing `conda/mamba`:
+```
+wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
+/bin/bash Mambaforge-Linux-x86_64.sh -f -b -p /home/user/conda
+/home/user/conda/bin/conda init
+echo '. ~/.bashrc' >> ~/.profile
+```
+
+Log out and log in again. You should see now prompt like this:
+```
+(base) user@vm-example-0:~$
+```
+
+You are now ready to install packages, e.g., `mc` package:
+```
+(base) user@vm-example-0:~$ mamba install mc
+```
+
+After a while, `mamba` finishes and you are able to use the installed package `mc`.
+
+All packages are installed into the `/home/user/conda` directory.
+
+### Persistent Home
+
+As mentioned above, disks inside container are not persistent. It means that everything that is installed by `conda`/`mamba` is lost if the container is restarted or re-created. To deal with this, persistent home needs to be created. 
