@@ -8,8 +8,6 @@ aside:
 sidebar:
   nav: docs
 ---
-# Harbor (hub.cerit.io)
-
 Harbor is a multi-user docker registry with a web UI. We have an instance
 of Harbor running available at [hub.cerit.io](https://hub.cerit.io) for all
 Metacentrum users. The main advantage of having our own registry as
