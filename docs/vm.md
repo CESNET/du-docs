@@ -126,7 +126,7 @@ However, using `conda`, installation of `conda` packages is possible even in run
 
 ### Rebuilding Image
 
-If you are not familiar with docker build. Check our [documentation](/docs/dockerfile.html). For docker image, docker registry is needed. You can use our [https://hub.cerit.io](https://hub.cerit.io) registry, that can store your docker image. Images can be referred as: `cerit.io/[project]/[image]:[tag]`. TBD: hub docs
+If you are not familiar with docker build. Check our [documentation](/docs/dockerfile.html). For docker image, docker registry is needed. You can use our [https://hub.cerit.io](https://hub.cerit.io) registry, that can store your docker image. Images can be referred as: `cerit.io/[project]/[image]:[tag]`. See [docs](/docs/harbor.html).
 
 To rebuild one of the images above, use the following `Dockerfile` example:
 ```
@@ -217,3 +217,51 @@ limits:
 2. For `conda`/`mamba`, at least 4GB Memory is required, or you get `killed` message when trying to run the `conda` command.
 
 ## Work with GPU
+
+To work with GPU, manifest resource section must contain GPU request. You can [download](/docs/deployments/vm-persistent-gpu.yaml) manifest or use your own with the following addition:
+```yaml
+limits:
+  cpu: "1"
+  memory: "4Gi"
+  ephemeral-storage: "4Gi"
+  nvidia.com/gpu: 1
+```
+
+If you run this manifest, NVIDIA drivers and `nvidia-smi` commands will be available in the container:
+```
+user@vm-pvc-example-0:~$ nvidia-smi
+Wed May 25 17:53:50 2022       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.57.02    Driver Version: 470.57.02    CUDA Version: 11.4     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  NVIDIA A40          On   | 00000000:A3:00.0 Off |                    0 |
+|  0%   34C    P8    31W / 300W |      0MiB / 45634MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+user@vm-pvc-example-0:~$ 
+```
+
+However, *CUDA* or *Tensorflow* or *Pytorch* frameworks need to be installed separately.
+
+### CUDA
+
+*CUDA* can be installed either modifying running container via Dockerfile as mentioned above or using `conda`/`mamba`.
+
+Using `mamba`, installation is possible via:
+```
+mamba install cudatoolkit-dev=11.4.0 cudatoolkit=11.4.2
+```
+
+
