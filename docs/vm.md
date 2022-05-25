@@ -352,4 +352,4 @@ Indentation of this section must match line `containers`, this is important!
 
 These two sections add 1GB of shared memory, `sizeLimit` denotes SHM size. 
 
-**Note:** `sizeLimit` of SHM is used from `memory` limits in the `resources` sections, meaning, if `memory` is set to 5GB and `sizeLimit` is 1GB, then 4GB of memory is available for applications.
+**Note:** `sizeLimit` of SHM is used from `memory` limits in the `resources` sections, meaning, if `memory` is set to 5GB and `sizeLimit` is 1GB, then 4GB of memory is available for applications. Quering SHM size using `df` command is misleading, it does not show true size of SHM.
