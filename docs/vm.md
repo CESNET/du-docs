@@ -176,8 +176,30 @@ You are now ready to install packages, e.g., `mc` package:
 
 After a while, `mamba` finishes and you are able to use the installed package `mc`.
 
-All packages are installed into the `/home/user/conda` directory.
+All packages are installed into the `/home/user/conda` directory. 
+
+#### Caveats
+
+* In this simple case, content of `/home/user/conda` is not preserved across container restarts. You need to configure persistent home, see below.
+* Size of whole container is limited to `4GB`. This is set by: `ephemeral-storage: "4Gi"`, if needed, this value can be increased. If size of `4GB` is exceeded, container will be *evicted* and restarted.
 
 ## Persistent Home
 
-As mentioned above, disks inside container are not persistent. It means that everything that is installed by `conda`/`mamba` is lost if the container is restarted or re-created. To deal with this, persistent home needs to be created. 
+As mentioned above, disks inside container are not persistent. It means that everything that is installed by `conda`/`mamba` is lost if the container is restarted or re-created. To deal with this, a persistent home needs to be created. 
+
+You can download [manifest](/docs/deployments/vm-persistent.yaml) that contains definition of persistent home. The persistent home is linked with name of deployment and its version. Name is in the manifest:
+```yaml
+kind: StatefulSet
+metadata:
+  name: vm-pvc-example
+```
+Default version is `-0`, so in this case, persistent home will be linked with `vm-pvc-example-0`. Corresponding [PVC](/docs/pvc.html) is called `home-vm-pvc-example-0`. You can find this PVC in Rancher under `Storage` -> `PersistentVolumeClaims`. This is usable for case when home content is damaged and needs to be deleted. You can delete the PVC from this Rancher UI and start over with empty one.
+
+You need to change the same items in this manifest as in the *simple* case, i.e., `external-dns.alpha.kubernetes.io/hostname` and `image`. You run it in the sam way as the *simple* case using 
+```
+kubectl create -f vm-persistent.yaml -n [namespace]
+```
+
+## Resources
+
+## Work with GPU
