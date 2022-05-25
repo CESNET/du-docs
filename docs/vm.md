@@ -87,11 +87,11 @@ We suppose that the downloaded and edited file has name `vm-simple.yaml`. Replac
 
 ### Logging In
 
-If manifest is running, you can log in using ssh command:
+If manifest is running, you can log in using ssh command. Login name is always `user`, it is not meant to be replaced.
 ```
 ssh user@vm-[namespace].dyn.cloud.e-infra.cz
 ```
-Again, replace `[namespace]` with your *namespace* from Rancher and you should see something like this:
+Again, replace `[namespace]` with your *namespace* from Rancher and you should see something like this: 
 ```
 anubis: ~ $ ssh user@vm-hejtmanek1-ns.dyn.cloud.e-infra.cz
 Warning: Permanently added 'vm-hejtmanek1-ns.dyn.cloud.e-infra.cz' (ED25519) to the list of known hosts.
