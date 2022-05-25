@@ -156,7 +156,7 @@ Replace `image` in the manifest above with this new name `cerit.io/[login]/[imag
 
 ### Conda Package Manager
 
-Using [conda](https://docs.conda.io/en/latest/) or `mamba` tool, you can install new packages even in the running container. First, installing `conda/mamba`:
+Using [conda](https://docs.conda.io/en/latest/) or `mamba` tool, you can install new packages even in the running container. First, instal `conda/mamba` issuing one by one the following commands:
 ```
 wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
 /bin/bash Mambaforge-Linux-x86_64.sh -f -b -p /home/user/conda
