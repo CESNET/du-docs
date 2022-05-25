@@ -264,4 +264,4 @@ Using `mamba`, installation is possible via:
 mamba install cudatoolkit-dev=11.4.0 cudatoolkit=11.4.2
 ```
 
-
+**Note:** Install CUDA version as close as possible to the version displayed via `nvidia-smi`, currently is is version **11.4.2**. Use `mamba search cuda` to list versions available.
