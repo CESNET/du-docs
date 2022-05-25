@@ -195,11 +195,25 @@ metadata:
 ```
 Default version is `-0`, so in this case, persistent home will be linked with `vm-pvc-example-0`. Corresponding [PVC](/docs/pvc.html) is called `home-vm-pvc-example-0`. You can find this PVC in Rancher under `Storage` -> `PersistentVolumeClaims`. This is usable for case when home content is damaged and needs to be deleted. You can delete the PVC from this Rancher UI and start over with empty one.
 
-You need to change the same items in this manifest as in the *simple* case, i.e., `external-dns.alpha.kubernetes.io/hostname` and `image`. You run it in the sam way as the *simple* case using 
+You need to change the same items in this manifest as in the *simple* case, i.e., `external-dns.alpha.kubernetes.io/hostname` and `image`. You run it in the same way as the *simple* case using 
 ```
 kubectl create -f vm-persistent.yaml -n [namespace]
 ```
 
 ## Resources
+
+Both examples above request **1 CPU**, **4GB Memory**, and **4GB disk**. You can change these limits modifying the following part of the manifest:
+```yaml
+limits:
+  cpu: "1"
+  memory: "4Gi"
+  ephemeral-storage: "4Gi"
+```
+
+**Notes:** 
+
+1. Number of CPU is set as number such as `1`, or fraction such as `100m` meaning *0.1 CPU*. For Memory and Disk, `Mi` or `Gi` units are used meaning Mega Bytes and Giga Bytes, resp. 
+
+2. For `conda`/`mamba`, at least 4GB Memory is required, or you get `killed` message when trying to run the `conda` command.
 
 ## Work with GPU
