@@ -178,6 +178,6 @@ After a while, `mamba` finishes and you are able to use the installed package `m
 
 All packages are installed into the `/home/user/conda` directory.
 
-### Persistent Home
+## Persistent Home
 
 As mentioned above, disks inside container are not persistent. It means that everything that is installed by `conda`/`mamba` is lost if the container is restarted or re-created. To deal with this, persistent home needs to be created. 
