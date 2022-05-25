@@ -334,7 +334,7 @@ For many GPU applications, increased shared memory (SHM) is required. Default si
 
 Added sections are:
 
-1. under `volumeMounts`
+1. Under `volumeMounts`:
 ```yaml
 - name: shm
   mountPath: /dev/shm
