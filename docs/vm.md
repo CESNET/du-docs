@@ -265,6 +265,59 @@ Using `mamba`, installation is possible via:
 mamba install cudatoolkit-dev=11.4.0 cudatoolkit=11.4.2
 ```
 
+After successful install, you can query CUDA is working issuing:
+```
+/home/user/conda/pkgs/cuda-toolkit/extras/demo_suite/deviceQuery
+```
+
+The output should look like this:
+```
+/home/user/conda/pkgs/cuda-toolkit/extras/demo_suite/deviceQuery Starting...
+
+ CUDA Device Query (Runtime API) version (CUDART static linking)
+
+Detected 1 CUDA Capable device(s)
+
+Device 0: "NVIDIA A40"
+  CUDA Driver Version / Runtime Version          11.4 / 11.4
+  CUDA Capability Major/Minor version number:    8.6
+  Total amount of global memory:                 45634 MBytes (47850782720 bytes)
+  (84) Multiprocessors, (128) CUDA Cores/MP:     10752 CUDA Cores
+  GPU Max Clock rate:                            1740 MHz (1.74 GHz)
+  Memory Clock rate:                             7251 Mhz
+  Memory Bus Width:                              384-bit
+  L2 Cache Size:                                 6291456 bytes
+  Maximum Texture Dimension Size (x,y,z)         1D=(131072), 2D=(131072, 65536), 3D=(16384, 16384, 16384)
+  Maximum Layered 1D Texture Size, (num) layers  1D=(32768), 2048 layers
+  Maximum Layered 2D Texture Size, (num) layers  2D=(32768, 32768), 2048 layers
+  Total amount of constant memory:               65536 bytes
+  Total amount of shared memory per block:       49152 bytes
+  Total number of registers available per block: 65536
+  Warp size:                                     32
+  Maximum number of threads per multiprocessor:  1536
+  Maximum number of threads per block:           1024
+  Max dimension size of a thread block (x,y,z): (1024, 1024, 64)
+  Max dimension size of a grid size    (x,y,z): (2147483647, 65535, 65535)
+  Maximum memory pitch:                          2147483647 bytes
+  Texture alignment:                             512 bytes
+  Concurrent copy and kernel execution:          Yes with 2 copy engine(s)
+  Run time limit on kernels:                     No
+  Integrated GPU sharing Host Memory:            No
+  Support host page-locked memory mapping:       Yes
+  Alignment requirement for Surfaces:            Yes
+  Device has ECC support:                        Enabled
+  Device supports Unified Addressing (UVA):      Yes
+  Device supports Compute Preemption:            Yes
+  Supports Cooperative Kernel Launch:            Yes
+  Supports MultiDevice Co-op Kernel Launch:      Yes
+  Device PCI Domain ID / Bus ID / location ID:   0 / 39 / 0
+  Compute Mode:
+     < Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) >
+
+deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 11.4, CUDA Runtime Version = 11.4, NumDevs = 1, Device0 = NVIDIA A40
+Result = PASS
+```
+
 **Note:** 
 
 1. Install CUDA version as close as possible to the version displayed via `nvidia-smi`, currently is is version **11.4.2**. Use `mamba search cuda` to list versions available.
@@ -274,3 +327,29 @@ mamba install cudatoolkit-dev=11.4.0 cudatoolkit=11.4.2
 stderr: ./cuda-installer: error while loading shared libraries: libxml2.so.2: cannot open shared object file: No such file or directory
 ```
 You missed correct setting of `conda`, especially, `echo 'export LD_LIBRARY_PATH=/home/user/conda/lib' >> ~/.bashrc` is missing.
+
+### SHM
+
+For many GPU applications, increased shared memory (SHM) is required. Default size of shared memory is 64kB for containers. Increasing SHM is done via mounting additional volume into `/dev/shm`. You can download example [manifest](/docs/deployment/vm-persistent-gpu-shm.yaml). 
+
+Added sections are:
+
+1. under `volumeMounts`
+```yaml
+- name: shm
+  mountPath: /dev/shm
+```
+
+2. Whole new section `volumes`:
+```yaml
+volumes:
+- name: shm
+  emptyDir:
+    medium: Memory
+    sizeLimit: 1Gi
+```
+Indentation of this section must match line `containers`, this is important!
+
+These two sections add 1GB of shared memory, `sizeLimit` denotes SHM size. 
+
+**Note:** `sizeLimit` of SHM is used from `memory` limits in the `resources` sections, meaning, if `memory` is set to 5GB and `sizeLimit` is 1GB, then 4GB of memory is available for applications.
