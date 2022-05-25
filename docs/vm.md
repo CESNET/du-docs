@@ -162,6 +162,7 @@ wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforg
 /bin/bash Mambaforge-Linux-x86_64.sh -f -b -p /home/user/conda
 /home/user/conda/bin/conda init
 echo '. ~/.bashrc' >> ~/.profile
+echo 'export LD_LIBRARY_PATH=/home/user/conda/lib' >> ~/.bashrc
 ```
 
 Log out and log in again. You should see now prompt like this:
@@ -257,11 +258,19 @@ However, *CUDA* or *Tensorflow* or *Pytorch* frameworks need to be installed sep
 
 ### CUDA
 
-*CUDA* can be installed either modifying running container via Dockerfile as mentioned above or using `conda`/`mamba`.
+*CUDA* can be installed either modifying running container via Dockerfile as mentioned above or using `conda`/`mamba`. In the latter case, at least **20GB** disk is needed (`ephemeral-storage` line).
 
 Using `mamba`, installation is possible via:
 ```
 mamba install cudatoolkit-dev=11.4.0 cudatoolkit=11.4.2
 ```
 
-**Note:** Install CUDA version as close as possible to the version displayed via `nvidia-smi`, currently is is version **11.4.2**. Use `mamba search cuda` to list versions available.
+**Note:** 
+
+1. Install CUDA version as close as possible to the version displayed via `nvidia-smi`, currently is is version **11.4.2**. Use `mamba search cuda` to list versions available.
+
+2. If you get error:
+```
+stderr: ./cuda-installer: error while loading shared libraries: libxml2.so.2: cannot open shared object file: No such file or directory
+```
+You missed correct setting of `conda`, especially, `echo 'export LD_LIBRARY_PATH=/home/user/conda/lib' >> ~/.bashrc` is missing.
