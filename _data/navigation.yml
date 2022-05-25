@@ -113,3 +113,5 @@ docs:
     children:
       - title: VPN
         url: /docs/other/vpn.html
+      - title: Harbor (hub.cerit.io)
+        url: /docs/harbor.html
