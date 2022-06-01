@@ -58,6 +58,25 @@ Local test has been done on top of local RAID 0 of all 8 NVME disks
 |18|72|Mirror|47467272.62 kB/s|17169190.23 kB/s|16466901.61 kB/s|6712180.77 kB/s|
 |18|72|Raid|43554656.69 kB/s|31707739.09 kB/s|15119176.98 kB/s|5047413.12 kB/s|
 
+### CephFS Test All-to-All
+
+`iozone` is running on all nodes in the table, i.e., 4, 8, and 18. The same number of nodes create the cluster.
+
+|---|---|---|---|---|---|---|
+|Nodes|Threads|Type|Read Linear|Write Linear|Read Random|Write Random|
+|---|---|---|---:|---:|---:|---:|
+|8|32|Mirror|21463073.62 kB/sec|4227784.41 kB/sec|6002032.70 kB/sec|5052520.17 kB/sec|
+|8|32|Raid 8+3|4155844.27 kB/sec|7456666.14 kB/sec|910742.23 kB/sec|3978431.54 kB/sec|
+
+### BeeGFS Test All-to-All
+
+`iozone` is running on all nodes in the table, i.e., 4, 8, and 18. The same number of nodes create the cluster.
+
+|---|---|---|---|---|---|---|
+|Nodes|Threads|Type|Read Linear|Write Linear|Read Random|Write Random|
+|---|---|---|---:|---:|---:|---:|
+|8|32|Raid 0|27207852.00 kB/sec|17306572.19 kB/sec|13558749.59 kB/sec|16921832.66 kB/sec|
+
 ### GPFS Test Client-to-Server
 
 `iozone` is running on dedicated nodes that do not export disks.
@@ -112,6 +131,20 @@ FIO is single node test and has been focused on IOPS using random 4k reads and w
 |---|---|---|
 |30.7k|22.0k|
 
+### CephFS
+
+|---|---|---|
+|Type|Read|Write|
+|---|---|---|
+|Mirror|25.1k|9019|
+
+### BeeGFS
+
+|---|---|---|
+|Type|Read|Write|
+|---|---|---|
+|Raid 0|4905|14.9k|
+
 ## Database Tests
 
 |---|---|---|
@@ -123,9 +156,14 @@ FIO is single node test and has been focused on IOPS using random 4k reads and w
 |GPFS RAID 4 Nodes|`pgbench -T 300 -c100 -j20 -r`|2267 TPS|
 |GPFS Mirror 4 Nodes|`pgbench -i -s 10000`|Duration: 187m49.7s|
 |GPFS Mirror 4 Nodes|`pgbench -T 300 -c100 -j20 -r`|3535 TPS|
-|GPFS RAID 18 Nodes|`pgbench -i -s 10000`|Duration: 151.56s|
+|GPFS RAID 18 Nodes|`pgbench -i -s 10000`|Duration: 151m56s|
 |GPFS RAID 18 Nodes|`pgbench -T 300 -c100 -j20 -r`|2061 TPS|
 |GPFS Mirror 18 Nodes|`pgbench -i -s 10000`|Duration: 115m0.5s|
 |GPFS Mirror 18 Nodes|`pgbench -T 300 -c100 -j20 -r`|3164 TPS|
 |NFS + GPFS + All-flash Array|`pgbench -i -s 10000`|Duration: 27m12s|
 |NFS + GPFS + All-flash Array|`pgbench -T 300 -c100 -j20 -r`|5633 TPS|
+|CephFS Mirror 8 Nodes|`pgbench -i -s 10000`|Duration:238m57.619s|
+|CephFS Mirror 8 Nodes|`pgbench -T 300 -c100 -j20 -r`|863 TPS|
+|Beegfs RAID 0 8 Nodes|`pgbench -i -s 10000`|Duration: 193m44s|
+|Beegfs RAID 0 8 Nodes|`pgbench -T 300 -c100 -j20 -r`|2667 TPS|
+
