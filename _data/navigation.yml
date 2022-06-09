@@ -115,3 +115,5 @@ docs:
     children:
       - title: VPN
         url: /docs/other/vpn.html
+      - title: Storage Secrets
+        url: /docs/other/storagesecrets.html
