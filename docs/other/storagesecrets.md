@@ -18,7 +18,7 @@ create 2 types of secrets:
 storage-brno12-cerit.metacentrum.cz
 
 To create your secrets you can visit the site at
-https://storagesecrets.cloud.e-infra.cz/
+[https://storagesecrets.cloud.e-infra.cz/](https://storagesecrets.cloud.e-infra.cz/)
 
 ## Reuqirements before use
 
