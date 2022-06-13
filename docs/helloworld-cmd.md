@@ -144,6 +144,8 @@ service/hello-kubernetes-svc created
 You can check status of deplyed resources with `kubectl get pods/services/ingress -n [namespace]` and when all of them are up and running, you can access the URL and you will be presented with sample page.
 ![hello](hello.png)
 
+NOTE: in case you are having trouble with 'Config not found' error message, see https://docs.cerit.io/docs/kubectl.html for further information
+
 ## Further customization
 You can specify various fields in every resource's file, many of them not used here. One of more wanted features is passing environment variables into `Deployments` in case spawned containers need some. We will use one environment variable in our deployment to change displayed message. At the end, add new section `env` which will forward the value into the pod. Then, run again `kubectl apply -f hello-world -n [namespace]` to apply changes. When you access the website now, new message is displayed!
 
