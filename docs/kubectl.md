@@ -17,4 +17,6 @@ sidebar:
 
 Copy contents of this file into `$HOME/.kube/config` and change permissions to 700 (`chmod 700 $HOME/.kube/config`). 
 
+NOTE: If the file `$HOME/.kube/config` does not exist, go ahead and create it, then copy the contents
+
 It is possible to have multiple cluster configurations in one config file. More about working with `kubectl` with access to multiple clusters [here](/docs/rancher-multiple.html).
