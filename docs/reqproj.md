@@ -16,7 +16,7 @@ In Kubernetes cluster we differentiate between 2 types of projects:
 Everybody who signs into the [Rancher instance](rancher.cloud.e-infra.cz) is assigned his/her default individual project (more information [here](https://docs.cerit.io/docs/rancher.html)) with default quotas described [here](https://docs.cerit.io/docs/quotas.html). 
 
 ## Requesting Group Project
-We are preparing a convenient request form, it will be available at this page when ready. In the meantime, if you need a group project, you have to contat us at  <a href="mailto:k8s@ics.muni.cz">k8s@ics.muni.cz</a>. By default, group project is assigned (and so its namespace) 64 CPUs *request, limit* and 256GB Memory *request, limit*. 
+We are preparing a convenient request form, it will be available at this page when ready. In the meantime, if you need a group project, you have to contat us at  <a href="mailto:k8s@ics.muni.cz">k8s@ics.muni.cz</a>. By default, group project is assigned (and so its namespace) 12 CPU *request* 64 CPU *limit* and  40GB RAM *request* 256GB RAM *limit*. 
 
 When asking for a project, please include in in the email following information:
 - name of the new project
