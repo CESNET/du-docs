@@ -26,6 +26,15 @@ export NXF_VER=20.10.0
 curl -s https://get.nextflow.io | bash
 ```
 
+Currently, 22.04.0 is highest available version using this method. However, you should use version 22.06.1-edge from github:
+`https://github.com/nextflow-io/nextflow` installable as follows:
+```
+git clone https://github.com/nextflow-io/nextflow.git
+cd nextflow
+git checkout v22.06.1-edge
+make compile install
+```
+
 ## Architecture of Nextflow 
 
 The Nextflow pipeline gets started by running the `nextflow` command, e.g.:
@@ -74,15 +83,20 @@ command is run and it has to be named `nextflow.config`.
 To instruct the Nextflow to run the `hello` pipeline in Kubernetes, you can run the
 following command:
 ```
-nextflow kuberun hello -pod-image 'cerit.io/nextflow:21.09.1' -v PVC:/mnt 
+nextflow kuberun hello -pod-image 'cerit.io/nextflow/nextflow:22.06.1' -v PVC:/mnt 
 ```
 where PVC is name of the PVC as discussed above. It will be mounted as /mnt.
 You should use this mount point as some pipelines expect this location.
 
+If using `nextflow` version 22.06.1 or later as mentioned above, use instead:
+```
+nextflow kuberun hello -pod-image 'cerit.io/nextflow/nextflow:22.06.1' -head-memory 4096Mi -head-cpus 1 -v PVC:/mnt 
+```
+
 If everything was correct then you should see output like this:
 ```
 Pod started: naughty-williams
-N E X T F L O W  ~  version 21.09.0-SNAPSHOT
+N E X T F L O W  ~  version 22.06.1-SNAPSHOT
 Launching `nextflow-io/hello` [naughty-williams] - revision: e6d9427e5b [master]
 [f0/ce818c] Submitted process > sayHello (2)
 [8a/8b278f] Submitted process > sayHello (1)
@@ -133,8 +147,7 @@ The Sarek pipeline uses functions in the pipeline configuration. However,
 functions in the pipeline configuration are not currently supported by
 `kuberun` executor. 
 
-To deal with this bug, you need Nextflow version 20.10.0,
-this is the only supported version.
+To deal with this bug, you need Nextflow version 22.06.1-edge or later.
 
 Download
 [nextflow-cfg.sh](deployments/nextflow-cfg.sh)
@@ -143,20 +156,10 @@ and
 and put both on the PVC (into its root). Do not rename the files and make
 `nextflow-cfg.sh` executable (`chmod a+x nextflow-cfg.sh`).
 
-On your local machine (or machine where you run Nextflow) run the following
-command (run this command **after and only if** you already installed Nextflow
-version 20.10.0):
-```
-cd /tmp; wget http://repo.cerit-sc.cz/misc/nextflow-20.10.0.jar -q && mv nextflow-20.10.0.jar ~/.nextflow/capsule/deps/io/nextflow/nextflow/20.10.0/
-```
-
-This command will install patched version of Nextflow to mitigate the
-mentioned bug.
-
 Now, if you have prepared your data on the PVC, you can start the Sarek
 pipeline with the following command:
 ```
-nextflow kuberun nf-core/sarek -v PVC:/mnt --input /mnt/test.tsv --genome GRCh38 --tools HaplotypeCaller,VEP,Manta
+nextflow kuberun nf-core/sarek -head-memory 4096Mi -head-cpus 1 -head-prescript /mnt/nextflow-cfg.sh -pod-image 'cerit.io/nextflow/nextflow:22.06.1' -v PVC:/mnt --input /mnt/test.tsv --genome GRCh38 --tools HaplotypeCaller,VEP,Manta
 ```
 
 where `PVC` is the mentioned PVC and `test.tsv` contains input data located on
@@ -181,17 +184,7 @@ the PVC.
 
 ### Kubernetes Run
 
-You need to download pipeline specific [nextflow.config](deployments/nextflow-vsn.config) and put it into the current directory where you start Nextflow from. This pipeline uses `-entry` parameter to specify entry point of workflow. Unless this [issue #2397](https://github.com/nextflow-io/nextflow/issues/2397) is resolved, patched version of Nextflow is needed. To deal with this bug, you need Nextflow version 20.10.0, this is the only supported version.
-
-On your local machine (or machine where you run Nextflow) run the following
-command (run this command **after and only if** you already installed Nextflow
-version 20.10.0):
-```
-cd /tmp; wget http://repo.cerit-sc.cz/misc/nextflow-20.10.0.jar -q && mv nextflow-20.10.0.jar ~/.nextflow/capsule/deps/io/nextflow/nextflow/20.10.0/
-```
-
-This command will install patched version of Nextflow to mitigate the
-mentioned bug.
+You need to download pipeline specific [nextflow.config](deployments/nextflow-vsn.config) and put it into the current directory where you start Nextflow from. This pipeline uses `-entry` parameter to specify entry point of workflow. Unless this [issue #2397](https://github.com/nextflow-io/nextflow/issues/2397) is resolved, patched version of Nextflow is needed. To deal with this bug, you need Nextflow version 22.06.1-edge or later.
 
 On the PVC you need to prepare data into directories specified in the `nextflow.config` see all occurrences of `/mnt/data1` in the config and change them accordingly.
 
@@ -199,7 +192,7 @@ Consult [documentation](https://vsn-pipelines.readthedocs.io/en/latest/index.htm
 
 You can run the pipeline with the following command:
 ```
-nextflow -C nextflow.config kuberun vib-singlecell-nf/vsn-pipelines -v PVC:/mnt -entry scenic
+nextflow -C nextflow.config kuberun vib-singlecell-nf/vsn-pipelines -pod-image 'cerit.io/nextflow/nextflow:22.06.1' -head-cpus 1 -head-memory 4096Mi -v PVC:/mnt -entry scenic
 ```
 
 where `PVC` is the mentioned PVC, `scenic` is pipeline entry point, and `nextflow.config` is the downloaded `nextflow.config`.
@@ -209,3 +202,21 @@ where `PVC` is the mentioned PVC, `scenic` is pipeline entry point, and `nextflo
 * For parallel run, you need to set `maxForks` in the `nextflow.config` together with `params.sc.scenic.numRuns` parameter. Consult [documentation](https://vsn-pipelines-examples.readthedocs.io/en/latest/PBMC10k_multiruns.html).
 
 * `NUMBA_CACHE_DIR` variable pointing to `/tmp` or other writable directory is requirement otherwise execution fails on permission denied. It tries to update readonly parts of running container.
+
+## Using GPUs
+
+Using GPUs in containers is straightforward, just add:
+```
+  accelerator = 1
+```
+
+into process section of `nextflow.config`, e.g.:
+```
+process {
+   executor = 'k8s'
+
+   withLabel:VEP {
+      accelerator = 1
+   }
+}
+```
