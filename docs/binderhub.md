@@ -21,9 +21,31 @@ After the notebook is spawned, a persistent volume is mounted to path `/home/{us
 Note: Pay attention to paths used in notebooks. Imagine you have two BinderHub running. In both, you write outputs to location `/home/{username}-nfs-pvc/test`. If both notebooks create file named `result.txt`, you would be overwriting the file. It is a good practice to create new directory in path `/home/{username}-nfs-pvc` for each BinderHub instance. 
 
 ## Resources
-Each user on your JupyterHub can use certain amount of memory and CPU. You are guaranteed **1G of RAM** and **1 CPU**. Resource limits represent a hard limit on the resources available. There are **16G of RAM** and **8 CPU** limits placed which means you can't use more than 16G of RAM and 8 CPUs, no matter what other resources are being used on the machines. 
+Each user on your JupyterHub can use certain amount of memory and CPU. You are guaranteed **1G of RAM** and **1 CPU** and you can utilize up to **16G of RAM** and **8 CPU**. Resource limits represent a hard limit on the resources available. 
 
-If you need more resources, please contact us at <a href="mailto:k8s@ics.muni.cz">IT Service desk</a>.
+### Custom resources
+If you need to specify other resource amounts or attach GPU, you can create a *.resources* file in the root of git repository. The file can look like:
+```
+# This file is for resource requests in CERIT-SC
+# Do not change
+gpu=1
+cpur=2
+cpul=4
+memr=1
+meml=4  
+```
+
+Lines starting with `#` are ignored (useful for commens); other stand for:
+- `gpu=[number_of_gpu_request]`
+- `cpur=[number_of_cpu_request]`
+- `cpul=[number_of_cpu_limit]`
+- `memr=[GB_of_RAM_request]`
+- `meml=[GB_of_RAM_limit]`
+
+RAM is assigned in *GB*, do not specify any units. By default, no GPU is assigned. If the *.resources* file does not contain any of the lines, defaults are used. Similarly, if the file specifies only some lines, the defaults for the missing lines are used.
+
+The setting currently works for repositories hosted on `github.com`. If you use another git service (gitlab, zenodo, ...), please contact us at <a href="mailto:k8s@ics.muni.cz">IT Service desk</a>.
+
 
 ## SSH key inside the instance
 To ensure more flexibility, we generate SSH keypair for everyohe who spawns at least one Jupyter notebook via BinderHub. This SSH keypair is mounted to notebook instance (`/home/jovyan/.ssh/ssh.priv` and `/home/jovyan/.ssh/ssh.pub`) and can be used e.g. to import public key to GitHub account. That way you can update and work with your Git repositories directly from notebook.
