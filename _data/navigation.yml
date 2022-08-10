@@ -63,6 +63,8 @@ docs:
         url: /docs/matlab.html
       - title: Minio
         url: /docs/minio.html
+      - title: Moodle
+        url: /docs/moodle.html
       - title: ownCloud
         url: /docs/owncloud.html
       - title: RStudio Server 
