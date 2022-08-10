@@ -1,8 +1,8 @@
 ---
 layout: article
-title: RStudio
-permalink: /docs/rstudio.html
-key: rstudio
+title: Moodle
+permalink: /docs/moodle.html
+key: moodle
 aside:
   toc: true
 sidebar:
