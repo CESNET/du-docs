@@ -46,12 +46,21 @@ The final URL is composed of selected namespace and samba application name. In o
 
 ![samba-linux-command](samba-images/linux-command.png)
 
-2. Windows ---
+2. Windows --- Open File Explorer from the taskbar or the Start menu, or press the Windows logo key + E. Select This PC from the left pane. Then, on the Computer tab, select Map network drive. In the Folder box, type the path of the folder or computer `\\[namespace]-[samba_name].dyn.cloud.e-infra.cz\data`. Select logging is as `another account` and provide credentials. 
+
+![samba-windows-choose](samba-images/windows-choose.png)
+
+![samba-windows-server](samba-images/windows-server.png)
+
+![samba-windows-login](samba-images/windows-login.png)
+
+![samba-windows-in](samba-images/windows-in.png)
 
 3. MacOS --- open Safari and provide url in the form of `smb://[namespace]-[samba_name].dyn.cloud.e-infra.cz\data`; the `\data` part is necessary!  Click on `Allow`, provide the credentials as registered user (username is user, password is the one you set). Connect and nework drive will be available in the Finder. You can later unmount the drive using unmount button. 
 
-
 ![samba-mac-allow](samba-images/mac-allow.png)
+
 ![samba-mac-connect](samba-images/mac-connect.png)
+
 ![samba-mac-unmount](samba-images/mac-unmount.png)
 
