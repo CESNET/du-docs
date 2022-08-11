@@ -39,14 +39,16 @@ Samba server works only when you want to expose already existing PVC! Therefore,
 5. Wait, until samba server is installed, it should take a couple of seconds. 
 
 ### Connection
-The final URL is composed of selected namespaces and samba application name. In our case, we can see name (samba-matlab) and namespace (spisakova-ns) next to green `Deployed` (which is a sign of successfull installation together with SUCCESS message in the logs boxs at the bottom of the page). The final url therefore looks like `spisakova-ns-samba-matlab.dyn.cloud.e-infra.cz`. 
+The final URL is composed of selected namespace and samba application name. In our case, we can see name (samba-matlab) and namespace (spisakova-ns) next to green `Deployed` (which is a sign of successfull installation together with SUCCESS message in the logs boxs at the bottom of the page). Therefore, the final url is `spisakova-ns-samba-matlab.dyn.cloud.e-infra.cz`. 
 
 
-1. Linux ---
+1. Linux --- Firstly, install `cifs-utils` on Ubunutu/Debian OS. After installation,  enter command `mount.cifs //[namespace]-[samba_name].dyn.cloud.e-infra.cz\data [mount_location] -o username=user`. Provide password. Then, you can change directory to location chisen as mountpoint and work with network drive as regular directory. 
+
+![samba-linux-command](samba-images/linux-command.png)
 
 2. Windows ---
 
-3. MacOS --- open Safari and provide url in the form of `smb://[namespace]-[samba_name].dyn.cloud.e-infra.cz\data`. Click on `Allow`, provide the credentials as registered user (username is user, password is the one you set). Connect and nework drive will be available in the Finder. You can later unmount the drive using unmount button. 
+3. MacOS --- open Safari and provide url in the form of `smb://[namespace]-[samba_name].dyn.cloud.e-infra.cz\data`; the `\data` part is necessary!  Click on `Allow`, provide the credentials as registered user (username is user, password is the one you set). Connect and nework drive will be available in the Finder. You can later unmount the drive using unmount button. 
 
 
 ![samba-mac-allow](samba-images/mac-allow.png)
