@@ -48,6 +48,10 @@ In the second part of the form, you select access display method. [VNC]((https:/
 
 If VNC is not selected, *WEBRTC* method is used. This option is still in beta version, however, full 3D OpenGL acceleration is available.
 
+#### Note
+
+*WEBRTC* method is available in chromium-based web browsers  such as `google-chrome`, Microsoft Edge; or in Apple Safari. Especially, it does not work in Mozilla Firefox.
+
 ![appform2](desktop/appform2.png)
 
 In the third part of the form, you select `password`. This password is used to login through VNC. If VNC is not selected, you need to fill also `username`, these credentials will be used in the browser to attach to the *WEBRTC* session.
