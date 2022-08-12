@@ -105,3 +105,15 @@ On the first login, desktop will look like this depending on selected version:
 If you feel you do not need the application anymore, you can delete it. Just navigate to `App & Marketplace` (1), `Installed Apps` (2), select the application (3) and hit `Delete` (4). The data in home directory is not deleted in case you check persistent home. Running the application again with the same `Name` restores access to the home directory folder.
 
 ![appdel](desktop/appdel.png)
+
+## Install Additional Software
+
+It is possible to install additional software into running desktop either using system install or `conda` system.
+
+### System Install
+
+`apt-get install`, `apt install`, or `dpkg -i` commands can be used to install any package into the running desktop. However, if the desktop is restarted, all installed packages are lost and have to be installed again. All mentioned commands are shell aliases using `fakeroot` and those aliases are working in `bash` only, if using different shell, it might be needed to use e.g.: `fakeroot apt-get install [package]`.
+
+### Conda
+
+We strongly recommend to use `mamba` tool in favor of `conda` as it is faster. If you setup virtual conda environment into home directory, everything installed using `conda` or `mamba` will be persistent. For more information [see official conda documentation](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#managing-environments), specifically `Specifying a location for an environment`.
