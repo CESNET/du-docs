@@ -28,7 +28,7 @@ Samba server works only when you want to expose already existing PVC! Therefore,
 
 ![samba-basic](samba-images/basic.png) 
 
-4. In the server settings, set password for the samba server. Username is always **user**. Select the PVC you want to expose, in the example we select `matlab-home`.
+4. In the server settings, set password for the samba server. Select the PVC you want to expose, in the example we select `matlab-home`.
 
 ![samba-server-settings](samba-images/serversettings.png)
 
@@ -39,7 +39,7 @@ Samba server works only when you want to expose already existing PVC! Therefore,
 5. Wait, until samba server is installed, it should take a couple of seconds. 
 
 ### Connection
-The final URL is composed of selected namespace and samba application name. In our case, we can see name (samba-matlab) and namespace (spisakova-ns) next to green `Deployed` (which is a sign of successfull installation together with SUCCESS message in the logs boxs at the bottom of the page). Therefore, the final url is `spisakova-ns-samba-matlab.dyn.cloud.e-infra.cz`. 
+The final URL is composed of selected namespace and samba application name. In our case, we can see name (samba-matlab) and namespace (spisakova-ns) next to green `Deployed` (which is a sign of successfull installation together with SUCCESS message in the logs boxs at the bottom of the page). Therefore, the final url is `spisakova-ns-samba-matlab.dyn.cloud.e-infra.cz`.  **Username is always user, password is the one you chose while setting up the application.** 
 
 
 1. Linux --- Firstly, install `cifs-utils` on Ubunutu/Debian OS. After installation,  enter command `mount.cifs //[namespace]-[samba_name].dyn.cloud.e-infra.cz\data [mount_location] -o username=user`. Provide password. Then, you can change directory to location chisen as mountpoint and work with network drive as regular directory. 
