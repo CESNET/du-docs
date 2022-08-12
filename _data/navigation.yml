@@ -59,6 +59,8 @@ docs:
         url: /docs/ansys.html
       - title: Bioconductor
         url: /docs/bioconductor.html
+      - title: Desktop
+        url: /docs/desktop.html
       - title: Matlab
         url: /docs/matlab.html
       - title: Minio
@@ -73,8 +75,6 @@ docs:
         url: /docs/shinysom.html
       - title: VMD
         url: /docs/vmd.html
-      - title: Desktop Server
-        url: /docs/desktop.html
       - title: Samba Server
         url: /docs/samba.html
   - title: Web Applications
