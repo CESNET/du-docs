@@ -9,14 +9,23 @@ sidebar:
   nav: docs
 ---
 ## Running RStudio
+We offer two ways of running RStudio:
 
+1. Run RStudio in web JupyterHub - this option ❗️**requires a valid MetaCentrum account**❗️. JupyterHub provides easy way of creating RStudio and straightforward integration with MetaCentrum home. Only R 4.2.1 is supported. 
+
+2. Run RStudio as a Rancher application - this option is ❗️**for anyone, who does not have MetaCentrum account**❗️. It offers multiple R versions but is slighly more complicated to set up.  
+
+## JupyterHub RStudio
+JupyterHub is a web application that has a simple input form where you choose various settings of your deployment. To learn more, see [JupyterHub introduction](jupyterhub.html) where you can find other necessary information.
+
+## Rancher RStudio
 If not already logged, log to [rancher.cloud.e-infra.cz](https://rancher.cloud.e-infra.cz), see [Rancher](https://cerit-sc.github.io/kube-docs/docs/rancher.html) section.
 
-Following the steps below, you can install RStudio web application. This application has persistent home directory, it means, that if you delete the application and later install the application again preserving its name, content of home directory will be preserved.
+Following the steps below, you can install RStudio web application. This application has persistent home directory, it means, that if you delete the application and later install the application again with the same name, content of home directory will be preserved.
 
 ### Notes
 
-* Default project had quota limit for 12 guaranteed CPUs and quota for 16 CPUs limit. Do not select more than 10 guaranteed CPUs and more than 14 CPUs limit. If needed more just [ask](mailto:k8s@ics.muni.cz). This may be increased in future so request for more CPUs can be made. 
+* Default project has quota limit for 12 guaranteed CPUs and quota for 16 CPUs limit. Do not select more than 10 guaranteed CPUs and more than 14 CPUs limit. If needed more just [ask](mailto:k8s@ics.muni.cz). This may be increased in future so request for more CPUs can be made. 
 
 ### Select Application to Run
 
