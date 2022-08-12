@@ -11,28 +11,34 @@ sidebar:
 
 # JupyterHub 
 
-We provide a JupyterHub running on Kubernetes for every MetaCentrum member. The hub can be accessed on [hub.cloud.e-infra.cz](https://hub.cloud.e-infra.cz/). Sign in with meta username (do not use @META, only username). 
+We provide a JupyterHub running on Kubernetes for every MetaCentrum member. The hub can be accessed on [hub.cloud.e-infra.cz](https://hub.cloud.e-infra.cz/). Sign in with meta username (do not use @META, only username) and related password. 
 
 ## Choosing image
 
-Any Jupyter notebook image can be run, options already provided:
+We pre-prepared the following images:
 - minimal-notebook ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-minimal-notebook))
 - datascience-notebook ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-datascience-notebook))
 - scipy-notebook ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-scipy-notebook))
 - tensorflow-notebook ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-tensorflow-notebook))
 - tensorflow-notebook with GPU support ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-tensorflow-notebook) but TF v. 2.7.0 and TensorBoard installed)
+- RStudio with R 4.2.1 
 
-If you choose custom, you have to provide image name together with its repo and optional tag - input text in format _repo/imagename:tag_.
-`minimal-notebook` is chosen as default image.
+You can choose to build your own image with all dependencies and sotware you need. However, don't forget to include whole jupyter stack, otherwise the the deployment will not work. We recommend building from [existing image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) which already incorporates all nexessary software. If you choose custom image, you have to provide image name together with its repo and optional tag --- input text in format _repo/imagename:tag_. 
 
+If you choose RStudio, you will be redirected directly do rstudio environment. 
 
-## Choosing storage
-By default, every notebook runs with persistent storage mounted to `/home/jovyan`. Therefore, we recommend to save the data to `/home/jovyan` directory to have them accessible every time notebook is spawned. Same persistent storage is mounted to all your notebooks so you can share data across multiple instances. Furthermore, in case you delete all you JupyterHub notebook instances and spawn new one later, again same persistent storage is mounted. Therefore your data are preserved across instances and across spawns.
+![rstudio](jupyterhub-images/rstudio.png)
 
+Other images are redirected to the `/lab` version of JupyterHub. 
+![lab](jupyterhub-images/lab.png)
 
-Optionally, you can mount your MetaCentrum home - check the option and select the desired home. Now, it is possible to mount only one home per notebook. In hub, your home is located in `/home/meta/{meta-username}`.
+## Storage
+By default, every notebook runs with persistent storage mounted to `/home/jovyan`. Therefore, we recommend to save the data to `/home/jovyan` directory to have them accessible every time notebook is spawned. Same persistent storage is mounted to all your notebooks so you can share data across multiple instances. If you delete all your JupyterHub notebook instances and spawn new one later, again same persistent storage is mounted. Therefore your data are preserved across instances and spawns.
 
-Possible homes:
+### MetaCentrum home
+You can mount your MetaCentrum home --- check the options and select the desired home. Currently, it is possible to mount only one home per notebook. In hub, your home is located in `/home/meta/{meta-username}`.
+
+Possibibilities:
 
 brno10-ceitec-hsm | brno11-elixir | brno12-cerit | brno14-ceitec | vestec1-elixir
 --- | --- | --- | --- |--- 
@@ -44,18 +50,18 @@ plzen1 | plzen4-ntis
 ## Resources
 Each user on JupyterHub can use certain amount of memory and CPU. You are guaranteed **1G of RAM** and **1 CPU**. Resource limits represent a hard limit on the resources available. There are **256G of RAM** and **32 CPU** limits placed which means you can't use more than 256G of RAM and 32 CPUs for that specific instance.
 
-It is possible to utilize GPU in your notebook. Using GPU requires particular setting (e.g. drivers, configuration) so it can be really used only in Tensorflow image with GPU support. You can request at most 2 whole GPUs. 
+### GPU
+
+It is possible to utilize GPU in your notebook, you can request at most 2 whole GPUs. **Using GPU requires particular setting (e.g. drivers, configuration) so it can be effectivwly used only in Tensorflow image with GPU support.** If you assign GPU with any other image, it will not be truly functional.
 
 ## Named servers
-In the top left corner, go to `File &rarr; Hub Control Panel`. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
+JupyterHub allows spawning more than one notebook instance; actually you can run multiple instances of various images at the same time. To do so, in the top left corner, go to `File &rarr; Hub Control Panel`. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
 
 ![add1](jupyterhub-images/add1.png)
 ![add2](jupyterhub-images/add2.png)
 
 ## Conda environment
-Conda is supported in all provided images and we can assure its functionality. 
-
-New conda environment in hub's terminal is created with command `conda create -n tenv --yes python=3.8 ipykernel nb_conda_kernels` (`ipykernel nb_conda_kernels` part is required, alternatively irkernel). 
+Conda is supported in all provided images and is activate using `conda init`. New conda environment terminal is created in notebook's terminal with command `conda create -n tenv --yes python=3.8 ipykernel nb_conda_kernels` (`ipykernel nb_conda_kernels` part is required, alternatively irkernel). 
 
 ![moveenv](jupyterhub-images/move_env.png)
 
@@ -83,14 +89,11 @@ Solutions:
  - please wait for 10 minutes
  - The service has a timeout of 10 minutes and during this time, it is trying to create all necessary resources. Due to error, creation won't succeed and after 10 minutes you will see red progress bars with message `Spawn failed: pod/jupyter-[username] did not start in 600 seconds!`. At this point, it is sufficient to reload the page and click on `Relaunch server`.
 
-## I've chosen wrong home! What now?!
+## Deleting Notebook Instance
 
-If notebook is already running, in the top left corner, go to `File ` &rarr; `Hub Control Panel` and click red `Stop My Server`. In a couple of seconds, your container notebook instance will be deleted (stop button disapperas) and you can again `Start Server` with different home. 
-
-Alternatively, you can create another named server. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
+In the top left corner, go to `File ` &rarr; `Hub Control Panel` and click red `Stop My Server`. In a couple of seconds, your container notebook instance will be deleted (stop button disapperas). If you need to spin notebook instance again, fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
 
 All of your named server are accessible under `Hub Control panel` where you can manipulate with them (create, delete, log in to).
-
 
 ## Feature requests
 Any tips for features or new notebook types are welcomed at <a href="mailto:k8s@ics.muni.cz">IT Service desk</a>.

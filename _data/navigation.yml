@@ -75,6 +75,8 @@ docs:
         url: /docs/vmd.html
       - title: Desktop Server
         url: /docs/desktop.html
+      - title: Samba Server
+        url: /docs/samba.html
   - title: Web Applications
     children:
       - title: Galaxy
