@@ -144,7 +144,7 @@ Where `selector:` `app: application` must match application name in deployment a
 
 Deploying this *Service* exposes the application on a public IP. One can check the IP with `kubectl get svc -n namespace` where `namespace` is namespace of the Service and application.
 
-It is also possible to expose application on MUNI private IP. In this case, the application will be reachable from MUNI network or using MUNI VPN. This type of exposing is selected using annotation `purelb.io/service-group: privmuni`. This case is preferred as it does not consume public IP. Full example is below.
+It is also possible to expose application on MUNI private IP. In this case, the application will be reachable from MUNI network or using MUNI VPN. This type of exposing is selected using annotation `metallb.universe.tf/address-pool: privmuni`. This case is preferred as it does not consume public IP. Full example is below.
 
 ```yaml
 apiVersion: v1
@@ -152,7 +152,7 @@ kind: Service
 metadata:
   name: application-svc
   annotations:
-    purelb.io/service-group: privmuni
+    metallb.universe.tf/address-pool: privmuni
     external-dns.alpha.kubernetes.io/hostname: application.dyn.cloud.e-infra.cz
 spec:
   type: LoadBalancer
