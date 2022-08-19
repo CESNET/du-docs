@@ -29,7 +29,7 @@ Select your namespace and name for your application, then click `Next`
 
 ![slectapp](phpMyAdmin/namespace.png)
 
-You will see two options to customize your app, in the field `Port` fill in port of your database and if necessary, fill in `hostname` of your database and hit `Install`
+You will see two options to customize your app, in the field `Port` fill in port of your database and hit `Install`
 
 ![selectapp](phpMyAdmin/port.png)
 
