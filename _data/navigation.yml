@@ -69,6 +69,8 @@ docs:
         url: /docs/moodle.html
       - title: ownCloud
         url: /docs/owncloud.html
+      - title: phpMyAdmin
+        url: /docs/phpmyadmin.html
       - title: RStudio Server 
         url: /docs/rstudio.html
       - title: ShinySOM
