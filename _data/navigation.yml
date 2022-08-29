@@ -79,6 +79,8 @@ docs:
         url: /docs/samba.html
   - title: Web Applications
     children:
+      - title: Alphafold
+        url: /docs/alphafold.html
       - title: Galaxy
         url: /docs/galaxy.html
       - title: JupyterHub
