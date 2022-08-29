@@ -27,7 +27,7 @@ Run (arrow 11) will start computation.
 
 ## Alphafold Running
 
-If job has been submitted, it can be seen under `Running Jobs` tab. It can be `Pending`, `Running`, or `Completed`.
+If job has been submitted, it can be seen under `Running Jobs` tab. It can be `Pending`, `Running`, or `Succeeded`.
 
 ![rj](/docs/alphafold/1a.png)
 
