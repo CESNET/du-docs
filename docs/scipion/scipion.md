@@ -27,19 +27,19 @@ Ensure, you did not select any namespace and see `Only User Namespaces` (1) at t
 
 Navigate through `App & Marketplace` (2), `Charts` (3) and select `Scipion` (4). See screenshot below.
 
-![selectapp](scipion/rancher-apps.png)
+![selectapp](rancher-apps.png)
 
 ### Select Version of the Application
 
 When you click on the chart, you can select version of application as shown below. Select `Chart Version`, you find exact Scipion version under `Application Version`. Versions can vary in time. Hit `Install` to continue.
 
-![selectversion](scipion/rancher-scipion.png)
+![selectversion](rancher-scipion.png)
 
 ### Install the Application
 
 Now you can install the Scipion application. Select `Namespace` (1) except `default`, fill the `Name` (2) of your instance, and hit the `Next` (3) button to continue. The `default` namespace is available but it is not meant to be used. **Keep in mind, that you should not run two or more instances in the same `Namespace` for now.** Information about creating a new `Namespace` is available [here](https://docs.cerit.io/docs/quotas.html). **If you delete the application and later install the application again, any data stored outside Onedata storages will be lost.**
 
-![appinst](scipion/rancher-scipion-form.png)
+![appinst](rancher-scipion-form.png)
 
 The first intem to fill in the form is the `noVNC password`, which you will need to access remote desktop of the Scipion application. Onedata related items in the form are described below.
 
@@ -58,11 +58,11 @@ The Onedata items you need to fill to the form are following:
 * `Onedata space-ID for project data` (Img. 2) - ID of your `project` `space`.
 * `Onedata token for project data` (Img. 3) - Token to access the `project` `space`.
 
-![form](scipion/rancher-scipion-form2.png)
+![form](rancher-scipion-form2.png)
 
-![form](scipion/onedata-host.png)
-![form](scipion/onedata-spaceid.png)
-![form](scipion/onedata-token.png)
+![form](onedata-host.png)
+![form](onedata-spaceid.png)
+![form](onedata-token.png)
 
 ### Wait for Application to Start
 
@@ -72,7 +72,7 @@ When you hit `Install`, you will see installation log. Once you see `SUCCESS` (s
 
 * It can take some time before application is ready, as a large docker image is being downloaded. This action should be completed within 5 minutes.
 
-![apphelm](scipion/rancher-scipion-ready.png)
+![apphelm](rancher-scipion-ready.png)
 
 ### Connect to the Running Instance
 
@@ -80,8 +80,8 @@ Once the application is running, navigate through `Service Discovery` (1) and `I
 
 Since the URL depends only on the namespace you selected in previous step, you can skip finding the URL in Rancher and navigate your browser to the URL with the following format: `https://scipion.`*your-namespace*`.dyn.cloud.e-infra.cz/`. E.g., `https://scipion.handl-ns.dyn.cloud.e-infra.cz/`.
 
-![apphelm](scipion/rancher-scipion-link.png)
-![app](scipion/desktop-vnc.png)
+![apphelm](rancher-scipion-link.png)
+![app](desktop-vnc.png)
 
 When connecting to the remote desktop of the application, you will be asked to enter the password filled in the form.
 
@@ -89,14 +89,14 @@ When connecting to the remote desktop of the application, you will be asked to e
 
 When the instance is running, you can connect to the remote desktop, but you may still not be able to use the Scipion because the instance synchronizes `source` and `project` data. The time depends on the size of the data. For very large `source` data (terabytes) it can take many hours. If this *synchronization phase* is still in progress, you will see its progress instead of the desktop environment. The desktop environmet will start after the *synchronization stage* is complete.
 
-![app](scipion/desktop-cloning.png)
-![app](scipion/desktop-xfce.png)
+![app](desktop-cloning.png)
+![app](desktop-xfce.png)
 
 ## Delete Running Instance
 
 If you feel you do not need the application anymore, you can delete it. Just navigate to `App & Marketplace` (1), `Installed Apps` (2), select the application (3) and hit `Delete` (4). All data saved outside the `Onedata` `storages` are deleted.
 
-![appdel](scipion/rancher-scipion-delete.png)
+![appdel](rancher-scipion-delete.png)
 
 ## Technical details about Onedata mounts
 
