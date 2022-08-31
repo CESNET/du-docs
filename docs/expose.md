@@ -77,6 +77,42 @@ TLS is terminated in NGINX Ingress at cluster boundary. Communication inside clu
 *IMPORTANT*
 Some applications are confused that they are configured as `HTTP` but exposed as `HTTPS`. If an application generates absolute URLs, it must generate `HTTPS` URLs and not `HTTP`. Kubernetes Ingress sets `HTTP_X_SCHEME` header to `HTTPS` if it is TLS terminated. E.g., for *django*, user must set: `SECURE_PROXY_SSL_HEADER = ("HTTP_X_SCHEME", "https")`. Common header used for this situation is `X_FORWARDED_PROTO` but this is not set by Kubernetes NGINX. It is possible to expose also 'HTTPS' configured applications. See below *HTTPS Target*.
 
+#### Custom domain name (FQDN)
+
+It is possible to use also custom domain name (any name basically). 
+
+1. `CNAME` DNS record is required. For `kuba-cluster`, `CNAME` target is `kuba-pub.cerit-sc.cz`
+2. Ingress object is in the form:
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: application-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - "my-name"
+      secretName: my-name-tls
+  rules:
+  - host: "my-name"
+    http:
+      paths:
+      - backend:
+          service:
+            name: application-svc
+            port:
+              number: 80
+        pathType: ImplementationSpecific
+```
+
+##### Note
+
+`CNAME` must be set in advance and must be propagated so that Let's Encrypt service is able to verify domain in case, TLS is requested. It means that seamless migration from any system to our infrastructure is not easily possible.
+
 #### Authentication
 
 `Ingress` can request user authentication and thus provide restricted access to the `Service`. Authentication can be set using a `Secret` and annotations.
@@ -119,6 +155,8 @@ Replace the `600m` value with desired max value for upload data.
 #### HTTPS Target
 
 Ingress object can expose applications use HTTPS procol instead of HTTP, i.e., communication between ingress and application is encrypted as well. In this case, you need to add `nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"` annotation to the Ingress object.
+
+
 
 ### Other Applications
 
