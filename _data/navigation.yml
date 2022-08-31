@@ -73,6 +73,8 @@ docs:
         url: /docs/phpmyadmin.html
       - title: RStudio Server 
         url: /docs/rstudio.html
+      - title: Scipion
+        url: /docs/scipion/scipion.html
       - title: ShinySOM
         url: /docs/shinysom.html
       - title: VMD
