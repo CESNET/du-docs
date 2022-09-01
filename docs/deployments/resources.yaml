@@ -48,6 +48,10 @@ rules:
   apiGroups: 
   - ""
   verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
+- resources: ["deployments", "statefulsets"]
+  apiGroups:
+  - "apps"
+  verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
