@@ -69,6 +69,10 @@ gitops:
     apiGroups: 
     - ""
     verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
+  - resources: ["deployments", "statefulsets"]
+    apiGroups:
+    - "apps"
+    verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
   ```
   
   Specify the resources and verbs to your choosing. 
