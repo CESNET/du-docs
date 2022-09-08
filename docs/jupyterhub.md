@@ -23,7 +23,9 @@ We pre-prepared the following images:
 - tensorflow-notebook with GPU support ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-tensorflow-notebook) but TF v. 2.7.0 and TensorBoard installed)
 - RStudio with R 4.2.1 
 
-You can choose to build your own image with all dependencies and sotware you need. However, don't forget to include whole jupyter stack, otherwise the the deployment will not work. We recommend building from [existing image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) which already incorporates all nexessary software. If you choose custom image, you have to provide image name together with its repo and optional tag --- input text in format _repo/imagename:tag_. 
+You can choose to build your own image with all dependencies and sotware you need. However, don't forget to include whole jupyter stack, otherwise the the deployment will not work. We recommend building from [existing image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) which already incorporates all nexessary software. If you choose custom image, you have to provide image name together with its repo and optional tag --- input text in format `repo/imagename:tag`. If you build your own image, you have to make sure repository is public. If you don't know what repository to choose, we maintain our own docker registry which you can freely use and does not require any further configuration. More information on registry is available [at a harbor site](https://docs.cerit.io/docs/harbor.html).
+
+### Working environment
 
 If you choose RStudio, you will be redirected directly do rstudio environment. 
 
@@ -33,7 +35,7 @@ Other images are redirected to the `/lab` version of JupyterHub.
 ![lab](jupyterhub-images/lab.png)
 
 ## Storage
-By default, every notebook runs with persistent storage mounted to `/home/jovyan`. Therefore, we recommend to save the data to `/home/jovyan` directory to have them accessible every time notebook is spawned. Same persistent storage is mounted to all your notebooks so you can share data across multiple instances. If you delete all your JupyterHub notebook instances and spawn new one later, again same persistent storage is mounted. Therefore your data are preserved across instances and spawns.
+By default, every notebook runs with persistent storage mounted to `/home/jovyan`. Therefore, we recommend to save the data to `/home/jovyan` directory to have them accessible every time notebook is spawned. Same persistent storage is mounted to all your notebooks so you can share data across multiple instances. If you delete all your JupyterHub notebook instances and spawn new one later, same persistent storage is mounted again. Therefore, your data are preserved across instances and spawns.
 
 ### MetaCentrum home
 You can mount your MetaCentrum home --- check the options and select the desired home. Currently, it is possible to mount only one home per notebook. In hub, your home is located in `/home/meta/{meta-username}`.
@@ -47,12 +49,44 @@ brno8 | brno9-ceitec | budejovice1 | du-cesnet | praha2-natur
 liberec3-tul | ostrava1 | ostrava2-archive | pruhonice1-ibot | praha5-elixir
 plzen1 | plzen4-ntis                   
 
+❗️ If you choose storage where you do NOT have a home, spawn will fail. Please, make sure you are choosing storage where your home exists. If you are not sure about home location, contact <a href="mailto:k8s@ics.muni.cz">IT Service desk</a> who will help.
+
 ## Resources
-Each user on JupyterHub can use certain amount of memory and CPU. You are guaranteed **1G of RAM** and **1 CPU**. Resource limits represent a hard limit on the resources available. There are **256G of RAM** and **32 CPU** limits placed which means you can't use more than 256G of RAM and 32 CPUs for that specific instance.
+Each Jupyter notebook can request 3 types of resources --- CPU, memory, GPU --- up to the set limit. Because we want to support effective computing, we have implemented a simple shutdown mechanism that applies to each notebook instance. Please, read the mechanism description below.
 
-### GPU
+#### CPU
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You are guaranteed **1 CPU** and can request up to **32 CPU** limit. Resource limits represent a hard limit which means you can't use more than set amount for that specific instance. If computation inside notebook requires more CPUs than assigned, it will not be killed but throttled --- the computation will continue, perhaps just slower.  
 
-It is possible to utilize GPU in your notebook, you can request at most 2 whole GPUs. **Using GPU requires particular setting (e.g. drivers, configuration) so it can be effectivwly used only in Tensorflow image with GPU support.** If you assign GPU with any other image, it will not be truly functional.
+#### Memory
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You are guaranteed **1G of RAM** and can request up to **256G of RAM**. Resource limits represent a hard limit which means you can't use more than set amount for that specific instance. If computation inside notebook consumes more memory than assigned, it will be killed. The notebook will not disappear but the computation will either error or abruptly end.
+
+#### GPU
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is possible to utilize GPU in your notebook, you can request either a fraction of GPU memory or whole GPU.
+
+- For whole GPU, you can request at most 2. **Using GPU requires particular setting (e.g. drivers, configuration) so it can be effectively used only in Tensorflow image with GPU support.** If you assign GPU with any other image, it will not be truly functional. Getting 2 GPUs at once might not be possible immediately, we recommend asking for 1 or gpu memory part.
+
+- For gpu memory fraction, you are given a possibly shared GPU. Fractions of GPUs are easily available but on the other hand, no technical power exists that would enforce requested GPU memory limits --- if a user (someone else than you) exceeds requested amount of GPU memory, there is a chance that your computation will fail for everyone sharing the GPU.
+
+
+### Resource utilization
+After providing JupyterHub for more than a year, we have collected enough data to safely state that most of the notebook instances request unreasonably high resource amounts that remain unused but blocked. We believe fine resource utilization is a key factor in effective computing and therefore we have implemented a simple mechanism which decides if your notebook instance will be deleted. It performs evaluation once a day.
+
+If **at least 1** GPU was requested, the mechanism checks GPU usage and does not care about CPU usage (GPU is a *more expensive* resource). After 3 days of zero GPU usage, the notebook instance is deleted. The threshold `0` was chosen because GPU usage equal to 0 obviously means no GPU usage. 
+
+If **no** GPU was requested, the mechanism checks only CPU usage. After 10 days of <0.001 CPU usage, the notebook instance is deleted. The threshold was chosen based on data collected by monitoring --- CPU usage below 0.001 suggests that the notebook just exists and no computation is performed.
+
+The mechanism works for both ways as following: 
+
+> The maximum GPU/CPU usage is measured in the time segments calculated as `(time.Now - X)` where X is 24h and decreases by 30 seconds until 0. The final maximum is chosen from all segments. If the resulting maximum *equals to zero*, the notebook instance is internally marked with "1" as the first warning. If usage is non-zero, nothing happens.
+> 
+>  Next run performs the same but if maximum:
+>  - still equals to zero/is still less than 0.001 for CPU, counter is increased by one. If counter reaches 3 (as 3 days), instance is deleted.
+>  - changes from zero to non-zero number/increases above 0.001 for CPU) (you apparently started using notebook again), the mark is completely removed.
+
+
+#### Notifying aboout usage
+
+If the notebook is marked for deletion, you will receive an e-mail informing about the situation for every warning until instance is truly removed. You will get an e-mail informing about deletion as well. You are not forced to do anything about instance if you receive an email --- if the usage does not go up, it will be deleted. We recommend saving the results or copying them elsewhere if you receive a warning. The email is sent to the address configured in your MetaCentrum account as a preferred address.
 
 ## Named servers
 JupyterHub allows spawning more than one notebook instance; actually you can run multiple instances of various images at the same time. To do so, in the top left corner, go to `File &rarr; Hub Control Panel`. Fill in the `Server name` and click on `Add new server`, you will be presented with input form page. 
