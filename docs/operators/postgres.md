@@ -13,7 +13,7 @@ The [Postgres Operator](https://opensource.zalando.com/postgres-operator/) deliv
 
 ## Deploying Single Instance 
 
-You can start with minimal instance suitable for testing only, it uses NFS storage as backend and uses only limited resources, but also performance is low. You can download [minimal manifest](postgres/minimal-nfs-postgres-manifest.yaml). 
+You can start with minimal instance suitable for testing only, it uses NFS storage as backend and uses only limited resources, but also performance is low. You can download [minimal manifest](/docs/postgres/minimal-nfs-postgres-manifest.yaml). 
 
 ```yaml
 apiVersion: "acid.zalan.do/v1"
@@ -61,7 +61,7 @@ This kind of setup is resilient to node failure --- if a node running this insta
 
 For better availability, cluster deployment can be used. In this case, multiple instances run in the cluster where one of them is a leader and others follow and sync data from the leader.
 
-To deploy cluster version, you can download [cluster manifest](postgres/cluster-nfs-postgres-manifest.yaml). The only difference is on line:
+To deploy cluster version, you can download [cluster manifest](/docs/postgres/cluster-nfs-postgres-manifest.yaml). The only difference is on line:
 
 ```yaml
 numberOfInstances: 3
@@ -73,7 +73,7 @@ Note: Cluster instances consume more resources and you must conside how much res
 
 ## Utilizing Local Storage
 
-It is possible to use a local storage (SSD) instead of NFS or any network-backed PVC. While it is not possible to directly request local storage in `volume` section, it is still possible to use local storage. You can download [single instance manifest](postgres/minimal-local-postgres-manifest.yaml) which can be used for the cluster instance as well (setting desired `numberOfInstances`).
+It is possible to use a local storage (SSD) instead of NFS or any network-backed PVC. While it is not possible to directly request local storage in `volume` section, it is still possible to use local storage. You can download [single instance manifest](/docs/postgres/minimal-local-postgres-manifest.yaml) which can be used for the cluster instance as well (setting desired `numberOfInstances`).
 
 ```yaml
 volume:
