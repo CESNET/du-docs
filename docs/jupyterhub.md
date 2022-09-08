@@ -71,20 +71,20 @@ Each Jupyter notebook can request 3 types of resources --- CPU, memory, GPU --- 
 ### Resource utilization
 After providing JupyterHub for more than a year, we have collected enough data to safely state that most of the notebook instances request unreasonably high resource amounts that remain unused but blocked. We believe fine resource utilization is a key factor in effective computing and therefore we have implemented a simple mechanism which decides if your notebook instance will be deleted. It performs evaluation once a day.
 
-If **at least 1** GPU was requested, the mechanism checks GPU usage and does not care about CPU usage (GPU is a *more expensive* resource). After 3 days of zero GPU usage, the notebook instance is deleted. The threshold `0` was chosen because GPU usage equal to 0 obviously means no GPU usage. 
+If **at least 1 GPU** was requested, the mechanism checks GPU usage and does not care about CPU usage (GPU is a *more expensive* resource). After 3 days of zero GPU usage, the notebook instance is deleted. The threshold `0` was chosen because GPU usage equal to 0 obviously means no GPU usage. 
 
-If **no** GPU was requested, the mechanism checks only CPU usage. After 10 days of <0.001 CPU usage, the notebook instance is deleted. The threshold was chosen based on data collected by monitoring --- CPU usage below 0.001 suggests that the notebook just exists and no computation is performed.
+If **no GPU** was requested, the mechanism checks only CPU usage. After 10 days of <0.001 CPU usage, the notebook instance is deleted. The threshold was chosen based on data collected by monitoring --- CPU usage below 0.001 suggests that the notebook just exists and no computation is performed.
 
 The mechanism works for both ways as following: 
 
-> The maximum GPU/CPU usage is measured in the time segments calculated as `(time.Now - X)` where X is 24h and decreases by 30 seconds until 0. The final maximum is chosen from all segments. If the resulting maximum *equals to zero*, the notebook instance is internally marked with "1" as the first warning. If usage is non-zero, nothing happens.
+> The maximum GPU/CPU usage is measured in the time segments calculated as `(time.Now - X)` where X is 24h and decreases by 30 seconds until 0. The final maximum is chosen from all segments. If the resulting maximum *equals to zero/under 0.001*, the notebook instance is internally marked with "1" as the first warning. If usage is non-zero/above 0.001, nothing happens.
 > 
 >  Next run performs the same but if maximum:
 >  - still equals to zero/is still less than 0.001 for CPU, counter is increased by one. If counter reaches 3 (as 3 days), instance is deleted.
->  - changes from zero to non-zero number/increases above 0.001 for CPU) (you apparently started using notebook again), the mark is completely removed.
+>  - changes from zero to non-zero number/increases above 0.001 for CPU (you apparently started using notebook again), the mark is completely removed.
 
 
-#### Notifying aboout usage
+#### Low usage notification
 
 If the notebook is marked for deletion, you will receive an e-mail informing about the situation for every warning until instance is truly removed. You will get an e-mail informing about deletion as well. You are not forced to do anything about instance if you receive an email --- if the usage does not go up, it will be deleted. We recommend saving the results or copying them elsewhere if you receive a warning. The email is sent to the address configured in your MetaCentrum account as a preferred address.
 
