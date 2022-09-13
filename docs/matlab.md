@@ -22,6 +22,12 @@ Following the steps below, you can run Matlab application. This application has 
 
 * If you do not select `Customize Helm options before install` in **Install the Application** step, installation appears to fail but actually it works after some longer time.
 
+* From Matlab version `v9.11.1` it is possible to mount your MetaCentrum home without asking for a password. However, it is necessary to create a set of specific Kubernetes objects. We simplified whole process and it is enough if you: 
+  *  Firstly, go through [this short tutorial](https://docs.cerit.io/docs/other/storagesecrets.html) where you just log into our custom service and select namespace where to create objects
+  *  Secondly, run the Matlab application from Rancher the same way as before, just select version **v9.11.1** and above. The application form features a field in the `Storage` section where you select your home.
+
+![selectapp](matlab/matlab-home.png)
+
 ### Select Application to Run
 
 Ensure, you did not select any namespace and see `Only User Namespaces` (1) at the top of the Rancher page.
