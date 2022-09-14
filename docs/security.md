@@ -16,7 +16,7 @@ This approach has one big security flaw. Authentication is required when connect
 
 This flaw can be mitigated using [Network Policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/) that can limit origin of network traffic. In this case, it is useful to allow ingress traffic to server from *kube-system* namespace only. The *kube-system* namespace hosts Ingress Nginx instance, therefore, connection from this and only this namespace is required.
 
-Example of network policy can be [downloaded here](deployments/netpolicy/yaml). This policy allows ingress traffic from *kube-system* to Pod named `myapp`. This policy is applied to the *namespace* where the Pod `myapp` is.
+Example of network policy can be [downloaded here](deployments/netpolicy.yaml). This policy allows ingress traffic from *kube-system* to Pod named `myapp`. This policy is applied to the *namespace* where the Pod `myapp` is.
 
 ## E-infra Single Sign On (BETA)
 
