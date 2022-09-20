@@ -83,7 +83,7 @@ with any other image mentioned above like `cerit.io/pub/ssh-base:ubuntu22.04`. S
 kubectl create -f vm-simple.yaml -n [namespace]
 ```
 We suppose that the downloaded and edited file has name `vm-simple.yaml`. Replace again `[namespace]` with your *namespace* from Rancher. This command run the manifest. You can check `Workload` -> `Pods` in Rancher to see your manifest is running:
-![vm-ssh-simple](/docs/vm/vm-ssh.png)
+![vm-ssh-simple](/docs/ssh/vm-ssh.png)
 
 ### Logging In
 
