@@ -26,7 +26,7 @@ export NXF_VER=20.10.0
 curl -s https://get.nextflow.io | bash
 ```
 
-Currently, 22.04.0 is highest available version using this method. However, you should use version 22.06.1-edge from github:
+Currently, 22.04.5 is highest available version using this method. However, you should use version 22.06.1-edge or later from github:
 `https://github.com/nextflow-io/nextflow` installable as follows:
 ```
 git clone https://github.com/nextflow-io/nextflow.git
