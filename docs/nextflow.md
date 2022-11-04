@@ -99,15 +99,20 @@ There are plenty of other customization options for workers or individual proces
 - add labels or annotations
 - etc.
 
-For customizing individual processes (e.g., memory, cpu), see nextflow documentation section on [processes](https://www.nextflow.io/docs/latest/process.html). For customizing the pod itself (e.g., mount pvc) see details in [nextflow pod documentation](https://www.nextflow.io/docs/latest/process.html#pod). If you specify some configuration as 
+For customizing individual processes (e.g., memory, cpu), see nextflow documentation section on [processes](https://www.nextflow.io/docs/latest/process.html). For customizing the pod itself (e.g., mount pvc) see details in [nextflow pod documentation](https://www.nextflow.io/docs/latest/process.html#pod). 
+
+
+When mixing generic process configuration 
 ```
 process {...}
 ```
-it will be applied to *ALL* processes and will overwrite configuration set in main `.nf` file. If you specify some configuration as 
-```
-process abc {...}
-```
-it will be applied *just* to process abc and will overwrite configuration set in main `.nf` file as well as in `process{...}`. 
+and selectors the following priority rules are applied (from lower to higher):
+
+- Process generic configuration (`nextflow.config`).
+- Process specific directive defined in the workflow script.
+- withLabel selector definition.
+- withName selector definition.
+
 
 ### Run ⏱
 
@@ -149,16 +154,16 @@ executor {
 
 process {
    executor = 'k8s'
-   memory = '500M' // THIS WILL BE APPLIED TO ALL WORKERS
+   memory = '500M' // THIS WILL BE DEFAULTLY APPLIED TO ALL WORKERS IF NOT SPECIFIED IN WORKFLOW SCRIPT
    pod = [[label: 'hpctransfer', value: 'must'], [securityContext:[fsGroupChangePolicy:'OnRootMismatch', runAsUser:1000, runAsGroup:1, fsGroup:1]], [automountServiceAccountToken:false], [secret: 'keythings', mountPath: '/etc/secrets']] // THIS WILL BE APPLIED TO ALL WORKERS
    
-   withLabel:VEP { // THIS WILL BE APPLIED ONLY TO PROCESS WITH LABEL VEP
+   withLabel:VEP { // THIS WILL BE APPLIED ONLY TO PROCESS WITH LABEL VEP EVEN IF SPECIFIED IN WORKFLOW SCRIPT
        memory = {check_resource(14.GB * task.attempt)}
    }
    
 }
 
-process mdrun { // THIS WILL BE APPLIED ONLY TO PROCESS NAMED mdrun
+process mdrun { // THIS WILL BE APPLIED ONLY TO PROCESS NAMED mdrun IF NOT SPECIFIED IN WORKFLOW SCRIPT
   cpus 20
 }
 ```
