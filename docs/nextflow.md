@@ -61,26 +61,136 @@ cluster. Its task is to run *worker* pods according to pipeline definition.
 The *workflow controller* pod has some generated name like `naughty-williams`.
 The *workers* have hashed names like `nf-81dae79db8e5e2c7a7c3ad5f6c7d59c6`.
 
-### Requirements
 
-* Installed [`kubectl`](https://cerit-sc.github.io/kube-docs/docs/kubectl.html) with configuration file.
-* Kubernetes [Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) to run in (see [here](ns.html) how to know your namespace).
-* Created [PVC](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) (see [here](pvc.html) how to do it).
+Firstly, you must have:
+- installed [`kubectl`](https://cerit-sc.github.io/kube-docs/docs/kubectl.html) with `kubeconfig` file in an expected location `$HOME/.kube/config`. 
+- Kubernetes [Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) to run in (see [here](ns.html) how to know your namespace).
+- created [PVC](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) (see [here](pvc.html) how to do it).
 
-### Running Nextflow
+### Configuration 🧩
 
-Running the Nextflow in Kubernetes requires local configuration. You can
-download
-[nextflow.config](deployments/nextflow.config)
-which can be used as is in the case, you change `namespace` to correct value
-and specify `launchDir` and `workDir` to point somewhere on the PVC. Take
+Running a Nextflow pipeline in Kubernetes requires local configuration with some necessary content:
+```
+k8s {
+   namespace = '[your_namespace]'
+   runAsUser = 1000
+   computeResourceType = 'Job'
+   storageClaimName = '[name_of_created_pvc]'
+   storageMountPath = '[mountpath]'
+   launchDir = '[mountpath_from_storageMountPath]/[some_launchDir_path]'
+   workDir = '[mountpath_from_storageMountPath]/[some_workDir_path]'
+}
+
+executor {
+  queueSize = 30
+}
+
+process {
+   executor = 'k8s'
+   pod = [[securityContext:[fsGroupChangePolicy:'OnRootMismatch', runAsUser:1000, runAsGroup:1, fsGroup:1]], [automountServiceAccountToken:false]]
+}
+```
+
+You must set the `namespace` to correct value (namespace you can access). Set the name of PVC you created as `storageClaimName`, it will serve as shared working space for nextflow. Set `storageMountPath` to any path, where you would like to connect this PVC (we advise `/mnt`). Set `launchDir` and `workDir` to point somewhere on the PVC. Take care, if running Nextflow in parallel, always use different `launchDir` and `workDir` for the parallel runs.
+
+There are plenty of other customization options for workers or individual processes. It is possible to:
+- mount another PVC or secret
+- set resource requirements (cpu, memory)
+- add labels or annotations
+- etc.
+
+For customizing individual processes (e.g., memory, cpu), see nextflow documentation section on [processes](https://www.nextflow.io/docs/latest/process.html). For customizing the pod itself (e.g., mount pvc) see details in [nextflow pod documentation](https://www.nextflow.io/docs/latest/process.html#pod). If you specify some configuration as 
+```
+process {...}
+```
+it will be applied to *ALL* processes and will overwrite configuration set in main `.nf` file. If you specify some configuration as 
+```
+process abc {...}
+```
+it will be applied *just* to process abc and will overwrite configuration set in main `.nf` file as well as in `process{...}`. 
+
+### Run ⏱
+
+To start a pipeline, you must use the `kuberun` subcommand of `nextflow`. If you use `nextflow` version 22.06.1 or later, you must add options 
+```
+-head-image 'cerit.io/nextflow/nextflow:22.06.1' -head-memory 4096Mi -head-cpus 1
+```
+These options are required just for *workflow controller pod* in our cluster. `head-memory`/`head-cpus` specify amount of memory/cpu dedicated to the controller pod  - use higher number if your pipeline is expected to generate thousands of tasks.
+
+Example run command:
+```
+nextflow kuberun hello -head-image 'cerit.io/nextflow/nextflow:22.06.1' -head-memory 4096Mi -head-cpus 1 -v PVC:/mnt 
+```
+
+If you are using `nextflow` version below 22.06.1 or you get an error message informing about `head-image not known`, you must add option
+```
+ -pod-image 'cerit.io/nextflow/nextflow:22.06.1' 
+ ```
+ Example run command:
+```
+nextflow kuberun hello -pod-image 'cerit.io/nextflow/nextflow:22.06.1'
+```
+
+A configuration file might look as following:
+```
+k8s {
+   namespace = 'nf-ns'
+   runAsUser = 1000
+   computeResourceType = 'Job'
+   storageClaimName = 'pvc-nf'
+   storageMountPath = '/mnt'
+   launchDir = '/mnt/data1'
+   workDir = '/mnt/data1/tmp'
+}
+
+executor {
+  queueSize = 30
+}
+
+process {
+   executor = 'k8s'
+   memory = '500M' // THIS WILL BE APPLIED TO ALL WORKERS
+   pod = [[label: 'hpctransfer', value: 'must'], [securityContext:[fsGroupChangePolicy:'OnRootMismatch', runAsUser:1000, runAsGroup:1, fsGroup:1]], [automountServiceAccountToken:false], [secret: 'keythings', mountPath: '/etc/secrets']] // THIS WILL BE APPLIED TO ALL WORKERS
+   
+   withLabel:VEP { // THIS WILL BE APPLIED ONLY TO PROCESS WITH LABEL VEP
+       memory = {check_resource(14.GB * task.attempt)}
+   }
+   
+}
+
+process mdrun { // THIS WILL BE APPLIED ONLY TO PROCESS NAMED mdrun
+  cpus 20
+}
+```
+
+### Debug 🐞 
+We recommend watching your namespace in Rancher GUI or on command line when you submit a pipeline. Not all problems are propagated to terminal, especially error related to Kubernetes such as quota exceeded. You can open `Jobs` tab in Rancher GUI and watch out for jobs that are `In progress` for too long or in `Error` state. Useful commands might include 
+
+```
+kubectl get jobs -n [namespace] // GET ALL JOBS IN NAMESPACE
+kubectl describe job [job_name] -n [namespace] // FIND OUT MORE ABOUT JOB AND WHAT IS HAPPENING WITH IT
+
+kubectl get pods -n [namespace] // GET ALL PODS IN NAMESPACE
+kubectl describe pod [pod_name] -n [namespace] // FIND OUT MORE ABOUT POD AND WHAT IS HAPPENING WITH IT
+kubectl logs [pod_name] -n [namespace] // GET POD LOGS (IF AVAILABLE)
+```
+
+If job is waiting for start for too long, try describing a job. It might reveal quota exceeded in your namespace:
+```
+  Warning  FailedCreate  18m    job-controller  Error creating: pods "nf-5dd9dc33d33c729b5cd57c818bafba86-lk4tl" is forbidden: exceeded quota: default-kbz9v, requested: requests.cpu=8, used: requests.cpu=16, limited: requests.cpu=20
+```
+If this happens to you, consider lowering problematic resource requests of workflow controller or processes that might demand a little too much. If you don't know what to do, <a href="mailto:k8s@ics.muni.cz">contact us</a> and we will come with solution together.
+
+## Running Nextflow Hello pipeline
+
+Download [nextflow.config](deployments/nextflow.config) which is prepared to be used as is, just hange `namespace` to correct value (namespace you can access) and specify `launchDir` and `workDir` to point somewhere on the PVC. Take
 care, if running Nextflow in parallel, always use different `launchDir` and
 `workDir` for the parallel runs.
 
 You need to keep the file in the current directory where the `nextflow`
 command is run and it has to be named `nextflow.config`.
 
-To instruct the Nextflow to run the `hello` pipeline in Kubernetes, you can run the
+To instruct the Nextflow to run the `hello` pipeline in Kubernetes, run the
 following command:
 ```
 nextflow kuberun hello -pod-image 'cerit.io/nextflow/nextflow:22.06.1' -v PVC:/mnt 
@@ -120,7 +230,7 @@ Hello world!
 
 * All runs (success or failed) will keep *workflow controller* pod visible in Rancher GUI, failed workers are also kept in Rancher GUI. You can delete them from GUI as needed.
 
-* For wome *workers*, log are not available in Rancher GUI, but the logs can be watched using the command:
+* For some *workers*, log are not available in Rancher GUI, but the logs can be watched using the command:
     ```
 kubectl logs POD -n NAMESPACE 
     ```
