@@ -25,7 +25,7 @@ Unless agreed beforehand, for personal projects and experiments you can use `kub
 We have to create at least 3 Kubernetes resources to deploy the app -- `Deployment`, `Service`, `Ingress`.
 
 ### 1. Deployment
-Create new directory, e.g. `hellok` and inside, create new file `deployment.yaml `with content:
+Create new directory, e.g. `hello-world` and inside, create new file `deployment.yaml `with content:
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -141,7 +141,7 @@ ingress.networking.k8s.io/hello-kubernetes-ingress created
 service/hello-kubernetes-svc created
 ```
 
-You can check status of deplyed resources with `kubectl get pods/services/ingress -n [namespace]` and when all of them are up and running, you can access the URL and you will be presented with sample page.
+You can check status of deplyed resources with `kubectl get [pods | services | ingress] -n [namespace]` and when all of them are up and running, you can access the URL and you will be presented with sample page.
 ![hello](hello.png)
 
 NOTE: in case you are having trouble with 'Config not found' error message, see https://docs.cerit.io/docs/kubectl.html for further information
