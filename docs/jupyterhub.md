@@ -61,11 +61,13 @@ Each Jupyter notebook can request 3 types of resources --- CPU, memory, GPU --- 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You are guaranteed **1G of RAM** and can request up to **256G of RAM**. Resource limits represent a hard limit which means you can't use more than set amount for that specific instance. If computation inside notebook consumes more memory than assigned, it will be killed. The notebook will not disappear but the computation will either error or abruptly end.
 
 #### GPU
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is possible to utilize GPU in your notebook, you can request either a fraction of GPU memory or whole GPU.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is possible to utilize GPU in your notebook, you can request a fraction of GPU memory, whole GPU, or MIG GPU.
 
-- For whole GPU, you can request at most 2. **Using GPU requires particular setting (e.g. drivers, configuration) so it can be effectively used only in Tensorflow image with GPU support.** If you assign GPU with any other image, it will not be truly functional. Getting 2 GPUs at once might not be possible immediately, we recommend asking for 1 or gpu memory part.
+- For whole GPU, you can request at most 2. **Using GPU requires particular setting (e.g. drivers, configuration) so it can be effectively used only in Tensorflow image with GPU support.** If you assign GPU with any other image, it will not be truly functional. Getting 2 GPUs at once might not be possible immediately, we recommend asking for 1 or GPU memory part.
 
-- For gpu memory fraction, you are given a possibly shared GPU. Fractions of GPUs are easily available but on the other hand, no technical power exists that would enforce requested GPU memory limits --- if a user (someone else than you) exceeds requested amount of GPU memory, there is a chance that your computation will fail for everyone sharing the GPU.
+- For GPU memory fraction, you are given a possibly shared GPU. Fractions of GPUs are easily available but on the other hand, no technical power exists that would enforce requested GPU memory limits --- if a user (someone else than you) exceeds requested amount of GPU memory, there is a chance that your computation will fail for everyone sharing the GPU.
+
+- For MIG GPU, see [NVIDIA MIG](https://www.nvidia.com/en-us/technologies/multi-instance-gpu/) documentation about MIG technology. It is possible to request 10GB MIG of NVIDIA A100/80GB card and up to 7 parts of the card using `10GB part A100` option. In this case, GPU memory is HW limited so there is no problem that someone else could overutilize requested amount of the resource. Individual MIG parts (up to 7) act as isolated GPUs so to utilize more than one MIG part, multi-GPU computation has to be setup in an application.
 
 
 ### Resource utilization
