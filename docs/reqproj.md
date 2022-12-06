@@ -29,6 +29,7 @@ If you don't have a group yet and you want to use:
   - include information you request a new group as well
 - *MU* Perun
   - you have to create group yourself, see [tutorial](https://it.muni.cz/sluzby/sprava-skupin-a-pristupu/navody/jak-vytvorit-skupiny)
+  - don't forget to out yourself in the group as well!
 
 ## Access Control
 We need the name of responsible person for project access control. It is up to you (or selected person from your group) to manage people allowed to access the project. Even if you know name of the existing group you would like to use from Perun, you have to assign it yourself.
