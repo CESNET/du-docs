@@ -14,22 +14,22 @@ Sometimes you want to monitor resource usage of the Pods deployed in your namesp
 ## Installation
 
 Start with choosing **Personal Monitoring** application from Rancher application menu.
-![choose](pmon/choose.png)
+![choose](choose.png)
 
 After choosing, click on `Install`.
-![startinstall](pmon/startinstall.png)
+![startinstall](startinstall.png)
 
 Click `Next`. It is not possible to change deployed chart name as there can exist only one monitoring per namespace.
-![next](pmon/next.png)
+![next](next.png)
 
 Change default credentials used to authenticate into Grafana instance. Click on `Install`.
-![install](pmon/install.png)
+![install](install.png)
 
 Wait until bottom panel shows `SUCCESS` and installed app shows green `Deployed`.
-![success](pmon/success.png)
+![success](success.png)
 
 Now you can access your monitoring instance on `pmon-[namespace].dyn.cloud.e-infra.cz` or find the final address in `Ingress` tab.
-![ingress](pmon/ingress.png)
+![ingress](ingress.png)
 
 After clicking on the link, you are redirected to your Grafana. Authenticate with credentials you put in the form.
-![grafana](pmon/grafana.png)
+![grafana](grafana.png)
