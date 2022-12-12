@@ -51,7 +51,7 @@ In the second part of the form, you select access password, please avoid chars l
 
 ![appform1](rstudio/appform2.png)
 
-In the third part of the form, you can select **e-infra** storage (3) to connect to the application. If you check `External Storage`, few more options appear. You can select storage and access credentials. Currently, only `storage-brno12-cerit.metacentrum.cz` and `ha-bay.ics.muni.cz` are supported. Username is e-infra ([metacentrum](https://metavo.metacentrum.cz/)) login and password **is not** Metacentrum password, but different set by administrator, [ask](mailto:k8s@ics.muni.cz) if you need to set. We are preparing more convenient way. For `ha-bay.ics.muni.cz` use UČO and secondary password, however, creating service account and using it is recommended. This storage is mounted to `/home/rstudio/data` directory. 
+In the third part of the form, you can select **e-infra** storage (3) to connect to the application. If you check `External Storage`, only `storage-brno12-cerit.metacentrum.cz` is supported. If you want to connect this storage, follow [the tutorial on creating the storage](https://docs.cerit.io/docs/other/storagesecrets.html). On the [storage secrets site](storagesecrets.cloud.e-infra.cz) you will click the first option `Create Samba password for storage-brno12-cerit.metacentrum.cz` This storage is mounted to `/home/rstudio/data` directory. 
 
 You can also select persistent `/opt` volume (2) that is used for installed packages via `conda` installer, see below. Persistent `/opt` preservers installed packages across `rstudio` restart.
 
