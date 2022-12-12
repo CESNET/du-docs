@@ -73,9 +73,9 @@ Each Jupyter notebook can request 3 types of resources --- CPU, memory, GPU --- 
 ### Resource utilization
 After providing JupyterHub for more than a year, we have collected enough data to safely state that most of the notebook instances request unreasonably high resource amounts that remain unused but blocked. We believe fine resource utilization is a key factor in effective computing and therefore we have implemented a simple mechanism which decides if your notebook instance will be deleted. It performs evaluation once a day.
 
-If **at least 1 GPU** was requested, the mechanism checks GPU usage and does not care about CPU usage (GPU is a *more expensive* resource). After 3 days of zero GPU usage, the notebook instance is deleted. The threshold `0` was chosen because GPU usage equal to 0 obviously means no GPU usage. 
+If **at least 1 GPU** was requested, the mechanism checks GPU usage and does not care about CPU usage (GPU is a *more expensive* resource). After 2 days of <0.005 GPU usage, the notebook instance is deleted. The threshold `0.005` was chosen because this number is truly insignificant and means no usage. 
 
-If **no GPU** was requested, the mechanism checks only CPU usage. After 10 days of <0.001 CPU usage, the notebook instance is deleted. The threshold was chosen based on data collected by monitoring --- CPU usage below 0.001 suggests that the notebook just exists and no computation is performed.
+If **no GPU** was requested, the mechanism checks only CPU usage. After 7 days of <0.01 CPU usage, the notebook instance is deleted. The threshold was chosen based on data collected by monitoring --- CPU usage below 0.01 suggests that the notebook just exists and no computation is performed.
 
 The mechanism works for both ways as following: 
 
