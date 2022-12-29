@@ -38,7 +38,7 @@ sidebar:
 
 * Parallel storage attaching/detaching should no more get stuck and should be reliable
 
-### Remaining Bugs
+### Known Issues
 
 * Zalando Postgres operator may upgrade postgres version, mainly from 13 to 14 without upgrading data which leads to failed instance. 
 
