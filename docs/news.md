@@ -43,3 +43,7 @@ sidebar:
 * Zalando Postgres operator may upgrade postgres version, mainly from 13 to 14 without upgrading data which leads to failed instance. 
 
   * It is recommended to fix docker image in DB resources using `dockerImage: registry.opensource.zalan.do/acid/spilo-13:2.1-p1` field.
+
+* Default `500Mi` memory limit for postgres server is not enough if DB needs to recover after restart.
+ 
+  * It is reommended to specify `resources` filed in DB resource and set limit to `2500Mi`.
