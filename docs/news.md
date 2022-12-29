@@ -8,7 +8,7 @@ aside:
 sidebar:
   nav: docs
 ---
-## News as of January 2023
+## January 2023
 
 ### New Features
 
@@ -37,3 +37,9 @@ sidebar:
 ### Fixed Bugs
 
 * Parallel storage attaching/detaching should no more get stuck and should be reliable
+
+### Remaining Bugs
+
+* Zalando Postgres operator may upgrade postgres version, mainly from 13 to 14 without upgrading data which leads to failed instance. 
+
+  * It is recommended to fix docker image in DB resources using `dockerImage: registry.opensource.zalan.do/acid/spilo-13:2.1-p1` field.
