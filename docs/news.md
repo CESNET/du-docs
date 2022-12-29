@@ -34,6 +34,8 @@ sidebar:
 
 * Jupyterhub usage statistics [https://kuba-mon.cloud.e-infra.cz/d/H5q_43FVk/jupyterhub](https://kuba-mon.cloud.e-infra.cz/d/H5q_43FVk/jupyterhub)
 
+* Launcher from MPIOperator now waits until all workers are ready, no need to sleep/restart/fix on user side
+
 ### Fixed Bugs
 
 * Parallel storage attaching/detaching should no more get stuck and should be reliable
