@@ -47,3 +47,5 @@ sidebar:
 * Default `500Mi` memory limit for postgres server is not enough if DB needs to recover after restart.
  
   * It is reommended to specify `resources` filed in DB resource and set limit to `2500Mi`.
+
+* Deployments with `seccompProfile` fail as it is not allowed by pod security policy.
