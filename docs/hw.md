@@ -11,7 +11,7 @@ sidebar:
 
 ## kuba-cluster
 
-This cluster comprises 4992 *hyperthreaded* CPU cores, 3456 currently available to users, 19.5TB RAM, 13TB currently available to users, and 22 NVIDIA A40, 6 NVIDIA A10 and 12 NVIDIA A100 (80GB variant) GPU accelerators. It consists of 38 nodes (31 currently available) with the following configuration:
+This cluster comprises 4992 *hyperthreaded* CPU cores, 3456 currently available to users, 19.5TB RAM, 13TB currently available to users, and 22 NVIDIA A40, 6 NVIDIA A10 and 12 NVIDIA A100 (80GB variant) GPU accelerators. Four A100 cards are configured as MIGs in 12x 10GB + 8 20GB variants. It consists of 38 nodes (31 currently available) with the following configuration:
 
 |  38x |                  |
 | :--- | :--- |
