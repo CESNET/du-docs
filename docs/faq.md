@@ -54,3 +54,25 @@ resources:
   limits:
     cerit.io/gpu-mem: 1
 ```
+
+---
+
+**Question:** Deployment returns message similar to:
+```
+CreateContainerConfigError (container has runAsNonRoot and image will run as root (pod: "mongo-db-846b7bfc7-qrlqt_namespace-ns(5d3538ab-7493-41ab-bd94-a4256c236f6f)", container: mongo-db-test))
+```
+
+**Answer:** Deployment is missing `securityContext` section and container image (`mongo` in this case) does not contain **numeric** `USER`. To fix it, just extend Deployment definition like:
+```yaml
+image: cerit.io/nextflowproxy:v1.2
+imagePullPolicy: Always
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+resources:
+  limits:
+    cpu: 4
+    memory: 8192Mi
+```
+
+Important lines are those with `runAsUser` and `runAsGroup`. 
