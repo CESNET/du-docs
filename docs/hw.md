@@ -11,19 +11,19 @@ sidebar:
 
 ## kuba-cluster
 
-This cluster comprises 2560 *hyperthreaded* CPU cores, 2530 available to users, 9.84TB RAM, 9.72TB available to users, and 20 NVIDIA A40 GPU accelerators. It consists of 20 nodes with the following configuration:
+This cluster comprises 4992 *hyperthreaded* CPU cores, 3456 currently available to users, 19.5TB RAM, 13TB currently available to users, and 22 NVIDIA A40, 6 NVIDIA A10 and 12 NVIDIA A100 (80GB variant) GPU accelerators. It consists of 38 nodes (31 currently available) with the following configuration:
 
-|  20x |                  |
+|  38x |                  |
 | :--- | :--- |
 | CPU: | 2x AMD EPYC 7543 |
 | :--- | :--- |
 | Memory: | 512GB |
 | :--- | :--- |
-| Disk: | 2x 3.5TB SSD SATA |
+| Disk: | 2x 3.5TB SSD SATA: kub-a5 -- kub-a25<br/> 8x 8TB NVME SSD: kub-b1 -- kub-b18 |
 | :--- | :--- |
-| GPU: | None: kub-a5 -- kub-a9<br/>2x NVIDIA A40 per node: kub-a10 -- kub-a14<br/>1x NVIDIA A40 per node: kub-a15 -- kub-a24 |
+| GPU: | None: kub-a5 -- kub-a9<br/>2x NVIDIA A40 per node: kub-a10 -- kub-a14<br/>1x NVIDIA A40 per node: kub-a15 -- kub-a24 <br/> 2x NVIDIA A10 per node: kub-b1 -- kub-b3<br>2x NVIDIA A100 (80GB) per node: kub-b4 -- kub-b9|
 | :--- | :--- |
-| Network: | 2x 10Gbps NIC |
+| Network: | 2x 10Gbps NIC<br/>1x 100Gbps Infiniband: kub-b1 -- kub-b18 |
 | :--- | :--- |
 
 ## Storage
