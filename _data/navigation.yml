@@ -7,6 +7,8 @@ docs:
         url: /docs/overview.html
       - title: Available Hardware
         url: /docs/hw.html
+      - title: Contacts
+        url: /docs/contacts.html
   - title: Rancher
     children:
       - title: Rancher Introduction
