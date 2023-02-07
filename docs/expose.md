@@ -155,9 +155,39 @@ Replace the `600m` value with desired max value for upload data.
 
 #### HTTPS Target
 
-Ingress object can expose applications use HTTPS procol instead of HTTP, i.e., communication between ingress and application is encrypted as well. In this case, you need to add `nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"` annotation to the Ingress object.
+Ingress object can expose applications use HTTPS protocol instead of HTTP, i.e., communication between ingress and application is encrypted as well. In this case, you need to add `nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"` annotation to the Ingress object.
 
+#### Limiting Access 
 
+It is possible to restrict access to web application at ingress level limiting access from particular IP range. It is done via `Ingress` annotation `nginx.ingress.kubernetes.io/whitelist-source-range`, the following example restricts access from MUNI network only.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: application-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/whitelist-source-range: 147.251.0.0/16
+spec:
+  tls:
+    - hosts:
+        - "my-name"
+      secretName: my-name-tls
+  rules:
+  - host: "my-name"
+    http:
+      paths:
+      - backend:
+          service:
+            name: application-svc
+            port:
+              number: 80
+        pathType: ImplementationSpecific
+
+```
 
 ### Other Applications
 
