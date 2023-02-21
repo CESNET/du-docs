@@ -9,25 +9,25 @@ sidebar:
   nav: docs
 ---
 
-We provide [Alphafold](https://www.deepmind.com/research/highlighted-research/alphafold) on demand service running on Kubernetes. Alphafold is available on [https://alphafold.cloud.e-infra.cz](https://alphafold.cloud.e-infra.cz), sign with e-INFRA CZ AAI or LifeScience AAI. 
+We provide [Alphafold](https://www.deepmind.com/research/highlighted-research/alphafold) on-demand service running on Kubernetes. Alphafold is available at [https://alphafold.cloud.e-infra.cz](https://alphafold.cloud.e-infra.cz), sign with e-INFRA CZ AAI or LifeScience AAI.
 
-Application is based on Jupyer notebook, therefore notebook loader is shown after login. *It may take few minutes before Alphafold is ready to run.*
+Application is based on Jupyer notebook, therefore notebook loader is shown after login. *It may take several minutes before Alphafold is ready to run.*
 
 ## Alphafold Parameters
 
-After successful login, you will see screen as shown below. You need to fill parameters for alphafold computation, at least Proteins (arrow 2) is required, everything else can be left default. See [here](https://github.com/deepmind/alphafold#running-alphafold) for additional parameters. Protein name (arrow 1) can be changed but must be unique (you cannot run several computations with the same name) or you will see the message: **A job with this name already exists, please specify a different name**.
+After successful login you will see screen as shown below. You need to fill parameters for Alphafold calculation, at least Proteins (arrow 2) is required, everything else can be left default. See [here](https://github.com/deepmind/alphafold#running-alphafold) for additional parameters. Protein name (arrow 1) can be changed, but must be unique (you cannot run multiple computations with the same name), otherwise you will see the message: **A job with this name already exists, please enter a different name**.
 
-By default, all computation results are public, it means, that everyone who is able to login can see them, but name of user that initiated the computation is not shown. If this is not desired, publication can be disabled (arrow 9). 
+By default, all calculation results are public, i.e. everyone who is able to log in can see them, but the name of the user who initiated the calculation is not shown. If this is not desired, publication can be disabled (arrow 9).
 
-If you fill email (arrow 10), you will receive notification when computation is complete. 
+If you fill in email (arrow 10), you will receive a notification when the calculation is finished.
 
-Run (arrow 11) will start computation.
+Run (arrow 11) starts the calculation.
 
 ![hub](/docs/alphafold/1.png)
 
 ## Alphafold Running
 
-If job has been submitted, it can be seen under `Running Jobs` tab. It can be `Pending`, `Running`, or `Succeeded`.
+If a job has been submitted, it can be seen in the `Running Jobs` tab. It can be `Pending`, `Running` or `Succeeded`.
 
 ![rj](/docs/alphafold/1a.png)
 
@@ -35,14 +35,14 @@ If job has been submitted, it can be seen under `Running Jobs` tab. It can be `P
 
 ## Viewing Results
 
-This application allows to preview computed results in tab `View Results`. You find your Protein name in selector (arrow 2), you can choose basic display parameters -- whether to show atoms or not (arrow 3). `View Result` (4) button shows result in browser. Viewer is interactive allowing rotation and moving. 
+This application allows you to preview the calculated results in the `View Results` tab. You can find your protein name in selector (arrow 2), you can choose basic display parameters -- whether to show atoms or not (arrow 3). The `View Result` button (4) displays the result in the browser. Viewer is interactive and allows rotation and panning.
 
 ![vr](/docs/alphafold/2.png)
 
-We also provide more complex viewer -- [Mol*](https://molstar.org/) clicking on the link `OPEN`. 
+We also provide a more complex viewer -- [Mol*](https://molstar.org/) clicking on the `OPEN` link.
 
 ![vr1](/docs/alphafold/3.png)
 
-Results can be downloaded on the bottom of this page hitting Generate download button and following `download zipfile` link.
+The results can be downloaded at the bottom of this page by clicking the Generate download button and following the `download zipfile` link.
 
 ![vr2](/docs/alphafold/5.png)
