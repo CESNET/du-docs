@@ -85,6 +85,15 @@ kubectl create -f vm-simple.yaml -n [namespace]
 We suppose that the downloaded and edited file has name `vm-simple.yaml`. Replace again `[namespace]` with your *namespace* from Rancher. This command run the manifest. You can check `Workload` -> `Pods` in Rancher to see your manifest is running:
 ![vm-ssh-simple](/docs/ssh/vm-ssh.png)
 
+If GPU is needed, request GPU in `limits` section:
+```
+resources:
+  limits:
+    cpu: "1"
+    memory: "4Gi"
+    nvidia.com/gpu: "1"
+```
+
 ### Logging In
 
 If manifest is running, you can log in using ssh command. Login name is always `user`, it is not meant to be replaced.
