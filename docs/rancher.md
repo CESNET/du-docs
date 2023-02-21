@@ -9,23 +9,23 @@ sidebar:
   nav: docs
 ---
 
-_Rancher_ instance is available on [rancher.cloud.e-infra.cz](https://rancher.cloud.e-infra.cz). Please login via CESNET, ELIXIR or EGI.
-After logging in, you shall see default dashboard. You should see default cluster as shown below. If none cluster is shown, please, realod the page, it can take up to one minute before a cluster is shown.
+The _Rancher_ instance is available at [rancher.cloud.e-infra.cz](https://rancher.cloud.e-infra.cz). Please log in using CESNET, ELIXIR or EGI.
+After login you should see default dashboard. You should see default clusters as shown below. If no cluster is shown, please reload the page, it may take up to a minute before a cluster is shown.
 
-World of Rancher and Kuberntes is organized into *clusters*, *projects*, and *namespaces*. *Clusters* correspond to sets of physical nodes. *Projects* are created within the *cluster* and *namespaces* are created within the *Projects*. The *Projects* are purely Rancher concept and they are not Kubernetes native concept. [Namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) provides a mechanism for isolating groups of resources within a single cluster. Names of resources need to be unique within a namespace, but not across namespaces. Names of namespaces need to be unique within a cluster. I.e., it is usually not a good idea to create namespace called *test* and so on.
+The world of Rancher and Kubernetes is organized into *clusters*, *projects*, and *namespaces*. *Clusters* correspond to groups of physical nodes. *Projects* are created within *clusters*, and *namespaces* are created within *Projects*. The *Projects* are a Rancher-only concept and are not a native Kubernetes concept. [Namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) provide a mechanism to isolate groups of resources within a single cluster. Resource names must be unique within a namespace, but not across namespaces. Namespace names must be unique within a cluster. That is, it is usually not a good idea to create a namespace called *test*, and so on.
 
-Each user is given a *Default Project* with name and surname and default *namespace* called `surname-ns`. The *Default Project* and default *namespace* is created automatically on the first login to Rancher dashboard. User can create additional namespaces either using kubectl or in the Rancher GUI. Creating namespaces using kubectl is not recommended way, therefore no example here, as kubectl's created namespaces are not linked to user *Project*. Instead, a user should create namespace in Rancher GUI in Namespace overview hitting `Create Namespace` button. See [quota](/docs/rancher-quotas.html) for more information related to creating namespaces and quotas.
+Each user is given a *Default Project* with a first and last name and a default *Namespace* called `surname-ns`. The default project and namespace are created automatically the first time the user logs in to the Rancher dashboard. Users can create additional namespaces either using the Rancher GUI in the namespace overview by pressing the `Create Namespace` button (do not use `kubectl` to create namespace). See [quota](/docs/rancher-quotas.html) for more information about creating namespaces and quotas.
 
-You can find assigned clusters which you are allowed to access either in upper left corner:
+Assigned clusters that you are allowed to access can be found in the upper left corner:
 
 ![clusters](cluster1.jpg)
 
-or just in the list on home page:
+or in the list on the home page:
 
 ![home page](cluster2.jpg)
 
-When you select a cluster, you can display your *projects and namespaces*
+When you select a cluster, you can see your *projects and namespaces*:
 
 ![projects and namespaces](projects.jpg)
 
-It is possible to work to certain extent only with Rancher. However, command line tool `kubectl` allows more actions. You can utilize both ways but we do not recommend `kubectl` for users inexperienced with working in terminal.
+It is possible to work with Rancher only to a certain extent. However, the command line tool `kubectl` allows more actions. You can use both ways, but we do not recommend `kubectl` for users who are not used to working in a terminal.
