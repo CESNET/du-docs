@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Postgres Operator
+title: Postgres Operator Zalando
 permalink: /docs/operators/postgres.html
 key: postgres
 aside:
