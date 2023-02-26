@@ -9,12 +9,12 @@ sidebar:
   nav: docs
 ---
 
-**Question:** Every Pod, Job, Deployment, and any other kind that runs a container needs *resources* attribute to be set otherwise deploy is rejected with similar error:
+**Question:** Every Pod, Job, Deployment, and any other type that runs a container must have the *resources* attribute set, otherwise the deploy will fail with a similar error:
 ```
 Pods "master-685f855ff-gg9sr" is forbidden: failed quota: default-w2qv7: must specify limits.cpu,limits.memory,requests.cpu,requests.memory:Deployment does not have minimum availability.
 ```
 
-**Answer:** Pod, Job, Deployement is missing the following resource section with appropriate values:
+**Answer:** Pod, Job, Deployment is missing the following resource section with appropriate values:
 ```yaml
 resources:
   requests:
@@ -36,13 +36,12 @@ used: limits.cpu=0,limits.memory=0,requests.cpu=0,requests.memory=0,
 limited:limits.cpu=0,limits.memory=0,requests.cpu=0,requests.memory=0.
 ```
 
-**Answer:** Deployment is done to a *Namespace* that is running out of quotas or even has quota set to zero. You need to increase *Namespace* quota which may need to decrease your other *Namespaces* quotas or request explicit *Project*. See [Projects, Namespaces, and Quotas](/docs/quotas.html).
-
+**Answer:** The deployment is being made to a *Namespace* that is running out of quota or even has quota set to zero. You need to increase the *Namespace* quota, which may require decreasing the quotas of your other *Namespaces* or requesting an explicit *Project*. See [Projects, Namespaces, and Quotas](/docs/quotas.html).
 ---
 
 **Question:** No GPU found, `nvidia-smi` returns `command not found`.
 
-**Answer:** Deployment is missing request for GPU like:
+**Answer:** The deployment is missing request for GPU like:
 ```yaml
 resources:
   limits:
@@ -62,7 +61,7 @@ resources:
 CreateContainerConfigError (container has runAsNonRoot and image will run as root (pod: "mongo-db-846b7bfc7-qrlqt_namespace-ns(5d3538ab-7493-41ab-bd94-a4256c236f6f)", container: mongo-db-test))
 ```
 
-**Answer:** Deployment is missing `securityContext` section and container image (`mongo` in this case) does not contain **numeric** `USER`. To fix it, just extend Deployment definition like:
+**Answer:** The deployment is missing the `securityContext` section and the container image (in this case `mongo`) does not contain **numeric** `USER`. To fix this, just extend the deployment definition like this:
 ```yaml
 image: cerit.io/nextflowproxy:v1.2
 imagePullPolicy: Always
@@ -75,4 +74,4 @@ resources:
     memory: 8192Mi
 ```
 
-Important lines are those with `runAsUser` and `runAsGroup`. 
+The `runAsUser` and `runAsGroup` lines are important.
