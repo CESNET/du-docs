@@ -108,3 +108,5 @@ Next, deploy the DB cluster via [template](/docs/postgres/minimal-cn-backup.yaml
 ### Images
 
 Currently, cloudnative-pg docker images do not contain `cs_CZ` locale, so Czech collate cannot be used. For this reason, we have created two local images: `cerit.io/cloudnative-pg/postgresql:10.23-3` and `cerit.io/cloudnative-pg/postgresql:15.0` which contain Czech locales.
+
+List of public images is available [here](https://github.com/cloudnative-pg/postgres-containers/pkgs/container/postgresql).
