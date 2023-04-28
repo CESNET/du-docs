@@ -71,7 +71,7 @@ Note: Cluster instances consume more resources and you must consider how much re
 
 It is possible to use local storage (SSD) instead of NFS or any network supported PVC. While it is not possible to directly request local storage in the `volume' section, it is still possible to use local storage. You can download the [single instance manifest](/docs/postgres/minimal-local-cn.yaml) which can also be used for the cluster instance (set the desired `numberOfInstances`).
 
-Basically, the `zfs-csi` storage class can be used to use local storage. Special care must be taken when setting the limit. It cannot be increased in the future and the limit is enforced.
+Basically, the `zfs-csi` storage class can be used to use local storage. Special care must be taken when setting the limit. It cannot be increased in the future and the limit is enforced, however, it is fasted storage that is offered.
 
 ## Database Access 
 
@@ -87,11 +87,107 @@ For variants comparison, see [zalando operator](/docs/operators/postgres.html#va
 
 ## Data Backups
 
-Operator offers automatic backups to S3 storage implemented via cronjobs.
+Operator offers automatic backups to S3 storage implemented via periodic wal streaming and regular backups (basically `pgdump` equivalent) using `CronJobs`.
 
 First you need to get an S3 storage account, e.g. at [DU Cesnet](https://du.cesnet.cz/en/navody/object_storage/cesnet_s3/start), mainly `KEY-ID` and `SECRET-ID` are needed. Using these two IDs, you can create a `Secret` object via [template](/docs/postgres/secret-cn.yaml), replacing `KEY-ID` and `SECRET-ID` with real values.
 
 Next, deploy the DB cluster via [template](/docs/postgres/minimal-cn-backup.yaml). Replace `BUCKET` and `S3URL` with real values. **Do not replace `ACCESS_KEY_ID` and `ACCESS_SECRET_KEY`, they need to match the Secret key names.**
+
+### Full Backups
+
+For full backups, additional resource needs to be created. 
+
+```yaml
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: [backup-name]
+spec:
+  schedule: "0 0 0 * * *"
+  backupOwnerReference: self
+  cluster:
+    name: [db-name]
+```
+
+Replace `[backup-name]` with appropriate name of the resource (must be unique within a namespace), and `[db-name]` with the name of the database cluster from the main manifest, these two names must match. E.g., cluster manifest beginning with:
+```yaml
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: test-cluster
+```
+
+Needs backup manifest:
+```yaml
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: backup
+spec:
+  schedule: "0 0 0 * * *"
+  backupOwnerReference: self
+  cluster:
+    name: test-cluster
+```
+
+Schedule is standard `cron` schedule. 
+
+## High Availability
+
+Replicated cluster is usable for high availability cases. Starting from Postgres version 11, operator supports some additional settings to increase high availability. 
+
+1. Increase wal segments history using the following snippeet. Change the `wal_keep_size` value as appropriate. Default value is about 500MB which can be small.
+```yaml
+  postgresql:
+    parameters:
+      wal_keep_size: 64GB
+```
+
+2. Enable high availability option:
+```yaml
+  replicationSlots:
+    highAvailability:
+      enabled: true
+```
+
+Please, keep in mind, that these options work for Postgres 11 and later only. Full cluster example with the HA options:
+```yaml
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: test-cluster
+spec:
+  instances: 3
+
+  imageName: 'ghcr.io/cloudnative-pg/postgresql:14.7-3'
+
+  primaryUpdateStrategy: unsupervised
+
+  bootstrap:
+    initdb:
+      database: dbname
+      owner: dbowner
+
+  postgresql:
+    parameters:
+      wal_keep_size: 64GB
+
+  replicationSlots:
+    highAvailability:
+      enabled: true
+
+  resources:
+    requests:
+      memory: "4096Mi"
+      cpu: 1
+    limits:
+      memory: "4096Mi"
+      cpu: 1
+
+  storage:
+    size: 10Gi
+    storageClass: zfs-csi
+```
 
 ## Caveats
 
