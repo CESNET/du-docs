@@ -138,14 +138,14 @@ Replicated cluster is usable for high availability cases. Starting from Postgres
 
 1. Increase wal segments history using the following snippeet. Change the `wal_keep_size` value as appropriate. Default value is about 500MB which can be small.
 ```yaml
-  postgresql:
+postgresql:
     parameters:
       wal_keep_size: 64GB
 ```
 
 2. Enable high availability option:
 ```yaml
-  replicationSlots:
+replicationSlots:
     highAvailability:
       enabled: true
 ```
