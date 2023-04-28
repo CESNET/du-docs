@@ -136,7 +136,7 @@ Schedule is standard `cron` schedule.
 
 Replicated cluster is usable for high availability cases. Starting from Postgres version 11, operator supports some additional settings to increase high availability. 
 
-1. Increase wal segments history using the following snippeet. Change the `wal_keep_size` value as appropriate. Default value is about 500MB which can be small.
+1. Increase wal segments history using the following snippeet. Change the `wal_keep_size` value as appropriate. Default value is about 500MB which can be small. However, this value is allocated from the underlaying storage. If `zfs-csi` is used, it enforces disk size and DB wals can easily consume all disk space.
 ```yaml
 postgresql:
     parameters:
