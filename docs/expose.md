@@ -82,6 +82,7 @@ It is also possible to use custom domain name (basically any name).
 
 1. DNS record `CNAME` is required. For `kuba-cluster`, `CNAME` target is `kuba-pub.cerit-sc.cz`.
 2. Ingress object is in the form:
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
