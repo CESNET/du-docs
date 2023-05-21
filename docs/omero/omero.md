@@ -11,9 +11,11 @@ sidebar:
 
 We have got a task to run [Omero](https://www.openmicroscopy.org/omero/) application in Kubernetes. Basically, we need two things: Docker container of the application and deployment manifest. The application may have some depencencies like database, in this case we need to deploy those as well.
 
-Searching for the term `omero docker`, we got the result [https://github.com/ome/omero-server-docker](https://github.com/ome/omero-server-docker) which explains how to deploy the Omero server. It has two options: 
+Searching for the term `omero docker`, we got the result [https://github.com/ome/omero-server-docker](https://github.com/ome/omero-server-docker) which explains how to deploy the Omero server. It has two options:
+ 
 1. Running OMERO with docker-compose
 2. Running the images (manual)
+
 For Kubernetes, we need to choose the second option because docker-compose cannot be applied directly to Kubernetes.
 
 The second option starts with database and it seems to be the Postgres database. Here, we are lucky because Kubernetes provide a Postgres operator for easy database deployment, see our [Operators](/docs/operators/postgres2.html) documentation.
