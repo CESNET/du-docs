@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Use case: Omero
+title: Use case Omero
 permalink: /docs/omero/omero.html
 key: omero
 aside:
