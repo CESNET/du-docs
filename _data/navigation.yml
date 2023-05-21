@@ -121,6 +121,8 @@ docs:
         url: /docs/nextflow.html
       - title: Running VM
         url: /docs/vm.html
+      - title: Running APP from example (Omero)
+        url: /docs/omero/omero.html
   - title: Debugging
     children:
       - title: FAQ
