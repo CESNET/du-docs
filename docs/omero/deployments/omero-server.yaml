@@ -38,10 +38,10 @@ spec:
         - name: CONFIG_omero_db_host
           value: omero-rw
         - name: ROOTPASS
-          value: omero-Root-p4ssword
+          value: omero-root-password
         securityContext:                                                          
           runAsUser: 1000 
-          runAsGroup: 1000
+          runAsGroup: 997
           allowPrivilegeEscalation: false
           capabilities:
             drop:

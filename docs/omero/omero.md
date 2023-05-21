@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Use case Omero
+title: Use case: Omero
 permalink: /docs/omero/omero.html
 key: omero
 aside:
@@ -9,200 +9,175 @@ sidebar:
   nav: docs
 ---
 
-The [Postgres Operator](https://cloudnative-pg.io/documentation/1.18/) provides easy to run PostgreSQL cluster on Kubernetes. We have provided cluster-wide Postgres Operator for easy deployment of Postgres SQL database servers. The Postgres Operator defines a kind of `Cluster` that ensures the existence of a database or database cluster, full documentation about its structure is available [here](https://cloudnative-pg.io/documentation/1.18/). The official manual for creating a minimal PostgreSQL cluster can be found [here](https://cloudnative-pg.io/documentation/1.18/quickstart/). For your convenience, we provide some working examples below, divided into sections. We have also added a comparison of deployments that use different underlying storage.
+We have got a task to run [Omero](https://www.openmicroscopy.org/omero/) application in Kubernetes. Basically, we need two things: Docker container of the application and deployment manifest. The application may have some depencencies like database, in this case we need to deploy those as well.
 
-## Deploying a single instance
+Searching for the term `omero docker`, we got the result [https://github.com/ome/omero-server-docker](https://github.com/ome/omero-server-docker) which explains how to deploy the Omero server. It has two options: 
+1. Running OMERO with docker-compose
+2. Running the images (manual)
+For Kubernetes, we need to choose the second option because docker-compose cannot be applied directly to Kubernetes.
 
-You can start with a minimal instance, which is suitable for testing only, it uses NFS storage as backend and consumes limited resources, but also performance is low. You can download the [minimal manifest] (/docs/postgres/minimal-cn.yaml).
+The second option starts with database and it seems to be the Postgres database. Here, we are lucky because Kubernetes provide a Postgres operator for easy database deployment, see our [Operators](/docs/operators/postgres2.html) documentation.
 
+## Postgres
+
+The Postgres operator creates random passwords by default, but in this example, we will create an explicit password for the Postgres database. We will use `omero` as database user and some secret password e.g., `xxxpassword`. First, we need to create a secret with the name and the password. Both of them must be [base64](https://www.base64encode.org/) encoded. 
+You can use the link or use `echo -e 'omero' | base64` in Linux shell. The `-n` switch is essential, the string (name, password) must not contain the newline character (`\n`). Once we have two base64 encoded values, we create and deploy secret:
+```yaml
+apiVersion: v1
+data:
+  password: b21lcm9rb2tvcw==
+  username: b21lcm8=
+kind: Secret
+metadata:
+  name: omero-db-app
+type: kubernetes.io/basic-auth
+```
+
+The `metadata.name` can be arbitrary but will be referenced in subsequent manifests. [Link](/docs/omero/deployments/db-app-secret.yaml).
+
+```
+kubectl create -f db-app-secret.yaml -n [namespace]
+```
+
+Once we have the secret, we deploy the database. Simple configuration is enough.
 ```yaml
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: test-cluster
+  name: omero
 spec:
-  instances: 1             # single instance
-
-  imageName: 'cerit.io/cloudnative-pg/postgresql:15.0' #image to use
-
+  instances: 1
+  imageName: 'ghcr.io/cloudnative-pg/postgresql:15.3-2'
   primaryUpdateStrategy: unsupervised
-
-  bootstrap:
-   initdb:
-     database: mydb        # db to create
-     owner: myowner        # user to create
-
-  storage:
-    size: 10Gi
-    storageClass: nfs-csi  # storage class to use
-```
-
-Run `kubectl create -f minimal-cn.yaml -n [namespace]`, you should see a pod named `test-cluster-1` (if `metadata.name` has not been changed from the example) running in your namespace.
-
-### Account Password
-
-To reveal the password of the create user, simply issue
-```shell
-kubectl get secret test-cluster-app -n [namespace] -o 'jsonpath={.data.pgpass}' | base64 -d
-```
-
-It will show the string in the form: `dbhost:port:dbname:dbuser:password`. For example:
-```
-test-cluster-rw:5432:mydb:myowner:uLUmkvAMwR0lJtw5ksUVKihd5OvCrD28RFH1JTLbbzO6BhEAtnWJr1L0nWpTi3GL
-```
-
-This type of setup is resilient to node failure --- if a node running this instance fails, the database is recreated on another node, data is reconnected from NFS storage, and operations resume. On the other hand, this setup is not speed superior even when resources are added.
-
-## Deploying Cluster Instance
-
-For better availability, cluster deployment can be used. In this case, multiple instances run in the cluster where one of them is a leader and others follow and sync data from the leader.
-
-To deploy cluster version, you can download [cluster manifest](/docs/postgres/cluster-cn.yaml). The only difference is on line:
-
-```yaml
-numberOfInstances: 3
-```
-
-That requests 3 node cluster.
-
-Note: Cluster instances consume more resources and you must consider how much resources you have available. Cluster instance consumes `numberOfInstances * limits` of resources.
-
-## Utilizing Local Storage
-
-It is possible to use local storage (SSD) instead of NFS or any network supported PVC. While it is not possible to directly request local storage in the `volume' section, it is still possible to use local storage. You can download the [single instance manifest](/docs/postgres/minimal-local-cn.yaml) which can also be used for the cluster instance (set the desired `numberOfInstances`).
-
-Basically, the `zfs-csi` storage class can be used to use local storage. Special care must be taken when setting the limit. It cannot be increased in the future and the limit is enforced, however, it is fasted storage that is offered.
-
-## Database Access 
-
-To access the database from other Pods, you can use `test-cluster-rw` as host (based on `metadata.name` from the deployment) within the same namespace, port is default `5432`. Username and password are based on the above deployment. There is a `test-cluster-ro` name available to access read-only replicas. If exposure to another namespace is required, use the full name: `test-cluster-rw.[namespace].svc.cluster.local`.
-
-To increase security, a *network policy* can be used to allow network access to the database only from certain pods. See [Network Policy](/docs/security.html). External access, i.e. access from the public Internet, is disabled by default. However, it is possible to expose the database via [Load Balancer](/docs/kubectl-expose.html#other-applications).
-
-An example of exposing the database outside of the Kubernetes cluster can be found [here](/docs/postgres/expose-cn.yaml). This example exposes the DB on private MUNI addresses. If you need to expose to the internet, remove the `metallb.universe.tf/address-pool: privmuni` annotations, especially in this case, be sure to specify `loadBalancerSourceRanges` which restricts access only from these IPs. Note: The `/32` suffix is required. This example exposes both read-only and read-write services, read-write is on port `5432` while read-only is on port `5433`. In order for the two ports to share the same IP address, the `metallb.universe.tf/allow-shared-ip' annotation must be unique and have the same value for both services.
-
-## Variants Comparison
-
-For variants comparison, see [zalando operator](/docs/operators/postgres.html#variants-comparison).
-
-## Data Backups
-
-Operator offers automatic backups to S3 storage implemented via periodic wal streaming and regular backups (basically `pgdump` equivalent) using `CronJobs`.
-
-First you need to get an S3 storage account, e.g. at [DU Cesnet](https://du.cesnet.cz/en/navody/object_storage/cesnet_s3/start), mainly `KEY-ID` and `SECRET-ID` are needed. Using these two IDs, you can create a `Secret` object via [template](/docs/postgres/secret-cn.yaml), replacing `KEY-ID` and `SECRET-ID` with real values.
-
-Next, deploy the DB cluster via [template](/docs/postgres/minimal-cn-backup.yaml). Replace `BUCKET` and `S3URL` with real values. **Do not replace `ACCESS_KEY_ID` and `ACCESS_SECRET_KEY`, they need to match the Secret key names.**
-
-### Full Backups
-
-For full backups, additional resource needs to be created. 
-
-```yaml
-apiVersion: postgresql.cnpg.io/v1
-kind: ScheduledBackup
-metadata:
-  name: [backup-name]
-spec:
-  schedule: "0 0 0 * * *"
-  backupOwnerReference: self
-  cluster:
-    name: [db-name]
-```
-
-Replace `[backup-name]` with appropriate name of the resource (must be unique within a namespace), and `[db-name]` with the name of the database cluster from the main manifest, these two names must match. E.g., cluster manifest beginning with:
-```yaml
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: test-cluster
-```
-
-Needs backup manifest:
-```yaml
-apiVersion: postgresql.cnpg.io/v1
-kind: ScheduledBackup
-metadata:
-  name: backup
-spec:
-  schedule: "0 0 0 * * *"
-  backupOwnerReference: self
-  cluster:
-    name: test-cluster
-```
-
-Schedule is standard `cron` schedule. 
-
-## High Availability
-
-Replicated cluster is usable for high availability cases. Starting from Postgres version 11, operator supports some additional settings to increase high availability. 
-
-1. Increase wal segments history using the following snippeet. Change the `wal_keep_size` value as appropriate. Default value is about 500MB which can be small. However, this value is allocated from the underlaying storage. If `zfs-csi` is used, it enforces disk size and DB wals can easily consume all disk space.
-```yaml
-postgresql:
-    parameters:
-      wal_keep_size: 64GB
-```
-
-2. Enable high availability option:
-```yaml
-replicationSlots:
-    highAvailability:
-      enabled: true
-```
-
-Please, keep in mind, that these options work for Postgres 11 and later only. Full cluster example with the HA options:
-```yaml
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: test-cluster
-spec:
-  instances: 3
-
-  imageName: 'ghcr.io/cloudnative-pg/postgresql:14.7-3'
-
-  primaryUpdateStrategy: unsupervised
-
   bootstrap:
     initdb:
-      database: dbname
-      owner: dbowner
-
-  postgresql:
-    parameters:
-      wal_keep_size: 64GB
-
-  replicationSlots:
-    highAvailability:
-      enabled: true
-
+      database: omero
+      owner: omero
+      secret:
+        name: omero-db-app
   resources:
     requests:
-      memory: "4096Mi"
-      cpu: 1
+      memory: 2Gi
+      cpu: 100m
     limits:
-      memory: "4096Mi"
-      cpu: 1
-
+      memory: 6Gi
+      cpu: 2
   storage:
     size: 10Gi
     storageClass: zfs-csi
 ```
+This manifest references the secret name in the `spec.bootstrap.initdb.secret.name`, it must match the name of the secret we created. If the database is slow to handle all the load, the `spec.resources.limits.cpu` can be increased. For non-demo purposes, the `spec.resources.requests.cpu` should be increased to match actual typical load. [Link](/docs/omero/deployments/db-cluster.yaml).
 
-## Caveats
+```
+kubectl create -f db-cluster.yaml [namespace]
+```
 
-### Deploy Errors
+After a while, a new Pod should be created in the `[namespace]` namespace. It will be named `omero-1`. 
 
-1. If you encounter a deployment error and want to delete and recreate, **you must** make sure that the running instance is deleted before recreating. If you create a new instance too early, the instance will never be created and you will have to use a different name.
+The cluster create has only a single Pod, it is not a real and resilient cluster. For high availability clusters, see [documentation](/docs/operators/postgres2.html).
 
-2. If you run out of quotas during the *cluster* deployment, only instances within quotas will be deployed. Unfortunately, even in this case, you cannot remove/redeploy a database using these deployments.
+## Omero Server
 
-3. Local SSD variant is not resilient to cluster failure. Data may be lost in this case (e.g. if cluster is restored from backup, local data may not be available). Regular backups are strongly recommended.
+Running the `omero-server` was the second step. The page shows how to run it in the Docker:
+```
+docker run -d --name omero-server --link postgres:db \
+    -e CONFIG_omero_db_user=postgres \
+    -e CONFIG_omero_db_pass=postgres \
+    -e CONFIG_omero_db_name=postgres \
+    -e ROOTPASS=omero-root-password \
+    -p 4063:4063 -p 4064:4064 \
+    openmicroscopy/omero-server
+```
 
-4. It may happen that a replica fails and cannot join the cluster, in which case the replica and PVC must be removed at once using kubectl delete pod/test-cluster-1 pvc/test-cluster-1 -n [namespace]` if the failed replica is `test-cluster-1`. The replica will be rebuilt and synchronized with the rest of the cluster. However, its number will be increased.
+Application in the managed Kubernetes cannot run as root. It is a good idea to get the expected user id from the container using the docker. So on a machine with docker installed, issue:
+```
+docker run -it --rm --entrypoint /bin/bash openmicroscopy/omero-server
+```
 
-### Images
+This will create and run the Omero server docker container. Next, issue the `id` command, it will show the expected user id and group id. It should look like this:
+```
+xhejtman@osiris:~$ docker run -it --rm --entrypoint /bin/bash openmicroscopy/omero-server
+bash-4.2$ id
+uid=1000(omero-server) gid=997(omero-server) groups=997(omero-server)
+bash-4.2$
+```
 
-Currently, cloudnative-pg docker images do not contain `cs_CZ` locale, so Czech collate cannot be used. For this reason, we have created two local images: `cerit.io/cloudnative-pg/postgresql:10.23-3` and `cerit.io/cloudnative-pg/postgresql:15.0` which contain Czech locales.
+So, for the server deployment, we use user id `1000` and group id `997`. 
 
-List of public images is available [here](https://github.com/cloudnative-pg/postgres-containers/pkgs/container/postgresql).
+We can see, that we should pass four environment variables: `CONFIG_omero_db_user`, ` CONFIG_omero_db_pass`, `CONFIG_omero_db_name`, and `ROOTPASS`. We need to pass an additional variable `CONFIG_omero_db_host` to specify the database hostname. The created database has the hostname in the form `[name]-rw`, so in our case `omero-rw`.
+
+We will use the database secret to fill the `CONFIG_omero_db_user` and `CONFIG_omero_db_pass` variables. The specific part of the manifest looks like this:
+```yaml
+name: CONFIG_omero_db_user
+valueFrom:
+  secretKeyRef:
+    name: omero-db-app
+    key: username
+```
+
+where `name: omero-db-app` is the name of the secret and the `key: username` is the key in the secret.
+
+Scrolling down the github page, we can see that we will also need some persistent storage:
+* `/opt/omero/server/OMERO.server/var`: The OMERO.server var directory, including logs
+* `/OMERO`: The OMERO data directory
+
+We will use a non-persistent `emptyDir` volume for the logs and a persistent volume for the `/OMERO` directory. This solution is based on the assumption, that the `/OMERO` contains valuable data, while `/opt/omero/server/OMERO.server/var` does not.
+
+For the persistent volume, a PVC must be created using the following manifest:
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-omero-data
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: nfs-csi
+```
+[Link](/docs/omero/deployments/pvc-data.yaml).
+
+```
+kubectl create -f pvc-data.yaml -n [namespace]
+```
+
+Finally, we are ready to deploy the `omero-server` using the [complete manifest](/docs/omero/deployments/omero-server.yaml). It also exposes two ports in the same way as the Docker command. **Do not forget to set your own ROOT password in the following fragment.** Also, rather a Secret object should be used to pass the password.
+```yaml
+name: ROOTPASS
+value: omero-root-password
+```
+
+```
+kubectl create -f omero-server.yaml -n [namespace]
+```
+
+Now, we should have the `omero-server` running. However, to be accessible from the cluster, another manifest needs to be ddeployed---service.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: omero-server
+spec:
+  type: ClusterIP
+  ports:
+  - port: 4064
+    name: ssl
+    targetPort: 4064
+  - port: 4063
+    name: plain
+    targetPort: 4063
+  selector:
+    app: omero-server
+```
+[Link](/docs/omero/deployments/omero-server-svc.yaml).
+
+```
+kubectl create -f omero-server-svc.yaml -n [namespace]
+```
+
+This manifest ensures, that the `omero-server` is accessible using the name `omero-server` (it is the value of the `metadata.name`).
+
+## Omero WEB
