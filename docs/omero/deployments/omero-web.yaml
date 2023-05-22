@@ -43,12 +43,8 @@ spec:
         - containerPort: 4080
           name: web
         volumeMounts:
-        - name: omero-data
-          mountPath: /omero
         - name: omero-logs
           mountPath: /opt/omero/web/OMERO.web/var/log
       volumes:
-      - name: omero-data
-        emptyDir: {}
       - name: omero-logs
         emptyDir: {}

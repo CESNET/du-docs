@@ -20,6 +20,8 @@ For Kubernetes, we need to choose the second option because docker-compose canno
 
 The second option starts with database and it seems to be the Postgres database. Here, we are lucky because Kubernetes provide a Postgres operator for easy database deployment, see our [Operators](/docs/operators/postgres2.html) documentation.
 
+In all the commands below, replace the `[namespace]` with your own namespace name.
+
 ## Postgres
 
 The Postgres operator creates random passwords by default, but in this example, we will create an explicit password for the Postgres database. We will use `omero` as database user and some secret password e.g., `xxxpassword`. First, we need to create a secret with the name and the password. Both of them must be [base64](https://www.base64encode.org/) encoded. 
@@ -180,6 +182,102 @@ spec:
 kubectl create -f omero-server-svc.yaml -n [namespace]
 ```
 
-This manifest ensures, that the `omero-server` is accessible using the name `omero-server` (it is the value of the `metadata.name`).
+This manifest ensures, that the `omero-server` is accessible using the name `omero-server` (it is the value of the `metadata.name`). The ports in this service must match the ports from the Docker command `-p 4063:4063 -p 4064:4064`. The name can be arbitrary, but will be different for each port.
 
 ## Omero WEB
+
+Running the `omero-server` is not enough, it does not provide a web interface. So, after some searching, we can follow the [omero-web](https://hub.docker.com/r/openmicroscopy/omero-web) description.
+
+The Docker command is:
+```
+docker run -d --name omero-web \
+    -e OMEROHOST=omero.example.org \
+    -p 4080:4080 \
+    openmicroscopy/omero-web-standalone
+```
+
+Obviously, we replace the `OMERHOST` with `omero-server` which references our service from the `omero-server`. Using the same steps as for the `omero-server`, we get the expected user id and user group:
+```
+xhejtman@osiris:~$ docker run -it --rm --entrypoint /bin/bash openmicroscopy/omero-web-standalone
+bash-4.2$ id
+uid=999(omero-web) gid=998(omero-web) groups=998(omero-web)
+bash-4.2$
+```
+
+Similar to the `omero-server`, the web page states data volume: 
+
+* `/opt/omero/web/OMERO.web/var`: The OMERO.web `var` directory, including logs
+
+For demo purposes, the volume type `emptyDir` is sufficient. 
+
+Now, we are able to deploy the `omero-web` [manifest](/docs/omero/deployments/omero-web.yaml).
+
+```
+kubectl create -f omero-web.yaml -n [namespace]
+```
+
+The `omero-web` should be running now. To access it from the internet, we need a Service and an Ingress -- because it is a web application. The Service is simple enabling the port from the Docker command `-p 4080:4080`:
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: omero-web
+spec:
+  type: ClusterIP
+  ports:
+  - port: 4080
+    name: web
+    targetPort: 4080
+  selector:
+    app: omero-web
+```
+
+[Link](/docs/omero/deployments/omero-web-svc.yaml).
+
+```
+kubectl create -f omero-svc.yaml -n [namespace]
+```
+
+And finally the Ingress:
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: omero
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+   - hosts:
+       - "[omero-test].dyn.cloud.e-infra.cz"
+     secretName: [omero-test]-dyn-cloud-e-infra-cz
+  rules:
+  - host: [omero-test].dyn.cloud.e-infra.cz
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: omero-web
+              port:
+                number: 4080
+```
+
+[Link](/docs/omero/deployments/omero-web-ingress.yaml).
+
+Replace the `[omero-test]` with your own name. The total hostname must not exceed 63 characters. The port number (`4080`) must match the service port number.
+
+```
+kubectl create -f omero-web-ingress.yaml -n [namespace]
+```
+
+You may see the `cm-acme-http-solver-` Pod running, in this case, wait until it is finished, then you can open your Omero link in the browser. Log in using the username `root` and the password from the `omero-server` deployment (the value): 
+```yaml
+- name: ROOTPASS
+  value: omero-root-password
+```
+
+Now we are done!
