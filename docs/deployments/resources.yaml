@@ -18,6 +18,10 @@ spec:
         app: gitlab-kubernetes-agent  
     spec:
       serviceAccountName: gitlab-kubernetes-agent
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - name: agent
         image: "registry.gitlab.com/gitlab-org/cluster-integration/gitlab-agent/agentk:stable"
@@ -38,6 +42,11 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
       volumes:
       - name: token-volume
         secret:

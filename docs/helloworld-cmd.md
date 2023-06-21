@@ -43,9 +43,17 @@ spec:
     spec:
       securityContext:                                                          
         runAsUser: 1000
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:      
       - name: hello-kubernetes
         image: paulbouwer/hello-kubernetes:1.9
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
         ports:
         - containerPort: 8080
 ```
@@ -165,10 +173,18 @@ spec:
         app: hello-kubernetes                                                   
     spec:                                                                       
       securityContext:                                                          
-        runAsUser: 1000                                                         
+        runAsUser: 1000
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:                                                               
       - name: hello-kubernetes                                                  
-        image: paulbouwer/hello-kubernetes:1.9                                  
+        image: paulbouwer/hello-kubernetes:1.9
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
         ports:                                                                  
         - containerPort: 8080                                                   
         env:                                                                    
@@ -225,10 +241,19 @@ spec:
     metadata:                                                                   
       labels:                                                                   
         ...                                                   
-    spec:                                                                       
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault                                                  
       containers:                                                               
         - name: flask-web                                                       
-          image: alpine:3.8                                                     
+          image: alpine:3.8
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL                                                  
           ports:                                                                
             - containerPort: 8888                                                                                                                                              
           volumeMounts:                                                                                                 
