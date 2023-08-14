@@ -22,7 +22,7 @@ When asking for a project, please include following in the email:
 - name of the new project
 - desired resource quota (if default is enough, you don't have to include the information and we will use defaults)
 - person responsible for the project (name + UCO)
-- [special] - **ONLY!!** if you are from MU and would like to reuse already existing group from MU Perun include group name
+- [special] - group name **ONLY!!** if you are from MU and would like to reuse already existing group from MU Perun
 
 If you don't have a group yet, contact <a href="mailto:perun@cesnet.cz">perun@cesnet.cz</a> - *CESNET* Perun support with request to create new group. Rancher project can be created without existence of Perun group as access control and assigning the group are the responsibility of the requestor - you.  
 
