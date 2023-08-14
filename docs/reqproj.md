@@ -18,26 +18,20 @@ Everybody who signs into the [Rancher instance](rancher.cloud.e-infra.cz) is ass
 ## Requesting Group Project
 We are preparing a convenient request form, it will be available at this page when ready. In the meantime, if you need a group project, you have to contat us at  <a href="mailto:k8s@ics.muni.cz">k8s@ics.muni.cz</a>. By default, group project is assigned (and so its namespace) 12 CPU *request* 64 CPU *limit* and  40GB RAM *request* 256GB RAM *limit*. 
 
-When asking for a project, please include in in the email following information:
+When asking for a project, please include following in the email:
 - name of the new project
 - desired resource quota (if default is enough, you don't have to include the information and we will use defaults)
 - person responsible for the project (name + UCO)
-- if group to be assigned is in *MU* or *CESNET* Perun (see following section for explanation)
+- [special] - **ONLY!!** if you are from MU and would like to reuse already existing group from MU Perun include group name
 
-If you don't have a group yet and you want to use:
-- *CESNET* Perun
-  - include information you request a new group as well
-- *MU* Perun
-  - you have to create group yourself, see [tutorial](https://it.muni.cz/sluzby/sprava-skupin-a-pristupu/navody/jak-vytvorit-skupiny)
-  - don't forget to out yourself in the group as well!
+If you don't have a group yet, contact <a href="mailto:perun@cesnet.cz">perun@cesnet.cz</a> - *CESNET* Perun support with request to create new group. Rancher project can be created without existence of Perun group as access control and assigning the group are the responsibility of the requestor - you.  
 
 ## Access Control
-We need the name of responsible person for project access control. It is up to you (or selected person from your group) to manage people allowed to access the project. Even if you know name of the existing group you would like to use from Perun, you have to assign it yourself.
+We need the name of responsible person for project access control. It is up to you (or selected person from your group) to manage people allowed to access the project. Even if you know name of the existing group you would like to use from Perun, you have to assign it yourself. Once the Perun resource is prepared, a responsible person is assigned an administrator role on this resource which means the person can add other people as administrators, assign allowed groups on the resource or add members. 
 
-As a part of the process, we prepare *a resource* in Identity Management System Perun. However, there exist multiple instances of Perun - MU Perun and CESNET Perun. Information about which Perun you use is crucial for ensuring functionality of the whole setup. Once we prepare the Perun resource, a responsible person is assigned an administrator role at this resource. This means that the person can add another people as administrators, assign allowed groups on the resource or add members. In order to enable access for specific Perun group, a responsible person (=an administrator) must assign desired group on the resource. 
+The most widespread way of access control is assigning a group containing several members on Perun resource. Below we provide a tutorial on how **an administrator** (a person you chose to be an administrator in the email) can assign such group.
 
-### Assigning Group
-1. Log into either [MU Perun](https://perun.aai.muni.cz) or [CESNET Perun](https://perun.aai.cesnet.cz).
+1. Log into [CESNET Perun](https://perun.aai.cesnet.cz).
 2. Scroll on the home page until you see table `Manager in Resources`.
 ![manager](request-project-images/manager.png)
 3. Click on the resource with same name as the requested project name.
