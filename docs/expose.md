@@ -70,11 +70,11 @@ Where `service` `name: application-svc` must match the metadata name of the *Ser
 
 If `tls` section is used, TLS will be terminated at NGINX Ingress. The application must be set to communicate over `HTTP`. Communication between Kubernetes and a user is over `HTTPS`.
 
-‼️*IMPORTANT*
+‼️  *IMPORTANT*
 
 TLS is terminated at the cluster boundary when using NGINX Ingress. Communication within the cluster is not encrypted, especially within a single cluster node. If this is a problem, the user must omit the `tls` and `anotations` sections and provide a certificate and key to the Pod itself.
 
-‼️*IMPORTANT*
+‼️  *IMPORTANT*
 
 Some applications are confused by being configured as `HTTP` but exposed as `HTTPS`. If an application generates absolute URLs, it must generate `HTTPS` URLs, not `HTTP`. Kubernetes Ingress sets the `HTTP_X_SCHEME` header to `HTTPS` if it is TLS terminated. For example, for *django*, the user must set `SECURE_PROXY_SSL_HEADER = ("HTTP_X_SCHEME", "https")`. A common header used for this situation is `X_FORWARDED_PROTO`, but this is not set by Kubernetes NGINX. It is also possible to expose `HTTPS` configured applications. See *HTTPS target* below.
 
@@ -141,7 +141,7 @@ The following two annotations are required in the `Ingress`.
 The `secretref' must match the metadata name of the `Secret'.
 
 
-‼️*IMPORTANT*
+‼️  *IMPORTANT*
 
 The password protection is only applied to external traffic, i.e. the user will be prompted for a password. However, traffic from other pods will bypass authentication if it communicates directly with the `Service` IP. This can be mitigated by using `Network Policy`. See [Security](/docs/security.html).
 
