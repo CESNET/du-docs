@@ -16,7 +16,7 @@ In the following documentation there are YAML fragments, they are meant to be de
 
 ### Web-based Applications
 
-Web-based applications are those that communicate using the `HTTP' protocol. These applications are exposed using `Ingress` rules.
+Web-based applications are those that communicate using the `HTTP` protocol. These applications are exposed using `Ingress` rules.
 
 This type of application requires a service that binds a port to an application and ingress rules that expose the service to the Internet.
 
@@ -70,11 +70,13 @@ Where `service` `name: application-svc` must match the metadata name of the *Ser
 
 If `tls` section is used, TLS will be terminated at NGINX Ingress. The application must be set to communicate over `HTTP`. Communication between Kubernetes and a user is over `HTTPS`.
 
-*IMPORTANT
-TLS is terminated at the cluster boundary in NGINX Ingress. Communication within the cluster is not encrypted, especially within a single cluster node. If this is a problem, the user must omit the `tls` and `anotations` sections and provide a certificate and key to the Pod itself.
+‼️*IMPORTANT*
 
-*IMPORTANT
-Some applications are confused by being configured as `HTTP` but exposed as `HTTPS`. If an application generates absolute URLs, it must generate `HTTPS` URLs, not `HTTP`. Kubernetes Ingress sets the `HTTP_X_SCHEME` header to `HTTPS` if it is TLS terminated. For example, for *django*, the user must set SECURE_PROXY_SSL_HEADER = ("HTTP_X_SCHEME", "https")`. A common header used for this situation is `X_FORWARDED_PROTO`, but this is not set by Kubernetes NGINX. It is also possible to expose `HTTPS' configured applications. See *HTTPS target* below.
+TLS is terminated at the cluster boundary when using NGINX Ingress. Communication within the cluster is not encrypted, especially within a single cluster node. If this is a problem, the user must omit the `tls` and `anotations` sections and provide a certificate and key to the Pod itself.
+
+‼️*IMPORTANT*
+
+Some applications are confused by being configured as `HTTP` but exposed as `HTTPS`. If an application generates absolute URLs, it must generate `HTTPS` URLs, not `HTTP`. Kubernetes Ingress sets the `HTTP_X_SCHEME` header to `HTTPS` if it is TLS terminated. For example, for *django*, the user must set `SECURE_PROXY_SSL_HEADER = ("HTTP_X_SCHEME", "https")`. A common header used for this situation is `X_FORWARDED_PROTO`, but this is not set by Kubernetes NGINX. It is also possible to expose `HTTPS` configured applications. See *HTTPS target* below.
 
 #### Custom Domain Name (FQDN)
 
@@ -138,8 +140,10 @@ The following two annotations are required in the `Ingress`.
 
 The `secretref' must match the metadata name of the `Secret'.
 
-*IMPORTANT
-The password protection is only applied to external traffic, i.e. the user will be prompted for a password. However, traffic from other pods will bypass authentication if it communicates directly with the `Service` IP. This can be mitigated by using `Network Policy'. See [Security](/docs/security.html).
+
+‼️*IMPORTANT*
+
+The password protection is only applied to external traffic, i.e. the user will be prompted for a password. However, traffic from other pods will bypass authentication if it communicates directly with the `Service` IP. This can be mitigated by using `Network Policy`. See [Security](/docs/security.html).
 
 #### Large Data Upload
 
@@ -186,6 +190,30 @@ spec:
         pathType: ImplementationSpecific
 
 ```
+
+#### Debugging: Certificate Not Issued
+
+If you configured everything according to the documentation, the certificate should be issued within several moments. If the certificate is not issued, it is possible the pod that is supposed to serve the `acme-challenge` (thus issue the certificate) can't be deployed in your namespace because of the full namespace resource quota. This new pod requires `100m` memory and `1` CPU so if your namespace is fully reserved, try to increase [namespace resource quota](quotas.html#changing-namespace-quotas) or remove some deployments from the namespace. 
+
+If you have `kubectl` installed, you can check if this is the issue:
+1. Check if Ingress creation is stuck on acme-solver (`kubectl get ingress -n [your_namespace]` will return a line featuring `cm-acme-http-solver`)
+```
+> kubectl get ingress -n [your_namespace]
+NAME                        CLASS    HOSTS                                                                             ADDRESS                PORTS     AGE
+cm-acme-http-solver-972p9   <none>   schema.biodata.ceitec.cz                                                          kuba-pub.cerit-sc.cz   80        12m
+```
+2. List events happening in your namespace and see if there is a warning about quotas (`kubectl get events -n [your_namespace]` will feature some lines along `exceeded quota`)
+```
+> kubectl get events -n [your_namespace] | grep cm-acme-http-solver
+...
+79s         Warning   PresentError   challenge/adamant-dyn-cloud-e-infra-cz-6dp4n-152868974-3440702542   (combined from similar events): Error presenting challenge: pods "cm-acme-http-solver-74szl" is forbidden: exceeded quota: default-kn7vq, requested: limits.cpu=100m, used: limits.cpu=1, limited: limits.cpu=1
+...
+```
+
+It is possible to check events from Rancher UI as well.
+
+![acmesolver](acme-solver.png)
+
 
 ### Other Applications
 
