@@ -193,7 +193,7 @@ spec:
 
 #### Debugging: Certificate Not Issued
 
-If you configured everything according to the documentation, the certificate should be issued within several moments. If the certificate is not issued, it is possible the pod that is supposed to serve the `acme-challenge` (thus issue the certificate) can't be deployed in your namespace because of the full namespace resource quota. This new pod requires `100m` memory and `1` CPU so if your namespace is fully reserved, try to increase [namespace resource quota](quotas.html#changing-namespace-quotas) or remove some deployments from the namespace. 
+If you configured everything according to the documentation, the certificate should be issued within several moments. If the certificate is not issued, it is possible the pod that is supposed to serve the `acme-challenge` (thus issue the certificate) can't be deployed in your namespace because of the full namespace resource quota. This new pod requires `100MiB` memory and `10m` CPU so if your namespace is fully reserved, try to increase [namespace resource quota](quotas.html#changing-namespace-quotas) (add `100` to memory reservation and memory limit; add `10` to CPU reservation and CPU limit) or remove some deployments from the namespace. 
 
 If you have `kubectl` installed, you can check if this is the issue:
 1. Check if Ingress creation is stuck on acme-solver (`kubectl get ingress -n [your_namespace]` will return a line featuring `cm-acme-http-solver`)
