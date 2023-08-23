@@ -35,7 +35,9 @@ Other images are redirected to the `/lab` version of JupyterHub.
 ![lab](jupyterhub-images/lab.png)
 
 ## Storage
-By default, every notebook runs with persistent storage mounted to `/home/jovyan`. Therefore, we recommend to save the data to `/home/jovyan` directory to have them accessible every time notebook is spawned. Same persistent storage is mounted to all your notebooks so you can share data across multiple instances. If you delete all your JupyterHub notebook instances and spawn new one later, same persistent storage is mounted again. Therefore, your data are preserved across instances and spawns.
+By default, every notebook runs with persistent storage mounted to `/home/jovyan`. Therefore, we recommend to save the data to `/home/jovyan` directory to have them accessible every time notebook is spawned. 
+
+If you create a new named notebook, new persistent storage is mounted to it. If you have ever created a notebook with the same name, new persistent storage is not created but old one is mounted. However, you can choose to delete existing storage which will result in losing all the data from it. Furthermore, you can choose to mount any already existing storage (to `/home/jovyan`) instead of creating a new one which enables sharing data across spawns and instances.
 
 ### MetaCentrum home
 You can mount your MetaCentrum home --- check the options and select the desired home. Currently, it is possible to mount only one home per notebook. In hub, your home is located in `/home/meta/{meta-username}`.
@@ -63,9 +65,9 @@ Each Jupyter notebook can request 3 types of resources --- CPU, memory, GPU --- 
 #### GPU
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is possible to utilize GPU in your notebook, you can request whole GPU or MIG GPU.
 
-- For whole GPU, **using GPU requires particular setting (e.g. drivers, configuration) so it can be effectively used only in images with GPU support.** (marked as `...with GPU...` in selection menu). If you assign GPU with any other image, it will not be truly functional.
+- For whole GPU, **using GPU requires particular setting (e.g. drivers, configuration) so it can be effectively used only in images with GPU support.** (marked as `...with GPU...` in the selection menu). If you assign GPU with any other image, it will not be truly functional.
 
-- For MIG GPU, see [NVIDIA MIG](https://www.nvidia.com/en-us/technologies/multi-instance-gpu/) documentation about MIG technology. It is possible to request 10GB MIG of NVIDIA A100/80GB card and up to 4 parts of the card using `10GB part A100` option. GPU memory is HW limited so there is no problem that someone else could overutilize requested amount of the resource. Individual MIG parts (up to 4) act as isolated GPUs so to utilize more than one MIG part, multi-GPU computation has to be setup in an application.
+- For MIG GPU, see [NVIDIA MIG](https://www.nvidia.com/en-us/technologies/multi-instance-gpu/) documentation about MIG technology. It is possible to request up to 4 parts of 10GB MIG of NVIDIA A100/80GB card using `10GB part A100` option and up to 4 parts of 20GB MIG of NVIDIA A100/80GB card using `120GB part A100` optino. GPU memory is HW limited so there is no problem that someone else could overutilize requested amount of the resource. Individual MIG parts (up to 4) act as isolated GPUs so to utilize more than one MIG part, multi-GPU computation has to be setup in an application.
 
 
 ### Resource utilization
