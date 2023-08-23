@@ -40,14 +40,14 @@ By default, every notebook runs with persistent storage mounted to `/home/jovyan
 ### MetaCentrum home
 You can mount your MetaCentrum home --- check the options and select the desired home. Currently, it is possible to mount only one home per notebook. In hub, your home is located in `/home/meta/{meta-username}`.
 
-Possibibilities:
+Possibilities:
 
-brno10-ceitec-hsm | brno11-elixir | brno12-cerit | brno14-ceitec | vestec1-elixir
---- | --- | --- | --- |--- 
-brno1-cerit | brno2 | brno3-cerit | brno6  | praha1
-brno8 | brno9-ceitec | budejovice1 | du-cesnet | praha2-natur
-liberec3-tul | ostrava1 | ostrava2-archive | pruhonice1-ibot | praha5-elixir
-plzen1 | plzen4-ntis                   
+brno11-elixir | brno12-cerit | brno14-ceitec 
+--- | --- | --- |
+brno1-cerit | brno2 | praha1
+budejovice1 | du-cesnet | praha2-natur
+liberec3-tul | pruhonice1-ibot | praha5-elixir
+plzen1 | plzen4-ntis | vestec1-elixir        
 
 ❗️ If you choose storage where you do NOT have a home, spawn will fail. Please, make sure you are choosing storage where your home exists. If you are not sure about home location, contact <a href="mailto:k8s@ics.muni.cz">IT Service desk</a> who will help.
 
@@ -58,20 +58,18 @@ Each Jupyter notebook can request 3 types of resources --- CPU, memory, GPU --- 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You are guaranteed **1 CPU** and can request up to **32 CPU** limit. Resource limits represent a hard limit which means you can't use more than set amount for that specific instance. If computation inside notebook requires more CPUs than assigned, it will not be killed but throttled --- the computation will continue, perhaps just slower.  
 
 #### Memory
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You are guaranteed **1G of RAM** and can request up to **256G of RAM**. Resource limits represent a hard limit which means you can't use more than set amount for that specific instance. If computation inside notebook consumes more memory than assigned, it will be killed. The notebook will not disappear but the computation will either error or abruptly end.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You are guaranteed **4G of RAM** and can request up to **256G of RAM**. Resource limits represent a hard limit which means you can't use more than set amount for that specific instance. If computation inside notebook consumes more memory than assigned, it will be killed. The notebook will not disappear but the computation will either error or abruptly end.
 
 #### GPU
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is possible to utilize GPU in your notebook, you can request a fraction of GPU memory, whole GPU, or MIG GPU.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is possible to utilize GPU in your notebook, you can request whole GPU or MIG GPU.
 
-- For whole GPU, you can request at most 2. **Using GPU requires particular setting (e.g. drivers, configuration) so it can be effectively used only in Tensorflow image with GPU support.** If you assign GPU with any other image, it will not be truly functional. Getting 2 GPUs at once might not be possible immediately, we recommend asking for 1 or GPU memory part.
+- For whole GPU, **using GPU requires particular setting (e.g. drivers, configuration) so it can be effectively used only in images with GPU support.** (marked as `...with GPU...` in selection menu). If you assign GPU with any other image, it will not be truly functional.
 
-- For GPU memory fraction, you are given a possibly shared GPU. Fractions of GPUs are easily available but on the other hand, no technical power exists that would enforce requested GPU memory limits --- if a user (someone else than you) exceeds requested amount of GPU memory, there is a chance that your computation will fail for everyone sharing the GPU.
-
-- For MIG GPU, see [NVIDIA MIG](https://www.nvidia.com/en-us/technologies/multi-instance-gpu/) documentation about MIG technology. It is possible to request 10GB MIG of NVIDIA A100/80GB card and up to 7 parts of the card using `10GB part A100` option. In this case, GPU memory is HW limited so there is no problem that someone else could overutilize requested amount of the resource. Individual MIG parts (up to 7) act as isolated GPUs so to utilize more than one MIG part, multi-GPU computation has to be setup in an application.
+- For MIG GPU, see [NVIDIA MIG](https://www.nvidia.com/en-us/technologies/multi-instance-gpu/) documentation about MIG technology. It is possible to request 10GB MIG of NVIDIA A100/80GB card and up to 4 parts of the card using `10GB part A100` option. GPU memory is HW limited so there is no problem that someone else could overutilize requested amount of the resource. Individual MIG parts (up to 4) act as isolated GPUs so to utilize more than one MIG part, multi-GPU computation has to be setup in an application.
 
 
 ### Resource utilization
-After providing JupyterHub for more than a year, we have collected enough data to safely state that most of the notebook instances request unreasonably high resource amounts that remain unused but blocked. We believe fine resource utilization is a key factor in effective computing and therefore we have implemented a simple mechanism which decides if your notebook instance will be deleted. It performs evaluation once a day.
+After providing JupyterHub for more than a year, we have collected enough data to safely state that most of the notebook instances request unreasonably high resource amounts that remain unused but blocked. We believe fine resource utilization is a key factor in effective computing and therefore we have implemented a simple mechanism that decides if your notebook instance will be deleted. It performs evaluations once a day.
 
 If **at least 1 GPU** was requested, the mechanism checks GPU usage and does not care about CPU usage (GPU is a *more expensive* resource). After 2 days of <0.005 GPU usage, the notebook instance is deleted. The threshold `0.005` was chosen because this number is truly insignificant and means no usage. 
 
@@ -79,11 +77,14 @@ If **no GPU** was requested, the mechanism checks only CPU usage. After 7 days o
 
 The mechanism works for both ways as following: 
 
-> The maximum GPU/CPU usage is measured in the time segments calculated as `(time.Now - X)` where X is 24h and decreases by 30 seconds until 0. The final maximum is chosen from all segments. If the resulting maximum *equals to zero/under 0.001*, the notebook instance is internally marked with "1" as the first warning. If usage is non-zero/above 0.001, nothing happens.
+> Notebook's CPU usage is measured over 24h and is calculated as the average of notebook CPU usage (in CPU seconds) over 5-minute-long segments. The final maximum is chosen from all segments. If the resulting maximum *equals to zero/under 0.01*, the notebook instance is internally marked with "1" as the first warning. If usage is above 0.01, nothing happens.
+>
+> Notebook's GPU usage is measured over 24h and is calculated as the average portion of time graphics engine was active over 5-minute-long segments. The final maximum is chosen from all segments. If the resulting maximum *equals to zero/under 0.005*, the notebook instance is internally marked with "1" as the first warning. If usage is above 0.005, nothing happens.
 > 
 >  Next run performs the same but if maximum:
->  - still equals to zero/is still less than 0.001 for CPU, counter is increased by one. If counter reaches 3 (as 3 days), instance is deleted.
->  - changes from zero to non-zero number/increases above 0.001 for CPU (you apparently started using notebook again), the mark is completely removed.
+>  - is still less than 0.01 for CPU (0.005 for GPU), counter is increased by one. If counter reaches `threshold+1` (e.g. for CPU, 8 as 7 days have already passed), instance is deleted.
+>  - changes from under the threshold above it, the mark is completely removed (you apparently started using notebook again).
+>  - is over the threshold, nothing happens.
 
 
 #### Low usage notification
