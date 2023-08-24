@@ -11,7 +11,12 @@ sidebar:
 
 # JupyterHub 
 
-We provide a JupyterHub running on Kubernetes for every MetaCentrum member. The hub can be accessed on [hub.cloud.e-infra.cz](https://hub.cloud.e-infra.cz/). Sign in with meta username (do not use @META, only username) and related password. 
+It is necessary to be a **valid** member of MetaCentrum to access JupyterHub on [hub.cloud.e-infra.cz](https://hub.cloud.e-infra.cz/).
+
+## MetaCentrum Membership
+If you are already a member of MetaCentrum, you can check your membership status in [user profile](https://profile.e-infra.cz/profile/organizations), row `MetaCentrum`. If the account is expired, ask for renewal by clicking on button in the same row.
+
+If you are not a member, you can [apply](https://metavo.metacentrum.cz/en/application/index.html) for a MetaCentrum account.
 
 ## Choosing image
 
