@@ -42,6 +42,8 @@ The most widespread way of access control is assigning a group containing severa
 6. Click `Next`, leave all options as they are and click `Assign group`. 
 7. It takes 5-10 minutes to propagate the change so you have to wait for a bit. After 10 minutes, the change should be propagated so you can log out and back into Rancher or just refresh the page. You (and all group  members) should now see the project.
 
+❗️ Don't forget administrator needs to be member of the group as well to have access to the project/service ❗️
+
 ## Requesting Larger Individual Project
 We are preparing a convenient request form, it will be available at this page when ready. In the meantime, if you need a larger project for your own use, you have to contat us at <a href="mailto:k8s@ics.muni.cz">k8s@ics.muni.cz</a>.
 
