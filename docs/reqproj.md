@@ -29,7 +29,7 @@ When asking for a project, please include following in the email:
 If you don't have a group yet, contact <a href="mailto:perun@cesnet.cz">perun@cesnet.cz</a> - *CESNET* Perun support - with request to create new group. Rancher project can be created without existence of Perun group. 
 
 ### Group in MUNI Perun?
-If your group is located in MUNI Perun, contact <a href="mailto:perun@cesnet.cz">perun@cesnet.cz</a> - *CESNET* Perun support - with request to sync the group into CESNET Perun instance. Rancher project can be created without existence of Perun group.
+If your group is located in MUNI Perun, contact <a href="mailto:perun@cesnet.cz">perun@cesnet.cz</a> - *CESNET* Perun support - with a request to sync the group (include its ID in MUNI Perun) into CESNET Perun instance with VO Meta authorization, (in Czech 'synchronizovat skupinu s opravnenim do VO Meta'). Rancher project can be created without the existence of Perun group.
 
 
 ## Access Control
