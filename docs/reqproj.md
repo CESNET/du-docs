@@ -21,10 +21,16 @@ We are preparing a convenient request form, it will be available at this page wh
 When asking for a project, please include following in the email:
 - name of the new project
 - desired resource quota (if default is enough, you don't have to include the information and we will use defaults)
-- person responsible for the project (name + UCO)
-- [special] - group name **ONLY!!** if you are from MU and would like to reuse already existing group from MU Perun
+- the person responsible for the project (name + UCO)
 
-If you don't have a group yet, contact <a href="mailto:perun@cesnet.cz">perun@cesnet.cz</a> - *CESNET* Perun support with request to create new group. Rancher project can be created without existence of Perun group as access control and assigning the group are the responsibility of the requestor - you.  
+❗️ **Access control = assigning the group** is the responsibility of the requestor - you - according to the [tutorial below](#access-control)
+
+### No Group Yet?
+If you don't have a group yet, contact <a href="mailto:perun@cesnet.cz">perun@cesnet.cz</a> - *CESNET* Perun support - with request to create new group. Rancher project can be created without existence of Perun group. 
+
+### Group in MUNI Perun?
+If your group is located in MUNI Perun, contact <a href="mailto:perun@cesnet.cz">perun@cesnet.cz</a> - *CESNET* Perun support - with request to sync the group into CESNET Perun instance. Rancher project can be created without existence of Perun group.
+
 
 ## Access Control
 We need the name of responsible person for project access control. It is up to you (or selected person from your group) to manage people allowed to access the project. Even if you know name of the existing group you would like to use from Perun, you have to assign it yourself. Once the Perun resource is prepared, a responsible person is assigned an administrator role on this resource which means the person can add other people as administrators, assign allowed groups on the resource or add members. 
