@@ -15,21 +15,28 @@ In Kubernetes cluster we differentiate between 2 types of projects:
 
 Everybody who signs into the [Rancher instance](rancher.cloud.e-infra.cz) is assigned his/her default individual project (more information [here](https://docs.cerit.io/docs/rancher.html)) with default quotas described [here](https://docs.cerit.io/docs/quotas.html). 
 
+To access projects in Rancher, you must be a valid member of MetaCentrum. If you are not a member of MetaCentrum, registration form is available [here](https://metavo.metacentrum.cz/en/application/index.html).
+
 ## Requesting Group Project
 We are preparing a convenient request form, it will be available at this page when ready. In the meantime, if you need a group project, you have to contat us at  <a href="mailto:k8s@ics.muni.cz">k8s@ics.muni.cz</a>. By default, group project is assigned (and so its namespace) 12 CPU *request* 64 CPU *limit* and  40GB RAM *request* 256GB RAM *limit*. 
 
-When asking for a project, please include following in the email:
+### Use Existing Group for Access Control
+If you already have a group in **perun.e-infra.cz**, please include its VO and ID in the email.
+
+Other required information:
 - name of the new project
 - desired resource quota (if default is enough, you don't have to include the information and we will use defaults)
 - the person responsible for the project (name + UCO)
 
 ❗️ **Access control = assigning the group** is the responsibility of the requestor - you - according to the [tutorial below](#access-control)
 
-### No Group Yet?
-If you don't have a group yet, contact <a href="mailto:perun@cesnet.cz">perun@cesnet.cz</a> - *CESNET* Perun support - with request to create new group. Rancher project can be created without existence of Perun group. 
+### No Group Yet for Access Control
+If you don't have any group, we will create it for you. Please include information "create a new group for a Rancher project".
 
-### Group in MUNI Perun?
-If your group is located in MUNI Perun, contact <a href="mailto:perun@cesnet.cz">perun@cesnet.cz</a> - *CESNET* Perun support - with a request to sync the group (include its ID in MUNI Perun) into CESNET Perun instance with VO Meta authorization, (in Czech 'synchronizovat skupinu s opravnenim do VO Meta'). Rancher project can be created without the existence of Perun group.
+Other required information:
+- name of the new project
+- desired resource quota (if default is enough, you don't have to include the information and we will use defaults)
+- the person responsible for the project (name + UCO)
 
 
 ## Access Control
