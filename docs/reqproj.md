@@ -18,24 +18,24 @@ Everybody who signs into the [Rancher instance](rancher.cloud.e-infra.cz) is ass
 To access projects in Rancher, you must be a valid member of MetaCentrum. If you are not a member of MetaCentrum, registration form is available [here](https://metavo.metacentrum.cz/en/application/index.html).
 
 ## Requesting Group Project
-We are preparing a convenient request form, it will be available at this page when ready. In the meantime, if you need a group project, you have to contat us at  <a href="mailto:k8s@ics.muni.cz">k8s@ics.muni.cz</a>. By default, group project is assigned (and so its namespace) 12 CPU *request* 64 CPU *limit* and  40GB RAM *request* 256GB RAM *limit*. 
+We are preparing a convenient request form, it will be available at this page when ready. In the meantime, if you need a group project, you have to contact us at  <a href="mailto:k8s@ics.muni.cz">k8s@ics.muni.cz</a>. By default, group project is assigned (and so its namespace) 12 CPU *request* 64 CPU *limit* and  40GB RAM *request* 256GB RAM *limit*. 
 
 ### Use Existing Group for Access Control
-If you already have a group in **perun.e-infra.cz**, please include its VO and ID in the email.
+If you already have a group in **perun.e-infra.cz**, please include the group's VO in the email. If the group is in VO e-infra.cz, include the group's ID as well.
 
 Other required information:
 - name of the new project
-- desired resource quota (if default is enough, you don't have to include the information and we will use defaults)
+- desired resource quota (not necessary if the default is enough)
 - the person responsible for the project (name + UCO)
 
 ❗️ **Access control = assigning the group** is the responsibility of the requestor - you - according to the [tutorial below](#access-control)
 
 ### No Group Yet for Access Control
-If you don't have any group, we will create it for you. Please include information "create a new group for a Rancher project".
+If you don't have a group, we will create it for you. Please include information "create a new group for a Rancher project".
 
 Other required information:
 - name of the new project
-- desired resource quota (if default is enough, you don't have to include the information and we will use defaults)
+- desired resource quota (not necessary if the default is enough)
 - the person responsible for the project (name + UCO)
 
 
