@@ -33,6 +33,35 @@ Then you can change `Resource Quotas` for the *Namespace* as desired and `Save` 
 
 To make things work properly, do not create a *Namespace* using `kubectl` or `helm` or any other tools. It is possible but you will not see this *Namespace* in Rancher UI. Instead, use the Rancher UI to create the *Namespace*. Most tools like `helm`, `kustomize` should deal with already existing *Namespaces* just fine.
 
+1. Firstly, in a project where you want to create new namespace, lower namespace resource quotas of some of the existing namespaces so you create space for new namespace. Perform this according to the previous section. 
+   
+2. Create a new namespace in the project via UI button and set some resource quotas
+![create-ns](create-ns.png)  
+4. Create the following role binding in the new namespace. New namespaces are forbidden to perform any action so to ensure you can deploy objects, this role binding is necessary. You can create rolebinding via UI or using kubectl.
+
+YAML rolebinding:
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: [new_namespace_name]-sa-rb
+  namespace: [new_namespace_name]
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: grant-namespace-permissions
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: [new_namespace_name]
+```
+
+Kubectl: Change `[new_namespace_name]` for the actual name of your new namespace, save it as e.g. `rolebinding.yaml`, and deploy via `kubectl create -f rolebinding.yaml`
+
+UI: Navigate according to the image and import the same YAML as above, changing `[new_namespace_name]` for the actual name of your new namespace.
+![rolebinding](rolebinding.png)
+
+
 ## Resource Limits
 
 If running container exceeds limits, result depends on resource type. If resource is CPU, container continues to run only the CPU is limited, i.e., it runs slower. If resource is Memory or ephemeral-storage, container is *evicted*, it can be restarted in case of *Deployment* but resource is not extended automatically, so eviction is likely to happen again.
