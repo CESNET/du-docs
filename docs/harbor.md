@@ -8,24 +8,16 @@ aside:
 sidebar:
   nav: docs
 ---
-Harbor is a multi-user docker registry with a web UI. We have an instance
-of Harbor running available at [hub.cerit.io](https://hub.cerit.io) for all
-Metacentrum users. The main advantage of having our own registry as
-opposed to using e.g. [hub.docker.io](https://hub.docker.io) is that
-we can offer unlimited private repositories to our users and thus they can
-create as many docker images as they want without publicly exposing them to
-the world.
+Harbor is a multi-user docker registry with a web UI available at [hub.cerit.io](https://hub.cerit.io). The main advantage of having our own registry as opposed to using e.g. [hub.docker.io](https://hub.docker.io) is that we can offer unlimited private repositories to our users and thus they can create as many docker images as they want without publicly exposing them to the world.
 
-Each user has their personal project with a 100 GB limit for artifact
-storage and unlimited number of artifacts. Harbor can be used to store
-Docker images and Helm charts. The web UI allows users to delete artifacts
-and repositories to reclaim space (deletion can take up to 24 hours).
+Each user has their personal project with a 100 GB limit for artifact storage and an unlimited number of artifacts. Harbor can be used to store Docker images and Helm charts. The web UI allows users to delete artifacts and repositories to reclaim space (deletion can take up to 24 hours).
 
-If needed, an administrator can create a shared project for a group of
-users that need to work together. 
+If needed, an administrator can create a shared project for a group of users that need to work together. 
 
-**WARNING** even though you have your own project and no one else can see
-your images, the Kubernetes cluster can access all images in all projects!
+
+‼️ **WARNING** ‼️
+
+Even though you have your own project and no one else can see your images, the Kubernetes cluster can access all images in all projects!
 
 Your images are therefore accessible by all users of Kubernetes (if they
 know or correctly guess your image name). So do **NOT** include any
