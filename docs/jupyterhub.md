@@ -27,6 +27,7 @@ We pre-prepared the following images:
 - tensorflow-notebook ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-tensorflow-notebook))
 - tensorflow-notebook with GPU support ([spec](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-tensorflow-notebook) but TF v. 2.7.0 and TensorBoard installed)
 - RStudio with R 4.2.1 or 4.3.1
+- Jupyter environment with Python 3.11 and R 4.3.1 kernels
 - MATLAB R2022b
 - MATLAB R2023a
 - Alphapose
