@@ -202,34 +202,38 @@ Other customization can include:
 
 
 ## Creating PersistentVolumeClaim
-If you need to use some persistent storage, you can demand a NFS volume and mount it in `Deployment`. 
+If you need to use some persistent storage, you can create a NFS volume and mount it in `Deployment`. 
 
-Example: create file `claim.yaml` with content
+Example: create file `pvc.yaml` and set `[pvc-name]` to desired name and `[capacity]` to desired capacity.
 ```yaml
 apiVersion: v1                                                                                                                                                                                              
 kind: PersistentVolumeClaim                                                     
 metadata:                                                                       
-  name: my-first-claim                                                               
+  name: [pvc-name]                                                               
 spec:                                                                           
   accessModes:                                                                  
     - ReadWriteMany                                                             
   resources:                                                                    
     requests:                                                                   
-      storage: 1Gi                                                              
+      storage: [capacity]Gi                                                              
   storageClassName: nfs-csi
 ```
-The `spec.resources.requests` field has to be specified but doesn't really mean anything. Then perform `kubectl apply -f claim.yaml -n [namespace]`. You can check if everything went fine by running
+Then perform `kubectl apply -f pvc.yaml -n [namespace]` where `[namespace]` is the namespace where you want to have pvc created. You can check if everything went fine by running
 ```bash
 kubectl get pvc -n [namespace]
 NAME                                                               STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-my-first-claim                                                    Bound    pvc-bcdcea2e-3019-409b-8b0f-18eb50d72c21   1Gi        RWX            csi-nfs        11d
+[pvc-name]                                                    Bound    pvc-bcdcea2e-3019-409b-8b0f-18eb50d72c21   1Gi        RWX            csi-nfs        11d
 ```
 
-The claim (and other mountable resources are done very similarly) is mounted into the `Deployment` in 2 steps:
+The claim is mounted into the `Deployment` (or other objects such as `Job, StatefulSet, DaemonSet`, etc.) in 2 steps:
 - create field `volumes` under `spec.template`
 - create field `volumeMounts` under `spec.template.spec.containers[container_which_will_have_pvc_mounted]`
 
-A piece of relevant config. `Volumes` is a list of volumes to mount with at least `name` field and type of resource which will be mounted (here `persistentVolumeClaim`) together with its name (the one specified in PVC's `metadata.name`). `volumeMounts` mounts items from `volumes` in certain path inside container. In container, everything saved in path `/work` will persist and can be shared between multiple containers (one volume can be mount many times if its type is `ReadWriteMany` which NFS is)
+`volumes` represents a list of volumes to mount with at least:
+- `name` field
+- resource type that will be mounted (here `persistentVolumeClaim`) together with resource's name (the one specified in PVC's `metadata.name`)
+
+`volumeMounts` mounts items from `volumes` in a certain path inside the container. In a container, everything saved in path `/work` will persist and can be shared between multiple containers (one volume can be mounted many times if its type is `ReadWriteMany` which NFS is)
 
 ```yaml
 spec:                                                                           
@@ -256,10 +260,10 @@ spec:
               - ALL                                                  
           ports:                                                                
             - containerPort: 8888                                                                                                                                              
-          volumeMounts:                                                                                                 
+          volumeMounts:            <---------------- VOLUME MOUNTS LIST                                                                                       
             - mountPath: /work                                                  
               name: shared-volume                                               
-      volumes:                                                                                                                      
+      volumes:        <---------------- VOLUMES LIST                                                                                                           
       - name: shared-volume                                                     
         persistentVolumeClaim:                                                  
           claimName: my-first-claim
