@@ -32,7 +32,9 @@ You can choose to build your own image with all dependencies and sotware you nee
 
 ### Working environment
 
-If you choose RStudio, you will be redirected directly do rstudio environment. 
+If you choose RStudio, you will be redirected to jupyter lab. It is then necessary to click on RStudio icon to be redirected to the RStudio environment. 
+
+![rstudio](jupyterhub-images/rstudio-click.png)
 
 ![rstudio](jupyterhub-images/rstudio.png)
 
