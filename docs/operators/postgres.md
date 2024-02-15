@@ -9,6 +9,10 @@ sidebar:
   nav: docs
 ---
 
+## Deprecated
+
+Please, use [CloudNativePg Operator instead](https://docs.cerit.io/docs/operators/postgres2.html).
+
 The [Postgres Operator](https://opensource.zalando.com/postgres-operator/) delivers easy to run PostgreSQL cluster on Kubernetes. We have deployed cluster-wide Postgres operator for easy deployment of Postgres SQL database servers. The Postgres Operator defines kind `postgresql` that ensures existence of databse or database cluster, full documentation on kind's structure is available [here](https://postgres-operator.readthedocs.io/en/latest/reference/cluster_manifest/). The official user guide to creating a minimal PostgreSQl cluster can be found [here](https://postgres-operator.readthedocs.io/en/latest/user/). For convenience, we provide some working examples below divided into sections. Furthermore, we added comparison of deployments that used different underlying storage.
 
 ## Deploying Single Instance 

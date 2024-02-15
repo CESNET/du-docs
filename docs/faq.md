@@ -75,3 +75,5 @@ resources:
 ```
 
 The `runAsUser` and `runAsGroup` lines are important.
+
+**See full security context settings** [here](https://docs.cerit.io/docs/securitycontext.html).
