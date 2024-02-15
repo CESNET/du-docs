@@ -18,7 +18,7 @@ Searching for the term `omero docker`, we got the result [https://github.com/ome
 
 For Kubernetes, we need to choose the second option because docker-compose cannot be applied directly to Kubernetes.
 
-The second option starts with database and it seems to be the Postgres database. Here, we are lucky because Kubernetes provide a Postgres operator for easy database deployment, see our [Operators](/docs/operators/postgres2.html) documentation.
+The second option starts with database and it seems to be the Postgres database. Here, we are lucky because Kubernetes provide a Postgres operator for easy database deployment, see our [Operators](/docs/operators/postgres-cnpg.html) documentation.
 
 In all the commands below, replace the `[namespace]` with your own namespace name.
 

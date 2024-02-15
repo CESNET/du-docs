@@ -1,8 +1,8 @@
 ---
 layout: article
 title: Postgres Operator Cloudnative-PG
-permalink: /docs/operators/postgres2.html
-key: postgres2
+permalink: /docs/operators/postgres-cnpg.html
+key: postgrescnpg
 aside:
   toc: true
 sidebar:

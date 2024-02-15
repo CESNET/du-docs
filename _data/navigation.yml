@@ -48,7 +48,7 @@ docs:
       - title: Postgres Operator Zalando
         url: /docs/operators/postgres.html
       - title: Postgres Operator Cloudnative-PG
-        url: /docs/operators/postgres2.html
+        url: /docs/operators/postgres-cnpg.html
       - title: Spark Operator
         url: /docs/operators/spark.html
   - title: Examples
