@@ -13,7 +13,7 @@ The [Postgres Operator](https://cloudnative-pg.io/documentation/1.18/) provides 
 
 ## Deploying a single instance
 
-You can start with a minimal instance, which is suitable for testing only, it uses NFS storage as backend and consumes limited resources, but also performance is low. You can download the [minimal manifest] (/docs/postgres/minimal-cn.yaml).
+You can start with a minimal instance, which is suitable for testing only, it uses NFS storage as backend and consumes limited resources, but also performance is low. You can download the [minimal manifest](/docs/postgres/minimal-cn.yaml).
 
 ```yaml
 apiVersion: postgresql.cnpg.io/v1
@@ -69,7 +69,7 @@ Note: Cluster instances consume more resources and you must consider how much re
 
 ## Utilizing Local Storage
 
-It is possible to use local storage (SSD) instead of NFS or any network supported PVC. While it is not possible to directly request local storage in the `volume' section, it is still possible to use local storage. You can download the [single instance manifest](/docs/postgres/minimal-local-cn.yaml) which can also be used for the cluster instance (set the desired `numberOfInstances`).
+It is possible to use local storage (SSD) instead of NFS or any network supported PVC. While it is not possible to directly request local storage in the `volume` section, it is still possible to use local storage. You can download the [single instance manifest](/docs/postgres/minimal-local-cn.yaml) which can also be used for the cluster instance (set the desired `numberOfInstances`).
 
 Basically, the `zfs-csi` storage class can be used to use local storage. Special care must be taken when setting the limit. It cannot be increased in the future and the limit is enforced, however, it is fasted storage that is offered.
 
