@@ -43,6 +43,8 @@ docs:
     children:
       - title: Operator Summary
         url: /docs/operators/operator-summary.html
+      - title: MinIO Operator
+        url: /docs/operators/minio.html
       - title: MPI Operator
         url: /docs/operators/mpi.html
       - title: Postgres Operator Zalando
