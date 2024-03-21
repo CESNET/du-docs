@@ -206,3 +206,60 @@ spec:
 Currently, cloudnative-pg docker images do not contain `cs_CZ` locale, so Czech collate cannot be used. For this reason, we have created two local images: `cerit.io/cloudnative-pg/postgresql:10.23-3` and `cerit.io/cloudnative-pg/postgresql:15.0` which contain Czech locales.
 
 List of public images is available [here](https://github.com/cloudnative-pg/postgres-containers/pkgs/container/postgresql).
+
+## Network Policy
+
+To increase security, a *network policy* can be used to allow network access to the database only from certain pods. See [Network Policy](/docs/security.html) for more information. External access, i.e. access from the public Internet, is disabled by default. However, it is possible to expose the database via [Load Balancer](/docs/kubectl-expose.html#other-applications).
+
+The following example shows a simple NetworkPolicy applied to the Postgres operator. You can download this example [here](postgres-cnpg-minimal-postgres-np.yaml). **Please note that if you want to use the data backups and also restrict the egress communication, you may need to add an egress rule enabling the communication to the backup server!** If ingress only restriction is suitable for you, you can remove the egress rules.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-cnpg-np
+spec:
+  podSelector:
+    matchLabels:
+      # This Network Policy is applied to our Postgres CNPG Cluster resource named "test-cluster"
+      cnpg.io/cluster: test-cluster
+  policyTypes:
+  - Ingress
+  - Egress # <---
+  ingress:
+    # Enables ingress Postgres port for all Pods
+  - ports:
+    - port: 5432
+      protocol: TCP
+    from:
+    - podSelector: {}
+    # Enables ingress communication from the Postgres CNPG Operator installed in the Kubernetes
+  - ports:
+    - port: 8000
+      protocol: TCP
+    from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cloudnativepg
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: cloudnative-pg
+  egress: # <---
+    # Enables egress communication to the Postgres CNPG Operator installed in the Kubernetes
+  - ports:
+    - port: 6443
+      protocol: TCP
+    to:
+    - ipBlock:
+        cidr: 10.43.0.1/32
+    - ipBlock:
+        cidr: 10.16.62.14/32
+    - ipBlock:
+        cidr: 10.16.62.15/32
+    - ipBlock:
+        cidr: 10.16.62.16/32
+    - ipBlock:
+        cidr: 10.16.62.17/32
+    - ipBlock:
+        cidr: 10.16.62.18/32
+```
