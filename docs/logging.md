@@ -16,7 +16,7 @@ The logging pipeline consists of two components, `SyslogNGFlow` and `SyslogNGOut
 
 ### SyslogNGFlow
 
-The `SyslogNGFlow` specifies what logs should be sent to the final output destination. For that, it uses `match` statements that support logical operator `and`, `or` and `not`. `SyslogNGFlow` must have at least one `match` statement to transfer any logs.
+The `SyslogNGFlow` specifies what logs should be sent to the final output destination. To do so, it uses `match` statements that support logical operators `and`, `or` and `not`. `SyslogNGFlow` must have at least one `match` statement to transfer logs.
 
 #### Example
 You might use the example configuration below to collect all pod logs from a namespace. Specify the namespace and the name of the related `SyslogNGOutput` resource.
@@ -70,7 +70,7 @@ spec:
   loggingRef: [value]
 ```
 
-To see full list of available output plugins, see [official documentation](https://kube-logging.dev/docs/configuration/plugins/syslog-ng-outputs/).
+To see a complete list of available output plugins, see [official documentation](https://kube-logging.dev/docs/configuration/plugins/syslog-ng-outputs/).
 
 ### Logging pipeline deployment
 To create a new logging pipeline, apply the resource configurations from a YAML file.
