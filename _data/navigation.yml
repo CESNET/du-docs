@@ -53,6 +53,8 @@ docs:
         url: /docs/operators/postgres-cnpg.html
       - title: Spark Operator
         url: /docs/operators/spark.html
+      - title: Logging
+        url: /docs/logging.html
   - title: Examples
     children:
       - title: Hello World
