@@ -73,6 +73,11 @@ It is possible to use local storage (SSD) instead of NFS or any network supporte
 
 Basically, the `zfs-csi` storage class can be used to use local storage. Special care must be taken when setting the limit. It cannot be increased in the future and the limit is enforced, however, it is fasted storage that is offered.
 
+### Variants Comparison
+
+For variants comparison, see [zalando operator](/docs/operators/postgres.html#variants-comparison).
+
+
 ## Database Access 
 
 Database can be accessed (connected) from the same namespace, different namespace, or from outside of the Kubernetes cluster. Databases commonly use read-only connections (targeting usually replicas) and read-write connections (targeting master instance).
@@ -96,14 +101,14 @@ The hostname of read-only replica is `test-cluster-ro` and the hostname of writa
 
 ### Access from a different Namespace
 
-This case is similar to the case of access from the same namespace. Assuming the database name is the same `test-cluster, the read-only hostname is `test-cluster-ro.[namespace].svc.cluster.local` and writable master is `test-cluster-rw.[namespace].svc.cluster.local`, replace `[namespace]` with name of the namespace where the database is deployed.
+This case is similar to the case of access from the same namespace. Assuming the database name is the same `test-cluster`, the read-only hostname is `test-cluster-ro.[namespace].svc.cluster.local` and writable master is `test-cluster-rw.[namespace].svc.cluster.local`, replace `[namespace]` with name of the namespace where the database is deployed.
 
 
 ### Access from outside of the Kubernetes Cluster
 
 To access the database from outside of the Kubernetes Cluster, a new service object of type LoadBalancer must be created. If both types of access are required -- read-only and writable, two LoadBalancers must be created, one for each type. In this case, it is strongly recommended to distinguish between read-only and writable access by different ports rather than different IP addresses as those are scare resources. 
 
-Assuming the database name is again `test-cluster`, you can find example of both objects [here](/docs/postgres/expose-cn.yaml). The annotation `metallb.universe.tf/allow-shared-ip` ensures that both LoadBalancers share the same IP address and are distinguished by port: `5433` port is for read-only replicas and `5432` is writable. This example assigns IP addresses that are reachable only from internal network from Masaryk University or via VPN service of Masaryk University. While this is recommended setup for users of Masaryk University, it will not work for the others. Other users must remove the annotation `metallb.universe.tf/address-pool: privmuni` and the IP addresses will be allocated from public IP pool. 
+Assuming the database name is again `test-cluster`, you can find example of both objects [here](/docs/postgres/expose-cn.yaml). The annotation `metallb.universe.tf/allow-shared-ip` ensures that both LoadBalancers share the same IP address and are distinguished by port: `5433` port is for read-only replicas and `5432` is writable. This example assigns IP addresses that are reachable only from internal network from Masaryk University or via VPN service of Masaryk University. While this is recommended setup for users of Masaryk University, it will not work for the others. Other users must remove the annotation `metallb.universe.tf/address-pool: privmuni` and the IP addresses will be allocated from public IP pool. In this case, it is strongly recommended to setup the Network Policy, see the next section.
 
 ### Network Policy
 
@@ -112,10 +117,6 @@ To increase security, a *network policy* can be used to allow network access to 
 You should restrict access from either a particular Pod or a particular external IP address. However, access from `cloudnativegp` namespace must be allowed as well so that the operator can control the instance. If your network policy contains also `Egress` rules, keep in mind to allow access to S3 backup address so that backups are working.
 
 Example for access from the Kubernetes cluster is [here](/docs/postgres/netpolicy-internal.yaml), example for access from external IP adress is [here](/docs/postgres/netpolicy-external.yaml). In both casese, replace `[namespace]` with your namespace and for the external case, replace `IP/32` with your external IP `/32` (this slash 32 must be the trailing part of the address).
-
-## Variants Comparison
-
-For variants comparison, see [zalando operator](/docs/operators/postgres.html#variants-comparison).
 
 ## Data Backups
 
