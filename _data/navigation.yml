@@ -47,8 +47,6 @@ docs:
         url: /docs/operators/minio.html
       - title: MPI Operator
         url: /docs/operators/mpi.html
-      - title: Postgres Operator Zalando
-        url: /docs/operators/postgres.html
       - title: Postgres Operator Cloudnative-PG
         url: /docs/operators/postgres-cnpg.html
       - title: Spark Operator

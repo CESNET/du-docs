@@ -13,8 +13,6 @@ spec:
   selector:
     postgresql: test-cluster
     role: replica
-  loadBalancerSourceRanges:
-  - IP/32
 ---
 apiVersion: v1
 kind: Service
@@ -31,5 +29,3 @@ spec:
   selector:
     postgresql: test-cluster
     role: primary
-  loadBalancerSourceRanges:
-  - IP/32

@@ -75,11 +75,43 @@ Basically, the `zfs-csi` storage class can be used to use local storage. Special
 
 ## Database Access 
 
-To access the database from other Pods, you can use `test-cluster-rw` as host (based on `metadata.name` from the deployment) within the same namespace, port is default `5432`. Username and password are based on the above deployment. There is a `test-cluster-ro` name available to access read-only replicas. If exposure to another namespace is required, use the full name: `test-cluster-rw.[namespace].svc.cluster.local`.
+Database can be accessed (connected) from the same namespace, different namespace, or from outside of the Kubernetes cluster. Databases commonly use read-only connections (targeting usually replicas) and read-write connections (targeting master instance).
 
-To increase security, a *network policy* can be used to allow network access to the database only from certain pods. See [Network Policy](/docs/security.html). External access, i.e. access from the public Internet, is disabled by default. However, it is possible to expose the database via [Load Balancer](/docs/kubectl-expose.html#other-applications).
+### Authentication
 
-An example of exposing the database outside of the Kubernetes cluster can be found [here](/docs/postgres/expose-cn.yaml). This example exposes the DB on private MUNI addresses. If you need to expose to the internet, remove the `metallb.universe.tf/address-pool: privmuni` annotations, especially in this case, be sure to specify `loadBalancerSourceRanges` which restricts access only from these IPs. Note: The `/32` suffix is required. This example exposes both read-only and read-write services, read-write is on port `5432` while read-only is on port `5433`. In order for the two ports to share the same IP address, the `metallb.universe.tf/allow-shared-ip' annotation must be unique and have the same value for both services.
+Username and password are based on the cluster instance, if you created the instance including username and password, use these credentials to connect. 
+
+### Access from the same Namespace
+
+If the cluster has been created with the name `test-cluster`:
+
+```yaml
+kind: Cluster
+metadata:
+  name: test-cluster
+...
+```
+
+The hostname of read-only replica is `test-cluster-ro` and the hostname of writable master is `test-cluster-rw`. If not explicitly set otherwise, port is default `5432`.
+
+### Access from a different Namespace
+
+This case is similar to the case of access from the same namespace. Assuming the database name is the same `test-cluster, the read-only hostname is `test-cluster-ro.[namespace].svc.cluster.local` and writable master is `test-cluster-rw.[namespace].svc.cluster.local`, replace `[namespace]` with name of the namespace where the database is deployed.
+
+
+### Access from outside of the Kubernetes Cluster
+
+To access the database from outside of the Kubernetes Cluster, a new service object of type LoadBalancer must be created. If both types of access are required -- read-only and writable, two LoadBalancers must be created, one for each type. In this case, it is strongly recommended to distinguish between read-only and writable access by different ports rather than different IP addresses as those are scare resources. 
+
+Assuming the database name is again `test-cluster`, you can find example of both objects [here](/docs/postgres/expose-cn.yaml). The annotation `metallb.universe.tf/allow-shared-ip` ensures that both LoadBalancers share the same IP address and are distinguished by port: `5433` port is for read-only replicas and `5432` is writable. This example assigns IP addresses that are reachable only from internal network from Masaryk University or via VPN service of Masaryk University. While this is recommended setup for users of Masaryk University, it will not work for the others. Other users must remove the annotation `metallb.universe.tf/address-pool: privmuni` and the IP addresses will be allocated from public IP pool. 
+
+### Network Policy
+
+To increase security, a *network policy* can be used to allow network access to the database only from certain pods. The network policy is recommended in all cases mentioned above and strongly recommended, if access from oside of the Kubernetes cluster has been set up. See [Network Policy](/docs/security.html) for general concepts.
+
+You should restrict access from either a particular Pod or a particular external IP address. However, access from `cloudnativegp` namespace must be allowed as well so that the operator can control the instance. If your network policy contains also `Egress` rules, keep in mind to allow access to S3 backup address so that backups are working.
+
+Example for access from the Kubernetes cluster is [here](/docs/postgres/netpolicy-internal.yaml), example for access from external IP adress is [here](/docs/postgres/netpolicy-external.yaml). In both casese, replace `[namespace]` with your namespace and for the external case, replace `IP/32` with your external IP `/32` (this slash 32 must be the trailing part of the address).
 
 ## Variants Comparison
 
