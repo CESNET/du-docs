@@ -57,7 +57,7 @@ volumeMounts:
 
 ## GPU
 
-GPU resource can be requested in two distinct ways. User can request GPU(s) exclusively using `nvidia.com/gpu: x` where `x` is a number denoting number of requested GPUs. User can request also only a fraction of GPU using `cerit.io/gpu-mem: x` where `x` is a number of GB of GPU memory. In this case, user is given a possibly shared GPU. Fractions of GPUs are easily available, on the other hand, Linux has no technical power to enforce requested GPU memory limits, so if a user exceeds requested amount of GPU memory, there is a chance that the computation will fail for all the users sharing the GPU.
+GPU resource can be requested in two distinct ways. User can request GPU(s) exclusively using `nvidia.com/gpu: x` where `x` is a number denoting number of requested GPUs. User can request also only a fraction of GPU using `nvidia.com/mig-1g.10gb: x` where `x` is a number of such GPU parts, or `nvidia.com/mig-2g.20gb: x`. The `nvidia.com/mig-1g.10gb` requests GPU part with 10GB memory size, the `nvidia.com/mig-2g.20gb` requests GPU part with 20GB memory size. More information about the GPU fractions (MIG) can be found [here](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/index.html). 
 
 ## Storage
 
