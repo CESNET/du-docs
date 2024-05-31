@@ -86,10 +86,10 @@ resources:
   requests:
     cpu: 500m
     memory: 4Gi
-    cerit.io/gpu-mem: 2
+    nvidia.com/mig-1g.10gb: 1
   limits:
     cpu: 500m
     memory: 4Gi
-    cerit.io/gpu-mem: 2
+    nvidia.com/mig-1g.10gb: 1
 ```
 
