@@ -73,9 +73,41 @@ It is possible to use local storage (SSD) instead of NFS or any network supporte
 
 Basically, the `zfs-csi` storage class can be used to use local storage. Special care must be taken when setting the limit. It cannot be increased in the future and the limit is enforced, however, it is fasted storage that is offered.
 
-### Variants Comparison
+## Variants Comparison
 
-For variants comparison, see [zalando operator](/docs/operators/postgres.html#variants-comparison).
+Two benchmarks were performed with standard `pgbench` tool:
+- `pgbench -i -s 1000` (**Create** column) which creates a table with 100M rows -- lower value is better
+- `pgbench -T 300 -c10 -j20 -r` (**TPS** column) which runs for 5 minutes and result is number of transactions per second -- higher value is better. 
+
+Resources mean: 
+- Low - CPU requests/limits: 0.01/0.5, RAM requests/limits 100MB/500MB
+- High - CPU requests/limits: 1/8, RAM requests/limits 1000MB/5000MB
+- Extreme - CPU requests/limits 16/16, RAM requests/limits 32GB/32GB
+
+**Fail Safe** column denotes whether deployment is resilient to a single node failure meaning data loss will occur if a node fails.
+
+### Single Instance
+
+
+|Storage|Resources|Create|TPS|Fail Safe|
+|---|---|---:|---:|:---:|
+|Local SSD|Low|628 sec|561|No|
+|Local SSD|High|263 sec|6745|No|
+|Local SSD|Extreme|244 sec|10567|No|
+|NFS|Low|586 sec|602|Yes|
+|NFS|High|314 sec|4432|Yes|
+|Ceph RBD|Low|2457 sec|142|Yes|
+
+### Cluster Instances
+
+
+|Storage|Resources|Create|TPS|Fail Safe|
+|---|---|---:|---:|:---:|
+|Local SSD|Low|704 sec|460|Yes|
+|Local SSD|High|277 sec|6550|Yes|
+|Local SSD|Extreme|246 sec|10447|Yes|
+|NFS|Low|1027 sec|347|Yes|
+|NFS|High|389 sec|2310|Yes|
 
 
 ## Database Access 
