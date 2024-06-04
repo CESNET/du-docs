@@ -104,7 +104,9 @@ If not explicitly set otherwise, the port is well-known postgres port `5432`.
 
 #### Access from outside of the Kubernetes Cluster
 
-To access the database from the external world (outside the Kubernetes cluster), a new service object of type `LoadBalancer` must be created. If both types of access are required -- read-only and writable, two LoadBalancers must be created, one for each type. In this case, it is strongly recommended to distinguish between read-only and writable access by different ports rather than different IP addresses as those are scarce resources. 
+To access the database from the external world (outside the Kubernetes cluster), a new service object of type `LoadBalancer` must be created. 
+
+If you want read-only access as well (in addition to writable access), two LoadBalancers must be created. In this case, please contact us at **k8s@ics.muni.cz**.
 
 There is a slight difference in created objects depending on whether you are accessing the database **from Masaryk University/Masaryk University VPN** or from **anywhere else**.
 
@@ -116,33 +118,16 @@ Assuming the database name is again `test-cluster`, the following are examples o
 apiVersion: v1
 kind: Service
 metadata:
-  name: test-cluster-lb-ro
-  annotations:
-    metallb.universe.tf/address-pool: privmuni
-    metallb.universe.tf/allow-shared-ip: "test-cluster-lb-058ea9a2-0d28-4377-b6e1-26b3f06dd41e"
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 5433
-    targetPort: 5432
-  selector:
-    postgresql: test-cluster # if name was changed provide [cluster-name]
-    role: replica
----
-apiVersion: v1
-kind: Service
-metadata:
   name: test-cluster-lb-rw
   annotations:
     metallb.universe.tf/address-pool: privmuni
-    metallb.universe.tf/allow-shared-ip: "test-cluster-lb-058ea9a2-0d28-4377-b6e1-26b3f06dd41e"
 spec:
   type: LoadBalancer
   ports:
   - port: 5432
     targetPort: 5432
   selector:
-    postgresql: test-cluster # if name was changed provide [cluster-name]
+    cnpg.io/cluster: test-cluster # if name was changed provide [cluster-name]
     role: primary
 ```
 
@@ -152,7 +137,7 @@ The annotation `metallb.universe.tf/allow-shared-ip` ensures that both LoadBalan
 
 This example assigns IP addresses that are reachable **only from internal network from Masaryk University or via VPN service of Masaryk University**. 
 
-##### Non MU accesses
+##### Non-MU accesses
 
 Assuming the database name is again `test-cluster`, the following are examples of needed services for both to and rw accesses.
 
@@ -160,31 +145,15 @@ Assuming the database name is again `test-cluster`, the following are examples o
 apiVersion: v1
 kind: Service
 metadata:
-  name: test-cluster-lb-ro  
-  annotations:
-    metallb.universe.tf/allow-shared-ip: "test-cluster-lb-058ea9a2-0d28-4377-b6e1-26b3f06dd41e"
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 5433
-    targetPort: 5432
-  selector:
-    postgresql: test-cluster  # if name was changed provide [cluster-name]
-    role: replica
----
-apiVersion: v1
-kind: Service
-metadata:
   name: test-cluster-lb-rw
   annotations:
-    metallb.universe.tf/allow-shared-ip: "test-cluster-lb-058ea9a2-0d28-4377-b6e1-26b3f06dd41e"
 spec:
   type: LoadBalancer
   ports:
   - port: 5432
     targetPort: 5432
   selector:
-    postgresql: test-cluster # if name was changed provide [cluster-name]
+    cnpg.io/cluster: test-cluster # if name was changed provide [cluster-name]
     role: primary
 ```
 
