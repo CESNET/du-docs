@@ -9,39 +9,65 @@ sidebar:
   nav: docs
 ---
 
-The [Postgres Operator](https://cloudnative-pg.io/documentation/1.18/) provides easy to run PostgreSQL cluster on Kubernetes. We have provided cluster-wide Postgres Operator for easy deployment of Postgres SQL database servers. The Postgres Operator defines a kind of `Cluster` that ensures the existence of a database or database cluster, full documentation about its structure is available [here](https://cloudnative-pg.io/documentation/1.18/). The official manual for creating a minimal PostgreSQL cluster can be found [here](https://cloudnative-pg.io/documentation/1.18/quickstart/). For your convenience, we provide some working examples below, divided into sections. We have also added a comparison of deployments that use different underlying storage.
+The [Postgres Operator](https://cloudnative-pg.io/documentation/1.18/) provides easy to run PostgreSQL cluster on Kubernetes. We have provided cluster-wide Postgres Operator for easy deployment of Postgres SQL database servers. The Postgres Operator defines a kind of `Cluster` that ensures the existence of a database or database cluster. For your convenience, we provide some working examples in the next sections together with some advanced features.
 
-## Deploying a single instance
+The original, full documentation about PostgresOperator structure is available [on its website](https://cloudnative-pg.io/documentation/1.18/) with the official manual for creating a minimal PostgreSQL cluster located in the [quickstart section](https://cloudnative-pg.io/documentation/1.18/quickstart/). If you seek advanced configuration or description and explanation of the YAML fields, consult the official documentation.
 
-You can start with a minimal instance, which is suitable for testing only, it uses NFS storage as backend and consumes limited resources, but also performance is low. You can download the [minimal manifest](/docs/postgres/minimal-cn.yaml).
+
+## Deploying a Cluster Instance
+
+It is possible to deploy either a single or cluster instance. For testing purposes, we advise to deploy a minimal (single) instance that uses NFS storage as an underlying storage and consumes limited resources (performance is low). For better availability and performance, cluster deployment can be used. In this case, multiple instances run in the cluster where one of them is a leader and others follow and sync data from the leader.
+
+### Single Instance
+
+In this example, a single instance with generated username and password is created. It is possible to provide a custom `Secret` object instead of an automatically generated username/password - see section **Custom Database Credentials**.
 
 ```yaml
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: test-cluster
+  name: test-cluster       # name, can be modified
 spec:
   instances: 1             # single instance
 
-  imageName: 'cerit.io/cloudnative-pg/postgresql:15.0' #image to use
+  imageName: 'cerit.io/cloudnative-pg/postgresql:15.0'  # image to use
 
   primaryUpdateStrategy: unsupervised
 
   bootstrap:
    initdb:
-     database: mydb        # db to create
-     owner: myowner        # user to create
+     database: mydb        # db to create, can be modified
+     owner: myowner        # user to create, can be modified
 
   storage:
     size: 10Gi
-    storageClass: nfs-csi  # storage class to use
+    storageClass: nfs-csi  # storage class to use, can be modified
 ```
 
 Run `kubectl create -f minimal-cn.yaml -n [namespace]`, you should see a pod named `test-cluster-1` (if `metadata.name` has not been changed from the example) running in your namespace.
 
-### Account Password
+The minimal manifest can be downloaded [here](/docs/postgres/minimal-cn.yaml).
 
-To reveal the password of the create user, simply issue
+### Cluster Instance
+
+To deploy the cluster version, you can download [cluster manifest](/docs/postgres/cluster-cn.yaml). The only difference is in the line denoting number of instances:
+
+```yaml
+numberOfInstances: 3
+```
+
+That requests 3 node cluster. This type of setup is resilient to node failure --- if a node running this instance fails, the database is recreated on another node, data is reconnected from NFS storage, and operations resume. On the other hand, this setup is not speed-superior even when resources are added.
+
+*Note*: Cluster instances consume more resources and you must consider how many resources are available in your namespace/project. Cluster instance consumes `numberOfInstances * limits` of resources.
+
+
+## Accessing the Database
+
+To access the database, you need to know the credentials and the location of the database. 
+
+### Database Credentials
+
+If you used custom `Secret` object, use those credentials. Otherwise, issue command (`test-cluster-app` if `metadata.name` has not been changed from the example, otherwise `[metadata-name]-app`)
 ```shell
 kubectl get secret test-cluster-app -n [namespace] -o 'jsonpath={.data.pgpass}' | base64 -d
 ```
@@ -51,74 +77,13 @@ It will show the string in the form: `dbhost:port:dbname:dbuser:password`. For e
 test-cluster-rw:5432:mydb:myowner:uLUmkvAMwR0lJtw5ksUVKihd5OvCrD28RFH1JTLbbzO6BhEAtnWJr1L0nWpTi3GL
 ```
 
-This type of setup is resilient to node failure --- if a node running this instance fails, the database is recreated on another node, data is reconnected from NFS storage, and operations resume. On the other hand, this setup is not speed superior even when resources are added.
+Use `dbuser:password` as credentials to connect. 
 
-## Deploying Cluster Instance
+### Database Access 
 
-For better availability, cluster deployment can be used. In this case, multiple instances run in the cluster where one of them is a leader and others follow and sync data from the leader.
+Database can be accessed (connected to) from the same namespace where it is deployed, a different namespace, or from outside of the Kubernetes cluster. Databases commonly use read-only connections (targeting usually replicas) and read-write connections (targeting master instances).
 
-To deploy cluster version, you can download [cluster manifest](/docs/postgres/cluster-cn.yaml). The only difference is on line:
-
-```yaml
-numberOfInstances: 3
-```
-
-That requests 3 node cluster.
-
-Note: Cluster instances consume more resources and you must consider how much resources you have available. Cluster instance consumes `numberOfInstances * limits` of resources.
-
-## Utilizing Local Storage
-
-It is possible to use local storage (SSD) instead of NFS or any network supported PVC. While it is not possible to directly request local storage in the `volume` section, it is still possible to use local storage. You can download the [single instance manifest](/docs/postgres/minimal-local-cn.yaml) which can also be used for the cluster instance (set the desired `numberOfInstances`).
-
-Basically, the `zfs-csi` storage class can be used to use local storage. Special care must be taken when setting the limit. It cannot be increased in the future and the limit is enforced, however, it is fasted storage that is offered.
-
-## Variants Comparison
-
-Two benchmarks were performed with standard `pgbench` tool:
-- `pgbench -i -s 1000` (**Create** column) which creates a table with 100M rows -- lower value is better
-- `pgbench -T 300 -c10 -j20 -r` (**TPS** column) which runs for 5 minutes and result is number of transactions per second -- higher value is better. 
-
-Resources mean: 
-- Low - CPU requests/limits: 0.01/0.5, RAM requests/limits 100MB/500MB
-- High - CPU requests/limits: 1/8, RAM requests/limits 1000MB/5000MB
-- Extreme - CPU requests/limits 16/16, RAM requests/limits 32GB/32GB
-
-**Fail Safe** column denotes whether deployment is resilient to a single node failure meaning data loss will occur if a node fails.
-
-### Single Instance
-
-
-|Storage|Resources|Create|TPS|Fail Safe|
-|---|---|---:|---:|:---:|
-|Local SSD|Low|628 sec|561|No|
-|Local SSD|High|263 sec|6745|No|
-|Local SSD|Extreme|244 sec|10567|No|
-|NFS|Low|586 sec|602|Yes|
-|NFS|High|314 sec|4432|Yes|
-|Ceph RBD|Low|2457 sec|142|Yes|
-
-### Cluster Instances
-
-
-|Storage|Resources|Create|TPS|Fail Safe|
-|---|---|---:|---:|:---:|
-|Local SSD|Low|704 sec|460|Yes|
-|Local SSD|High|277 sec|6550|Yes|
-|Local SSD|Extreme|246 sec|10447|Yes|
-|NFS|Low|1027 sec|347|Yes|
-|NFS|High|389 sec|2310|Yes|
-
-
-## Database Access 
-
-Database can be accessed (connected) from the same namespace, different namespace, or from outside of the Kubernetes cluster. Databases commonly use read-only connections (targeting usually replicas) and read-write connections (targeting master instance).
-
-### Authentication
-
-Username and password are based on the cluster instance, if you created the instance including username and password, use these credentials to connect. 
-
-### Access from the same Namespace
+#### Access From the Same Namespace
 
 If the cluster has been created with the name `test-cluster`:
 
@@ -129,38 +94,196 @@ metadata:
 ...
 ```
 
-The hostname of read-only replica is `test-cluster-ro` and the hostname of writable master is `test-cluster-rw`. If not explicitly set otherwise, port is default `5432`.
+The hostname to use of the read-only replica is `test-cluster-ro` and the hostname of the writable master is `test-cluster-rw`. If not explicitly set otherwise, the port is well-known postgres port `5432`.
 
-### Access from a different Namespace
+#### Access From a Different Namespace
 
-This case is similar to the case of access from the same namespace. Assuming the database name is the same `test-cluster`, the read-only hostname is `test-cluster-ro.[namespace].svc.cluster.local` and writable master is `test-cluster-rw.[namespace].svc.cluster.local`, replace `[namespace]` with name of the namespace where the database is deployed.
+Assuming the database name is `test-cluster`, the read-only hostname is `test-cluster-ro.[namespace].svc.cluster.local`, and the writable master is `test-cluster-rw.[namespace].svc.cluster.local`, replace `[namespace]` with the name of the namespace where the database is deployed. 
 
+If not explicitly set otherwise, the port is well-known postgres port `5432`.
 
-### Access from outside of the Kubernetes Cluster
+#### Access from outside of the Kubernetes Cluster
 
-To access the database from outside of the Kubernetes Cluster, a new service object of type LoadBalancer must be created. If both types of access are required -- read-only and writable, two LoadBalancers must be created, one for each type. In this case, it is strongly recommended to distinguish between read-only and writable access by different ports rather than different IP addresses as those are scarce resources. 
+To access the database from the external world (outside the Kubernetes cluster), a new service object of type `LoadBalancer` must be created. If both types of access are required -- read-only and writable, two LoadBalancers must be created, one for each type. In this case, it is strongly recommended to distinguish between read-only and writable access by different ports rather than different IP addresses as those are scarce resources. 
 
-Assuming the database name is again `test-cluster`, you can find an example of both objects [here](/docs/postgres/expose-cn.yaml). The annotation `metallb.universe.tf/allow-shared-ip` ensures that both LoadBalancers share the same IP address and are distinguished by port: `5433` port is for read-only replicas and `5432` is writable. This example assigns IP addresses that are reachable only from internal network from Masaryk University or via VPN service of Masaryk University. While this is recommended setup for users of Masaryk University, it will not work for the others. Other users must remove the annotation `metallb.universe.tf/address-pool: privmuni` and the IP addresses will be allocated from public IP pool. In this case, it is strongly recommended to setup the Network Policy, see the next section.
+There is a slight difference in created objects depending on whether you are accessing the database **from Masaryk University/Masaryk University VPN** or from **anywhere else**.
+
+##### MU/MU VPN
+
+Assuming the database name is again `test-cluster`, the following are examples of needed services for both to and rw accesses.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-cluster-lb-ro
+  annotations:
+    metallb.universe.tf/address-pool: privmuni
+    metallb.universe.tf/allow-shared-ip: "test-cluster-lb-058ea9a2-0d28-4377-b6e1-26b3f06dd41e"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5433
+    targetPort: 5432
+  selector:
+    postgresql: test-cluster # if name was changed provide [cluster-name]
+    role: replica
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-cluster-lb-rw
+  annotations:
+    metallb.universe.tf/address-pool: privmuni
+    metallb.universe.tf/allow-shared-ip: "test-cluster-lb-058ea9a2-0d28-4377-b6e1-26b3f06dd41e"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5432
+    targetPort: 5432
+  selector:
+    postgresql: test-cluster # if name was changed provide [cluster-name]
+    role: primary
+```
+
+The annotation `metallb.universe.tf/allow-shared-ip` ensures that both LoadBalancers share the same IP address and are distinguished by ports:
+- `5433` port is for read-only replicas
+- `5432` is for writable replicas
+
+This example assigns IP addresses that are reachable **only from internal network from Masaryk University or via VPN service of Masaryk University**. 
+
+##### Non MU accesses
+
+Assuming the database name is again `test-cluster`, the following are examples of needed services for both to and rw accesses.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-cluster-lb-ro  
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "test-cluster-lb-058ea9a2-0d28-4377-b6e1-26b3f06dd41e"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5433
+    targetPort: 5432
+  selector:
+    postgresql: test-cluster  # if name was changed provide [cluster-name]
+    role: replica
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-cluster-lb-rw
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "test-cluster-lb-058ea9a2-0d28-4377-b6e1-26b3f06dd41e"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5432
+    targetPort: 5432
+  selector:
+    postgresql: test-cluster # if name was changed provide [cluster-name]
+    role: primary
+```
+
+In this case, the IP addresses are allocated from the public IP pool. When accessing the database from the external world, we **strongly recommend** to setup the Network Policy.
+
 
 ### Network Policy
 
-To increase security, a *network policy* can be used to allow network access to the database only from certain pods. The network policy is recommended in all cases mentioned above and strongly recommended if access from outside of the Kubernetes cluster has been set up. See [Network Policy](/docs/security.html) for general concepts.
+To increase security, a *network policy* is used to allow network access to the database only from certain pods. The network policy is recommended in all cases mentioned above and **strongly recommended** if access from outside of the Kubernetes cluster has been set up. See [Network Policy](/docs/security.html) for general concepts.
 
-You should restrict access from either a particular Pod or a particular external IP address. However, access from `cloudnativegp` namespace must be allowed as well so that the operator can control the instance. If your network policy contains also `Egress` rules, keep in mind to allow access to S3 backup address so that backups are working.
+You should restrict access from either a particular Pod or a particular external IP address. However, access from `cloudnativegp` namespace must be allowed so that the operator managing the Postgres cluster can manage the instance. 
 
-An example for access from the Kubernetes cluster is [here](/docs/postgres/netpolicy-internal.yaml), example for access from an external IP address is [here](/docs/postgres/netpolicy-external.yaml). In both cases, replace `[namespace]` with your namespace and for the external case, replace `IP/32` with your external IP `/32` (this slash 32 must be the trailing part of the address).
+#### Access Only from Specific Namespace Allowed
+
+This example enables access only from the specific namespace of the Kubernetes cluster ([download here](/docs/postgres/netpolicy-internal.yaml)). Provide the cluster's name (if it was changed) as `spec.podSelector.matchLabels.cnpg.io/cluster` and replace `[namespace]` with the namespace where postgres is deployed. Other namespaces are allowed by adding more `namespaceSelector` items into the list.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cnpg-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      cnpg.io/cluster: test-cluster
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cloudnativepg
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: [namespace]
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: [any_other_namespace]
+    ...
+```
+
+#### Access Only from Specific External IP Address Allowed
+
+This example enables access only from the specific external IP address ([download here](/docs/postgres/netpolicy-external.yaml)). Provide the cluster's name (if it was changed) as `spec.podSelector.matchLabels.cnpg.io/cluster`, replace `[namespace]` with the namespace where the cluster is deployed, and replace `[IP]/32` with your external IP `/32` (this `slash 32` part must be provided as the trailing part of the address). More IP blocks can be allowed by adding whole `ipBlock` part into the yaml.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cnpg-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      cnpg.io/cluster: test-cluster
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cloudnativepg
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: [namespace]
+    - ipBlock:
+        cidr: [IP]/32
+    - ipBlock:
+        cidr: [another_IP]/32
+```
 
 ## Data Backups
 
-Operator offers automatic backups to S3 storage implemented via periodic wal streaming and regular backups (basically `pgdump` equivalent) using `CronJobs`.
+Postgres operator offers automatic backups to S3 storage implemented via periodic wal streaming and regular backups (basically `pgdump` equivalent) using `CronJobs`.
 
-First you need to get an S3 storage account, e.g. at [DU Cesnet](https://du.cesnet.cz/en/navody/object_storage/cesnet_s3/start), mainly `KEY-ID` and `SECRET-ID` are needed. Using these two IDs, you can create a `Secret` object via [template](/docs/postgres/secret-cn.yaml), replacing `KEY-ID` and `SECRET-ID` with real values.
+Firstly, you need to get an S3 storage account, e.g. at [DU Cesnet](https://du.cesnet.cz/en/navody/object_storage/cesnet_s3/start), particularly `KEY-ID` and `SECRET-ID` are needed. Using these two IDs, you can create a `Secret` object via [template](/docs/postgres/secret-cn.yaml), replacing `KEY-ID` and `SECRET-ID` with real values obtained from S3 account. 
 
-Next, deploy the DB cluster via [template](/docs/postgres/minimal-cn-backup.yaml). Replace `BUCKET` and `S3URL` with real values. **Do not replace `ACCESS_KEY_ID` and `ACCESS_SECRET_KEY`, they need to match the Secret key names.**
+To enable the backup, add the `backup` section to the cluster manifest. See [template](/docs/postgres/minimal-cn-backup.yaml), the last section `backup`.
+
+```yaml
+...
+  backup:
+    barmanObjectStore:
+      destinationPath: "s3://[BUCKET]"
+      endpointURL: "https://[S3URL]"
+      s3Credentials:
+        accessKeyId:
+          name: aws-creds
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: aws-creds
+          key: ACCESS_SECRET_KEY
+    retentionPolicy: "30d"
+```
+
+Replace `[BUCKET]` and `[S3URL]` with real values. **Do not replace `ACCESS_KEY_ID` and `ACCESS_SECRET_KEY`, they need to match the Secret keywords that identify the values for them.**
 
 ### Full Backups
 
-For full backups, additional resource needs to be created. 
+For full backups, additional resources must be created. 
 
 ```yaml
 apiVersion: postgresql.cnpg.io/v1
@@ -174,7 +297,7 @@ spec:
     name: [db-name]
 ```
 
-Replace `[backup-name]` with appropriate name of the resource (must be unique within a namespace), and `[db-name]` with the name of the database cluster from the main manifest, these two names must match. E.g., cluster manifest beginning with:
+Replace `[backup-name]` with the appropriate name of the resource (must be unique within a namespace), and `[db-name]` with the name of the database cluster from the main manifest, these two names must match. E.g., cluster manifest beginning with:
 ```yaml
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
@@ -195,13 +318,13 @@ spec:
     name: test-cluster
 ```
 
-Schedule is standard `cron` schedule. 
+The schedule is **NOT** a standard `cron` schedule - this second/minutes/hours/day in month/month/day of week.
 
-## High Availability
+## High Availability Cluster Setup
 
-Replicated cluster is usable for high availability cases. Starting from Postgres version 11, operator supports some additional settings to increase high availability. 
+A replicated cluster can be utilized for high-availability cases. Starting from Postgres version 11, the operator supports additional settings to increase high availability. 
 
-1. Increase wal segments history using the following snippeet. Change the `wal_keep_size` value as appropriate. Default value is about 500MB which can be small. However, this value is allocated from the underlaying storage. If `zfs-csi` is used, it enforces disk size and DB wals can easily consume all disk space.
+1. Increase `wal` segments history using the following snippet. Change the `wal_keep_size` value as appropriate. The default value is about 500MB which might be small. However, this value is allocated from the underlying storage. If `zfs-csi` is used, it enforces disk size and DB `wals` can easily consume all disk space.
 ```yaml
 postgresql:
     parameters:
@@ -215,7 +338,7 @@ replicationSlots:
       enabled: true
 ```
 
-Please, keep in mind, that these options work for Postgres 11 and later only. Full cluster example with the HA options:
+Keep in mind that these options work for Postgres 11 and newer only. Full cluster example with the HA options:
 ```yaml
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
@@ -254,29 +377,45 @@ spec:
     storageClass: zfs-csi
 ```
 
-## Caveats
+## Local Storage vs NFS
 
-### Deploy Errors
+It is possible to use local storage (SSD) instead of NFS or any network supported PVC. While it is not possible to directly request local storage in the `volume` section, it is possible to use local storage. You can download the [single instance manifest](/docs/postgres/minimal-local-cn.yaml) which can also be used for the cluster instance (set the desired `numberOfInstances`).
 
-1. If you encounter a deployment error and want to delete and recreate, **you must** make sure that the running instance is deleted before recreating. If you create a new instance too early, the instance will never be created and you will have to use a different name.
+Basically, the `zfs-csi` storage class can be used to use local storage. Special care must be taken when setting the limit. It cannot be increased in the future and the limit is enforced, however, it is fasted storage that is offered.
 
-2. If you run out of quotas during the *cluster* deployment, only instances within quotas will be deployed. Unfortunately, even in this case, you cannot remove/redeploy a database using these deployments.
+## Custom Database Credentials
 
-3. Local SSD variant is not resilient to cluster failure. Data may be lost in this case (e.g. if cluster is restored from backup, local data may not be available). Regular backups are strongly recommended.
+If you want to use custom database credentials, a `Secret` object must be created (save this yaml to `secret.yaml`)
 
-4. It may happen that a replica fails and cannot join the cluster, in which case the replica and PVC must be removed at once using kubectl delete pod/test-cluster-1 pvc/test-cluster-1 -n [namespace]` if the failed replica is `test-cluster-1`. The replica will be rebuilt and synchronized with the rest of the cluster. However, its number will be increased.
+```yaml
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/basic-auth
+stringData:
+  password: [password]
+  username: [username]
+metadata:
+  name: [secret_name]
+```
+Run `kubectl create -f secret.yaml -n [namespace_where_postgres_will_be_deployed]`.
 
-### Images
+In the cluster manifest, change the `boostrap.initdb` section to reference the newly created secret.
 
-Currently, cloudnative-pg docker images do not contain `cs_CZ` locale, so Czech collate cannot be used. For this reason, we have created two local images: `cerit.io/cloudnative-pg/postgresql:10.23-3` and `cerit.io/cloudnative-pg/postgresql:15.0` which contain Czech locales.
+```yaml
+...
+bootstrap:
+    initdb:
+      database: [database-name]
+      owner: [username_from_secret]
+      secret:
+        name: [secret_name]
+```
 
-List of public images is available [here](https://github.com/cloudnative-pg/postgres-containers/pkgs/container/postgresql).
+## Egress Network Policy
 
-## Network Policy
+If you want to control the outgoing traffic (egress), it is necessary to allow particular ports and ipblocks - see the following example. If ingress-only restriction is suitable for you, you can remove the egress rules.
 
-To increase security, a *network policy* can be used to allow network access to the database only from certain pods. See [Network Policy](/docs/security.html) for more information. External access, i.e. access from the public Internet, is disabled by default. However, it is possible to expose the database via [Load Balancer](/docs/kubectl-expose.html#other-applications).
-
-The following example shows a simple NetworkPolicy applied to the Postgres operator. You can download this example [here](postgres-cnpg-minimal-postgres-np.yaml). **Please note that if you want to use the data backups and also restrict the egress communication, you may need to add an egress rule enabling the communication to the backup server!** If ingress only restriction is suitable for you, you can remove the egress rules.
+**Please note that if you want to use the data backups and also restrict the egress communication, you may need to add an egress rule enabling the communication to the backup server!** 
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -328,3 +467,22 @@ spec:
     - ipBlock:
         cidr: 10.16.62.18/32
 ```
+
+## Caveats
+
+### Deploy Errors
+
+1. If you encounter a deployment error and want to delete and recreate, **you must** make sure that the running instance is deleted before recreating. If you create a new instance too early, the instance will never be created and you will have to use a different name.
+
+2. If you run out of quotas during the *cluster* deployment, only instances within quotas will be deployed. Unfortunately, even in this case, you cannot remove/redeploy a database using these deployments.
+
+3. Local SSD variant is not resilient to cluster failure. Data may be lost in this case (e.g. if cluster is restored from backup, local data may not be available). Regular backups are strongly recommended.
+
+4. It may happen that a replica fails and cannot join the cluster, in which case the replica and PVC must be removed at once using kubectl delete pod/test-cluster-1 pvc/test-cluster-1 -n [namespace]` if the failed replica is `test-cluster-1`. The replica will be rebuilt and synchronized with the rest of the cluster. However, its number will be increased.
+
+### Images
+
+Currently, cloudnative-pg docker images do not contain `cs_CZ` locale, so Czech collate cannot be used. For this reason, we have created two local images: `cerit.io/cloudnative-pg/postgresql:10.23-3` and `cerit.io/cloudnative-pg/postgresql:15.0` which contain Czech locales.
+
+List of public images is available [here](https://github.com/cloudnative-pg/postgres-containers/pkgs/container/postgresql).
+
