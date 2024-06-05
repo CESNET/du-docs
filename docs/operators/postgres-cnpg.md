@@ -137,6 +137,8 @@ The annotation `metallb.universe.tf/allow-shared-ip` ensures that both LoadBalan
 
 This example assigns IP addresses that are reachable **only from internal network from Masaryk University or via VPN service of Masaryk University**. 
 
+
+
 ##### Non-MU accesses
 
 Assuming the database name is again `test-cluster`, the following are examples of needed services for both to and rw accesses.
@@ -159,6 +161,19 @@ spec:
 
 In this case, the IP addresses are allocated from the public IP pool. When accessing the database from the external world, we **strongly recommend** to setup the Network Policy.
 
+##### Retrieve Public IP to Connect
+
+After creating this service, the database is reachable on a public IP address that can be found via command:
+```shell
+kubectl get svc [name_of_loadbalancer_service_from_previous_step] -n [namespace_where_cluster_is_deployed]
+```
+
+The output will be similar to the one below where `EXTERNAL-IP` denotes IP to connect (hostname/address in pgAdmin) and `PORT` port to connect.
+```shell
+kubectl get svc test-cluster-external -n test-postgres-ns          
+NAME                    TYPE           CLUSTER-IP    EXTERNAL-IP       PORT(S)    AGE
+test-cluster-external   LoadBalancer   10.43...      147.251.X.Y       5432/TCP   21h
+```
 
 ### Network Policy
 
