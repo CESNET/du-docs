@@ -149,6 +149,7 @@ kind: Service
 metadata:
   name: test-cluster-lb-rw
   annotations:
+    metallb.universe.tf/address-pool: default
 spec:
   type: LoadBalancer
   ports:
