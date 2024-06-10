@@ -37,6 +37,7 @@ limited:limits.cpu=0,limits.memory=0,requests.cpu=0,requests.memory=0.
 ```
 
 **Answer:** The deployment is being made to a *Namespace* that is running out of quota or even has quota set to zero. You need to increase the *Namespace* quota, which may require decreasing the quotas of your other *Namespaces* or requesting an explicit *Project*. See [Projects, Namespaces, and Quotas](/docs/quotas.html).
+
 ---
 
 **Question:** No GPU found, `nvidia-smi` returns `command not found`.

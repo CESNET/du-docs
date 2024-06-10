@@ -4,6 +4,7 @@ metadata:
   name: test-cluster
 spec:
   instances: 1
+  enableSuperuserAccess: true
 
   imageName: 'cerit.io/cloudnative-pg/postgresql:15.0'
 
