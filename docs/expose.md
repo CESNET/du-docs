@@ -18,6 +18,9 @@ In the following documentation there are YAML fragments, they are meant to be de
 
 Web-based applications are those that communicate using the `HTTP` protocol. These applications are exposed using `Ingress` rules.
 
+Overal architecture is shown in this Figure:
+![Networking](ingress.png)
+
 This type of application requires a service that binds a port to an application and ingress rules that expose the service to the Internet.
 
 Suppose we have an application that is ready to run on port 8080. We create a service:
