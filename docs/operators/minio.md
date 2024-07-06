@@ -21,10 +21,10 @@ kind: Tenant
 metadata:
   name: myminio
 spec:
-  ## Create users in the Tenant using this field. Make sure to create secrets per user added here.
-  ## Secret should follow the format used in `minio-creds-secret`.
-  users:
-    - name: myminio-user-secret
+  ## Create configuration in the Tenant using this field. Make sure to create a secret with root credentials with the same name as in this section.
+  ## Secret should follow the format used in `myminio-root-secret`.
+  configuration:
+    - name: myminio-root-secret
   ## Specification for MinIO Pool(s) in this Tenant.
   pools:
     ## Servers specifies the number of MinIO Tenant Pods / Servers in this pool.
@@ -35,6 +35,14 @@ spec:
       name: pool-0
       ## volumesPerServer specifies the number of volumes attached per MinIO Tenant Pod / Server.
       volumesPerServer: 2
+      ## Request CPU resources
+      resources:
+        limits:
+          cpu: 2
+          memory: 2Gi
+        requests:
+          cpu: 100m
+          memory: 512Mi
       ## This VolumeClaimTemplate is used across all the volumes provisioned for MinIO Tenant in this Pool.
       volumeClaimTemplate:
         metadata:
@@ -65,23 +73,17 @@ spec:
           type: "RuntimeDefault"
 ```
 
-This example also requires to deploy secret for the user. You can download the [secret example](minio-minimal-tenant-secret.yaml).
+This example also requires to deploy secret for the root access to the minio console. You can download the [secret example](minio-minimal-tenant-secret.yaml).
 ```yaml
 apiVersion: v1
 kind: Secret
 metadata:
-  name: myminio-user-secret
+  name: myminio-root-secret
 type: Opaque
-data:
-  CONSOLE_ACCESS_KEY: Y29uc29sZQ== # "console", base64 encoding
-  CONSOLE_SECRET_KEY: Y29uc29sZTEyMw== # "console123", base64 encoding
-```
-To specify and encode/decode own `access_key` (*username*) and `secret_key` (*password*), you can use the following commands:
-```bash
-# encode
-echo -n "securepassword" | base64
-# decode
-echo -n "c2VjdXJlcGFzc3dvcmQ=" | base64 -d
+stringData:
+  config.env: |-
+    export MINIO_ROOT_USER=<root-user-name>
+    export MINIO_ROOT_PASSWORD=<root-user-password>
 ```
 
 Run `kubectl create -n [namespace] -f example-tenant-secret.yaml -f example-tenant.yaml`, you should see pod named `myminio-pool-0-0` (possibly similar pods depending on the configuration) running in the specified namespace.
