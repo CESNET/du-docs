@@ -88,6 +88,39 @@ stringData:
 
 Run `kubectl create -n [namespace] -f example-tenant-secret.yaml -f example-tenant.yaml`, you should see pod named `myminio-pool-0-0` (possibly similar pods depending on the configuration) running in the specified namespace.
 
+## Minio Console Access
+To access the Minio console from the internet you need to configure the ingress rule. There you can define a custom hostname. Below, you can find the ingress rule example. Adding this ingress will generate the appropriate secret (certificate) for your hostname and bind to minio service within Kubernetes. There You must change `host` property in `rules` section to your own and consequently also the properties in `tls` section. For `secretName` use the hostname where you replace dots with dashes and append `-tls`, i.e. *myminio-console-dyn-cloud-e-infra-cz-tls*. This secret will be generated automatically DO NOT generate it in advance or DO NOT use any existing. You can fully rely on Let's Encrypt service to obtain the correct secret (certificate). You can check the port number of `myminio-console` by running the command `kubectl -n <your-namespace> get svc`, default console port is 9443.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+  name: minio-ingress-console
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: myminio-console.dyn.cloud.e-infra.cz
+    http:
+      paths:
+      - backend:
+          service:
+            name: myminio-console
+            port:
+              number: 9443
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - myminio-console.dyn.cloud.e-infra.cz
+    secretName: myminio-console-dyn-cloud-e-infra-cz-tls
+status:
+  loadBalancer:
+    ingress:
+    - hostname: kuba-pub.cerit-sc.cz
+```
 ## S3 Storage Access
 
 To access the storage from other Pods, you can use `myminio-console` and `myminio-hl` services that are automatically created. These services work like DNS names, so you can use them as endpoints for another applications within the Kubernetes cluster. If exposure to another namespace is required, use the full name - e.g. `myminio-hl.[namespace].svc.cluster.local`.
