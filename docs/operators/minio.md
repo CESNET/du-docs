@@ -99,7 +99,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-  name: minio-ingress-console
+  name: myminio-ingress-console
 spec:
   ingressClassName: nginx
   rules:
