@@ -22,7 +22,3 @@ spec:
   - hosts:
     - myminio-console.dyn.cloud.e-infra.cz
     secretName: myminio-console-dyn-cloud-e-infra-cz-tls
-status:
-  loadBalancer:
-    ingress:
-    - hostname: kuba-pub.cerit-sc.cz
