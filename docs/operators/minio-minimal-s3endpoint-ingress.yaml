@@ -23,7 +23,3 @@ spec:
   - hosts:
     - myminio-s3.dyn.cloud.e-infra.cz
     secretName: myminio-s3-dyn-cloud-e-infra-cz-tls
-status:
-  loadBalancer:
-    ingress:
-    - hostname: kuba-pub.cerit-sc.cz
