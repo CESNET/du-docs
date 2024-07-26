@@ -19,6 +19,16 @@ Na to, aby sa student vedel prihlasit do hubu ho:
 Na to, aby student videl nejaky kurz a vedel s nim pracovat:
 - musi byt pridany do skupiny "nbgrader-(nazov kurzu)"
 
+## Registracia studenta
+
+Sign up je pod prihalsenim
+![loginpage](nbgrader/loginpage.png)
+
+A treba vyplnit vsetky policka necim
+
+![neco](nbgrader/neco.png)
+
+
 ## Autorizovanie studenta
 
 Autorizovat vedia iba admini. Zoznam adminov sa da zistit cez horny panel po prihlaseni a tento panel vidia iba admini. Ak ho nevidite, nieste admin ale viete poziadat hociktoreho admina, aby vas pridal ako admina.
