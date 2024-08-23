@@ -9,13 +9,19 @@ sidebar:
   nav: docs
 ---
 
-# Kurzy
+# Prihlasovanie do hubu
 
-Prerobili sme systém pridávania kurzov, ich študentov a inštruktorov. Pôvodne bolo nutné nám poslať názov kurzu, my sme založili potrebné zložky a až potom ste si mohli (a museli) popridávať študentov ručne. Zatiaľ je nutné pre pridanie/odobranie kurzu, študentov, inštruktorov komunikovať s nami, ale mohle by ste si to ľahko robiť aj vy sami, ak by ste chceli nad tým správu. 
+Prihlasovanie je zabezpečené cez jednotné prihlásenie s extra kontrolou, či je človek z TULu. Keďže čistá kontrola iba TUL domény nezabezpečuje, že sa prihlasuje človek, ktorý je študentom/inštruktorom, vykonáva sa na pozadí kontrola emailu z vyššie spomínaných súborov a podľa (ne)existenciu mailu v niektorom z týchto súborov sa buď zobrazí prístup do kurzov pre inštruktora, spawn form pre študenta alebo nič.
 
+Nie je nutná iná registrácia okrem MetaCentra a eINFRA. Ak študent/inštruktor nie je členom meta, musí sa zaregistrovať tu: https://metavo.metacentrum.cz/en/application/index.html. 
+
+# Kurzy - pridávanie a správa
+
+Prerobili sme systém pridávania kurzov, ich študentov a inštruktorov. Pôvodne bolo nutné nám poslať názov kurzu, my sme založili potrebné zložky a až potom ste si mohli (a museli) popridávať študentov ručne. 
 ## Pridanie kurzu:
 
-Do konkrétneho súboru, ktorý slúži ako konfigurák sa pridá pre každý kurz sekcia pod `courses`, ktorá obsahuje meno kurzu a cesty, kde sú mountnuté súbory so študentmi a inštruktormi. 
+Do konkrétneho súboru, ktorý slúži ako konfigurák sa pridá pre každý kurz sekcia pod `courses`, ktorá obsahuje meno kurzu a cesty, kde sú mountnuté súbory so študentmi a inštruktormi. Zatiaľ je nutné pre pridanie/odobranie kurzu komunikovať s nami, ale mohle by ste si to ľahko robiť aj vy sami, ak by ste chceli nad tým správu. 
+
 ```
 courses:
   - name: course1
@@ -26,40 +32,36 @@ courses:
 
 ## Pridanie študentov do kurzu
 
-Vyrobí sa súbor s názvom `[meno_kurzu]_students.txt` v stanovenej lokácii. Súbor obsahuje *IBA* oficiálne TUL emaile študentov ktorí sú zapísaní do daného predmetu. V súbore je jeden mail na jednom riadku. Nič viac nie je potrebné, študent automaticky uvidí kurz, do ktorého má prístup. Aktuálne funguje nbgrader tak, že študent má prístup z jedného singleuser servru na všetky kurzy, iba si ich preklikáva v menu. To by sme radi v blízkej budúcnosti zmenili tak, že čo kurz, to nový singleuser server pre študenta - toto správanie by zabezpečilo, že by bolo napr. možné používať iný image pre každý predmet (napr. s inými predinštalovanými knihovnami) a tiež by to bolo prehľadnejšie. 
+Vyrobí sa súbor s názvom `[meno_kurzu]_students.txt` v stanovenej lokácii. Súbor obsahuje *IBA* emaile študentov ktorí sú zapísaní do daného predmetu (oficiálne TUL emaile, ktoré sa dajú vytiahnuť z vášho ISu). V súbore je jeden mail na jednom riadku. Nič viac nie je potrebné, študent automaticky uvidí kurz, do ktorého má prístup. 
 
 > [!IMPORTANT]
-> Ak študent nevidí kurz a jeho email je určite v súbore, je možné, že má v Perune nastavený iný preferred email než je oficiálny TUL email. Obráťte sa na nás s menom študenta a vyriešime. 
+> Ak študent nevidí kurz a jeho email je určite v súbore, je možné, že má v Perune nastavený iný preferred email - ak už používal metacentrum a nastavil si iný preferred email než je oficiálny TUL email. Obráťte sa na nás s menom študenta a vyriešime. 
+
+
+Aktuálne funguje nbgrader tak, že študent má prístup z jedného singleuser servru na všetky kurzy, iba si ich preklikáva v menu. To by sme radi v blízkej budúcnosti zmenili tak, že čo kurz, to nový singleuser server pre študenta - toto správanie by zabezpečilo, že by bolo napr. možné používať iný image pre každý predmet (napr. s inými predinštalovanými knihovnami) a tiež by to bolo prehľadnejšie. 
 
 > [!NOTE]
-> Ak bol študent do kurzu pridaný dodatočne a jeho notebook už beží, musí svoj notebook vymazať a znova spustiť.
+> Aktuálne, ak bol študent do kurzu pridaný dodatočne a jeho notebook už beží, musí svoj notebook vymazať a znova spustiť.
 
 
 
 ## Pridanie inštruktorov do kurzu
 
-Vyrobí sa súbor s názvom `[meno_kurzu]_instructors.txt` v stanovenej lokácii. Súbor obsahuje *IBA* oficiálne TUL emaile inštruktorov ktorí sú vedení jak lektori daného predmetu. V súbore je jeden mail na jednom riadku. Nič viac nie je potrebné, inštruktor automaticky uvidí kurz, do ktorého má prístup. 
+Vyrobí sa súbor s názvom `[meno_kurzu]_instructors.txt` v stanovenej lokácii. Súbor obsahuje *IBA* emaile inštruktorov ktorí sú vedení jak lektori daného predmetu (oficiálne TUL emaile, ktoré sa dajú vytiahnuť z vášho ISu). V súbore je jeden mail na jednom riadku. Nič viac nie je potrebné, inštruktor automaticky uvidí kurz, do ktorého má prístup. 
 
 > [!IMPORTANT]
-> Ak inštruktor nevidí kurz a jeho email je určite v súbore, je možné, že má v Perune nastavený iný preferred email než je oficiálny TUL email. Obráťte sa na nás s menom inštruktora a vyriešime. 
+> Ak inštruktor nevidí kurz a jeho email je určite v súbore, je možné, že má v Perune nastavený iný preferred email - ak už používal metacentrum a nastavil si iný preferred email než je oficiálny TUL email. Obráťte sa na nás s menom inštruktora a vyriešime. 
 
 > [!NOTE]
 > Ak bol inštruktor pridaný ako inštruktor dodatočne (už sa niekedy prihlásil na avisem hub a ostal prihlásený) tak sa musí odhĺásiť a prihlásiť.
 
 > [!CAUTION]
-> Nemalo by sa stať, že inštruktor nejakého kurzu je zároveň aj študent iného. To zatiaľ vedie k mixu práv a nbgrader tak nefunguje dobre. Ak by to bolo v budúcnosti nutné, pozrieme sa na to no zatiaľ nneodporúčame tento stav.
+> Nemalo by sa stať, že inštruktor nejakého kurzu je zároveň aj študent iného. To zatiaľ vedie k mixu práv a nbgrader tak nefunguje dobre. Ak by to bolo v budúcnosti nutné, pozrieme sa na to no zatiaľ neodporúčame tento stav.
 
 
-# Prihlasovanie
+# Konfigurácia notebookového prostredia
 
-Prihlasovanie je zabezpečené cez jednotné prihlásenie s extra kontrolou, či je človek z TULu. Keďže čistá kontrola iba TUL domény nezabezpečuje, že sa prihlasuje človek, ktorý je študentom/inštruktorom, vykonáva sa na pozadí kontrola emailu z vyššie spomínaných súborov a podľa (ne)existenciu mailu v niektorom z týchto súborov sa buď zobrazí prístup do kurzov pre inštruktora, spawn form pre študenta alebo nič.
-
-Nie je nutná iná registrácia okrem MetaCentra a eINFRA. Ak študent/inštruktor nie je členom meta, musí sa zaregistrovať tu: https://metavo.metacentrum.cz/en/application/index.html. 
-
-
-# Konfigurácia pracovného prostredia
-
-Notebooky študentov sú spúšťatné ako samostatné kontajnere. Inštruktori pracujú rovno v hub pode (tak to má nbgrader, dá sa to preprogramovať ak by bolo nutné) no tieto rozdiely spôsobujú rôzne možnosti ďalšej konfigurácie prostredia.
+Notebooky študentov sú spúšťatné ako samostatné kontajnere. Inštruktori pracujú rovno v hub pode (tak to má nbgrader, dá sa to preprogramovať ak by bolo nutné) no tieto rozdiely spôsobujú iné možnosti ďalšej konfigurácie prostredia.
 
 ## Notebooky študentov
 
@@ -67,7 +69,7 @@ Notebooky študentov sú spúšťatné ako samostatné kontajnere. Inštruktori 
 
 ## Prostredie inštruktora
 
-Keďže inštuktori pracujú priamo v hub pode, nemajú možnosť si po prihlásení nakonfigurovať prostredie pretože hub už existuje. Ak by bolo potrebné, dali by sa natvoriť samostatné perzistentné úložiská pre inštruktorov, ktoré by boli pripojené do hubu a tak by mal každý svoj priestor (na nejaké extra súbory ap.). Všetky zložky by ale boli mountnuté naraz čže každý inštruktor by si musel dať pozor, kde zapisuje pr práci.
+Keďže inštuktori pracujú priamo v hub pode, nemajú možnosť si po prihlásení nakonfigurovať prostredie pretože hub už existuje a sú v ňom. Ak by bolo potrebné, dali by sa natvoriť samostatné perzistentné úložiská pre inštruktorov, ktoré by boli pripojené do hubu a tak by mal každý svoj priestor (na nejaké extra súbory ap.). Všetky zložky by ale boli mountnuté naraz čže každý inštruktor by si musel dať pozor, kde zapisuje pri práci.
 
 ## Po prihlásení
 
