@@ -1,0 +1,110 @@
+# Kubectl
+
+`Kubectl` je mocný nástroj pro interakci s Kubernetes clustery. Pro instalaci se podívejte na [oficiální dokumentaci](https://kubernetes.io/docs/tasks/tools/#kubectl). Po instalaci je vyžadován soubor `kube config` pro jeho fungování. Soubor se nachází v přehledu dashboardu clusteru (klikněte na název clusteru v rozbalovacím menu v levém horním rohu).
+
+![kube config](/img/ceritsc/config.jpg)
+
+Zkopírujte obsah tohoto souboru do `$HOME/.kube/config` a změňte oprávnění na 700 (`chmod 700 $HOME/.kube/config`). 
+
+POZNÁMKA: Pokud soubor `$HOME/.kube/config` neexistuje, vytvořte ho a poté zkopírujte obsah.
+
+Je možné mít více konfigurací clusterů v jednom konfiguračním souboru. 
+
+## Více clusterů
+
+Jedna osoba může mít přístupová práva k více clusterům. Pro práci s nimi musí být `config` každého clusteru dostupný buď:
+- v `$HOME/.kube/config`
+- v samostatném souboru, ale pak musí být při použití `kubectl` specifikováno `-f [název_souboru]`
+
+Je mnohem pohodlnější sloučit více konfigurací clusterů do jedné, protože se nemusíte obávat, kde se nachází vaše namespace. 
+
+### Sloučení konfigurací
+Pokud váš `config` již obsahuje nějaký obsah, vypadá podobně jako:
+
+```yaml filename="config" copy
+apiVersion: v1
+kind: Config
+clusters:
+- name: "kuba-cluster"
+  cluster:
+    server: "https://rancher.cloud.e-infra.cz/k8s/clusters/c-qgxlf"
+
+users:
+- name: "kuba-cluster"
+  user:
+    token: [token]
+
+
+contexts:
+- name: "kuba-cluster"
+  context:
+    user: "kuba-cluster"
+    cluster: "kuba-cluster"
+
+current-context: "kuba-cluster"
+```
+
+Chcete-li přidat další cluster, přejděte do jeho `config` souboru v Rancheru a nekopírujte celý soubor, pouze potřebné části, konkrétně:
+- položku pod sekcí `clusters`, která bude umístěna jako nová položka pod `clusters` v existujícím configu
+- položku pod sekcí `contexts`, která bude umístěna jako nová položka pod `contexts` v existujícím configu
+- položku pod sekcí `users`, která bude umístěna jako nová položka pod `users` v existujícím configu
+ 
+Toto je konfigurace, kterou chcete přidat. Zkopírujte pouze zvýrazněné části.
+
+```yaml {4-6,9-11,14-17}filename="config" copy
+apiVersion: v1
+kind: Config
+clusters:
+- name: "hdhu-cluster"
+  cluster:
+    server: "https://rancher.cloud.e-infra.cz/k8s/clusters/c-sprdw"
+
+users:
+- name: "hdhu-cluster"
+  user:
+    token: [token]
+
+contexts:
+- name: "hdhu-cluster"
+  context:
+    user: "hdhu-cluster"
+    cluster: "hdhu-cluster"
+
+current-context: "hdhu-cluster"
+```
+
+a umístěte je do existujícího `config` souboru. Hodnota `token` je jedinečná, ale vždy stejná napříč všemi clustery pro každou přihlášenou osobu. 
+Proto můžete mít pouze položku pod sekcí `users` a změnit tuto hodnotu v každém výskytu `user` v `contexts`. Nicméně je jednodušší a méně náchylné k chybám, když je hodnota zkopírována a použita tak, jak je.
+Konečný soubor vypadá podobně jako tento:
+
+```yaml filename="config" copy
+apiVersion: v1
+kind: Config
+clusters:
+- name: "kuba-cluster"
+  cluster:
+    server: "https://rancher.cloud.e-infra.cz/k8s/clusters/c-qgxlf"
+- name: "hdhu-cluster"
+  cluster:
+    server: "https://rancher.cloud.e-infra.cz/k8s/clusters/c-sprdw"
+
+users:
+- name: "kuba-cluster"
+  user:
+    token: [token]
+- name: "hdhu-cluster"
+  user:
+    token: [token]
+
+contexts:
+- name: "kuba-cluster"
+  context:
+    user: "kuba-cluster"
+    cluster: "kuba-cluster"
+- name: "hdhu-cluster"
+  context:
+    user: "hdhu-cluster"
+    cluster: "hdhu-cluster"
+
+current-context: "kuba-cluster"
+```

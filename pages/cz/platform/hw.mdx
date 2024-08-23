@@ -1,0 +1,41 @@
+# Dostupný hardware
+
+## kuba-cluster
+
+Tento cluster se skládá z 4992 *hyperthreaded* CPU jader, 3456 aktuálně dostupných uživatelům, 19.5TB RAM, 13TB aktuálně dostupných uživatelům a 22 NVIDIA A40, 6 NVIDIA A10 a 12 NVIDIA A100 (80GB varianta) GPU akcelerátorů. Čtyři A100 karty jsou nakonfigurovány jako MIGs v 12x 10GB + 8 20GB variantách. Skládá se z 39 uzlů (31 aktuálně dostupných) s následující konfigurací:
+
+<table>
+  <thead>
+    <tr>
+      <th>39x</th>
+      <th></th>
+      <th>Uzly</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CPU</td><td>2x AMD EPYC 7543</td>
+    </tr>
+    <tr>
+      <td>Paměť:</td><td>512GB</td>
+    </tr>
+    <tr>
+      <td>Disk:</td><td>2x 3.5TB SSD SATA:<br/>8x 8TB NVME SSD:</td><td>kub-a5 -- kub-a25<br/>kub-b1 -- kub-b18</td>
+    </tr>
+    <tr>
+      <td>GPU:</td><td>Žádné:<br/>2x NVIDIA A40 na uzel:<br/>1x NVIDIA A40 na uzel:<br/> 2x NVIDIA A10 na uzel:<br/>2x NVIDIA A100 (80GB) na uzel:<br/>1x NVIDIA H100 (PCIE/80GB):<br/>1x NVIDIA L4</td>
+                   <td>kub-a5 -- kub-a9<br/>kub-a10 -- kub-a14, kub-b12<br/>kub-a15 -- kub-a24 <br/>kub-b1 -- kub-b3<br/>kub-b4 -- kub-b8<br/>kub-b10 -- kub-b11<br/>kub-b13</td>
+    </tr>
+    <tr>
+      <td>Síť:</td><td>2x 10Gbps NIC<br/>1x 100Gbps Infiniband:</td><td>Všechny uzly<br/>kub-b1 -- kub-b18</td>
+    </tr>
+  </tbody>
+</table>
+
+## Úložiště
+
+Primární síťové úložiště se skládá ze čtyř hlavních uzlů, z nichž každý je vybaven AMD EPYC 7302P, 256GB RAM, 2x 10Gbps NIC (pouze pro failover). Nabízí 500TB plně flash kapacity SSD disků pouze v konfiguraci ekvivalentní RAID 6. Používaný souborový systém je IBM Spectrum Scale, který je exportován přes NFS verzi 3 do clusteru kubernetes.
+
+### Zálohování dat
+
+Úložiště není zálohováno na jiné místo, nicméně, snímky souborového systému jsou vytvářeny na denní bázi, 14 snímků je uchováváno. Tj. až 14 dní do minulosti jsme schopni obnovit smazaná/přepsaná data.

@@ -1,0 +1,41 @@
+# Available Hardware
+
+## kuba-cluster
+
+This cluster comprises 4992 *hyperthreaded* CPU cores, 3456 currently available to users, 19.5TB RAM, 13TB currently available to users, and 22 NVIDIA A40, 6 NVIDIA A10 and 12 NVIDIA A100 (80GB variant) GPU accelerators. Four A100 cards are configured as MIGs in 12x 10GB + 8 20GB variants. It consists of 39 nodes (31 currently available) with the following configuration:
+
+<table>
+  <thead>
+    <tr>
+      <th>39x</th>
+      <th></th>
+      <th>Nodes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CPU</td><td>2x AMD EPYC 7543</td>
+    </tr>
+    <tr>
+      <td>Memory:</td><td>512GB</td>
+    </tr>
+    <tr>
+      <td>Disk:</td><td>2x 3.5TB SSD SATA:<br/>8x 8TB NVME SSD:</td><td>kub-a5 -- kub-a25<br/>kub-b1 -- kub-b18</td>
+    </tr>
+    <tr>
+      <td>GPU:</td><td>None:<br/>2x NVIDIA A40 per node:<br/>1x NVIDIA A40 per node:<br/> 2x NVIDIA A10 per node:<br/>2x NVIDIA A100 (80GB) per node:<br/>1x NVIDIA H100 (PCIE/80GB):<br/>1x NVIDIA L4</td>
+                   <td>kub-a5 -- kub-a9<br/>kub-a10 -- kub-a14, kub-b12<br/>kub-a15 -- kub-a24 <br/>kub-b1 -- kub-b3<br/>kub-b4 -- kub-b8<br/>kub-b10 -- kub-b11<br/>kub-b13</td>
+    </tr>
+    <tr>
+      <td>Network:</td><td>2x 10Gbps NIC<br/>1x 100Gbps Infiniband:</td><td>All nodes<br/>kub-b1 -- kub-b18</td>
+    </tr>
+  </tbody>
+</table>
+
+## Storage
+
+Primary network storage consists of four head nodes each equipped with AMD EPYC 7302P, 256GB RAM, 2x 10Gbps NIC (failover only). It offers 500TB all-flash capacity of SSD drives only in RAID 6 equivalent configuration. Used filesystem is IBM Spectrum Scale that is exported via NFS version 3 to the kubernetes cluster.
+
+### Data Backup
+
+Storage is not backed up to another location, however, file system snapshots are made on daily basis, 14 snapshosts are kept. I.e., up to 14 days to the past, we are able to restore deleted/overwritten data.
