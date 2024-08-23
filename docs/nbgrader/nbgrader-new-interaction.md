@@ -71,15 +71,15 @@ Notebooky študentov sú spúšťatné ako samostatné kontajnere. Inštruktori 
 
 Keďže inštuktori pracujú priamo v hub pode, nemajú možnosť si po prihlásení nakonfigurovať prostredie pretože hub už existuje a sú v ňom. Ak by bolo potrebné, dali by sa natvoriť samostatné perzistentné úložiská pre inštruktorov, ktoré by boli pripojené do hubu a tak by mal každý svoj priestor (na nejaké extra súbory ap.). Všetky zložky by ale boli mountnuté naraz čže každý inštruktor by si musel dať pozor, kde zapisuje pri práci.
 
-## Po prihlásení
+# Po prihlásení
 
-# Študent
+## Študent
 
 Študent si po prihlásení vyberie zo server options množstvo zdrojov, či chce premazať home a klikne na spawn/start. Po spustení singleservru uvidí túto stránku. Väčšinou neni vidieť kurzy hneď, treba kliknúť na refresh button a v zozname sa objavia. 
 
 ![coursesrefresh](nbgrader/courses_refresh.png)
 
-# Inštruktor
+## Inštruktor
 
 Inštruktor po prihlásení uvidí (jednoduchý) klikací list s kurzami, kde je inštruktor. Po kliknutí na meno kurzu bude presmerovaný do známeho prostredia nbgradru. 
 
