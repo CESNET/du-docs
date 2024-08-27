@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 # Nbgrader New Tutorial
 
 ## Prihlasovanie do hubu
@@ -25,14 +27,16 @@ courses:
 
 Vyrobí sa súbor s názvom `[meno_kurzu]_students.txt` v stanovenej lokácii. Súbor obsahuje *IBA* emaile študentov ktorí sú zapísaní do daného predmetu (oficiálne TUL emaile, ktoré sa dajú vytiahnuť z vášho ISu). V súbore je jeden mail na jednom riadku. Nič viac nie je potrebné, študent automaticky uvidí kurz, do ktorého má prístup. 
 
-> [!IMPORTANT]
-> Ak študent nevidí kurz a jeho email je určite v súbore, je možné, že má v Perune nastavený iný preferred email - ak už používal metacentrum a nastavil si iný preferred email než je oficiálny TUL email. Obráťte sa na nás s menom študenta a vyriešime. 
+<Callout type="info">
+Ak študent nevidí kurz a jeho email je určite v súbore, je možné, že má v Perune nastavený iný preferred email - ak už používal metacentrum a nastavil si iný preferred email než je oficiálny TUL email. Obráťte sa na nás s menom študenta a vyriešime. 
+</Callout>
 
 
 Aktuálne funguje nbgrader tak, že študent má prístup z jedného singleuser servru na všetky kurzy, iba si ich preklikáva v menu. To by sme radi v blízkej budúcnosti zmenili tak, že čo kurz, to nový singleuser server pre študenta - toto správanie by zabezpečilo, že by bolo napr. možné používať iný image pre každý predmet (napr. s inými predinštalovanými knihovnami) a tiež by to bolo prehľadnejšie. 
 
-> [!NOTE]
-> Aktuálne, ak bol študent do kurzu pridaný dodatočne a jeho notebook už beží, musí svoj notebook vymazať a znova spustiť.
+<Callout typy="info">
+Aktuálne, ak bol študent do kurzu pridaný dodatočne a jeho notebook už beží, musí svoj notebook vymazať a znova spustiť.
+</Callout>
 
 
 
@@ -40,14 +44,17 @@ Aktuálne funguje nbgrader tak, že študent má prístup z jedného singleuser 
 
 Vyrobí sa súbor s názvom `[meno_kurzu]_instructors.txt` v stanovenej lokácii. Súbor obsahuje *IBA* emaile inštruktorov ktorí sú vedení jak lektori daného predmetu (oficiálne TUL emaile, ktoré sa dajú vytiahnuť z vášho ISu). V súbore je jeden mail na jednom riadku. Nič viac nie je potrebné, inštruktor automaticky uvidí kurz, do ktorého má prístup. 
 
-> [!IMPORTANT]
-> Ak inštruktor nevidí kurz a jeho email je určite v súbore, je možné, že má v Perune nastavený iný preferred email - ak už používal metacentrum a nastavil si iný preferred email než je oficiálny TUL email. Obráťte sa na nás s menom inštruktora a vyriešime. 
+<Callout type="warning">
+Ak inštruktor nevidí kurz a jeho email je určite v súbore, je možné, že má v Perune nastavený iný preferred email - ak už používal metacentrum a nastavil si iný preferred email než je oficiálny TUL email. Obráťte sa na nás s menom inštruktora a vyriešime. 
+</Callout>
 
-> [!NOTE]
-> Ak bol inštruktor pridaný ako inštruktor dodatočne (už sa niekedy prihlásil na avisem hub a ostal prihlásený) tak sa musí odhĺásiť a prihlásiť.
+<Callout type="info">
+Ak bol inštruktor pridaný ako inštruktor dodatočne (už sa niekedy prihlásil na avisem hub a ostal prihlásený) tak sa musí odhĺásiť a prihlásiť.
+</Callout>
 
-> [!CAUTION]
-> Nemalo by sa stať, že inštruktor nejakého kurzu je zároveň aj študent iného. To zatiaľ vedie k mixu práv a nbgrader tak nefunguje dobre. Ak by to bolo v budúcnosti nutné, pozrieme sa na to no zatiaľ neodporúčame tento stav.
+<Callout type="warning">
+Nemalo by sa stať, že inštruktor nejakého kurzu je zároveň aj študent iného. To zatiaľ vedie k mixu práv a nbgrader tak nefunguje dobre. Ak by to bolo v budúcnosti nutné, pozrieme sa na to no zatiaľ neodporúčame tento stav.
+</Callout>
 
 
 ## Konfigurácia notebookového prostredia
