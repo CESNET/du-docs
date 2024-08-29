@@ -2,6 +2,7 @@ import '../styles/global.css';
 import { ThemeProvider } from 'next-themes'
 import { useState, useContext } from 'react';
 import { GlobalContext, GlobalContextValue } from '../contexts/globalContext';
+import { SessionProvider } from "next-auth/react";
 import Modal from '../components/Modal';
 
 export default function MyApp({ Component, pageProps }) {
@@ -14,6 +15,7 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      <SessionProvider session={session}>
       <ThemeProvider forcedTheme="light">
       <GlobalContext.Provider
         value={{ value: globalContext, setValue: setGlobalContext }}>
@@ -21,6 +23,7 @@ export default function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </GlobalContext.Provider>
       </ThemeProvider>
+      </SessionProvider>
     </>
   );
 }
