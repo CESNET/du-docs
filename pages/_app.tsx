@@ -5,9 +5,7 @@ import { GlobalContext, GlobalContextValue } from '../contexts/globalContext';
 import { SessionProvider } from "next-auth/react";
 import Modal from '../components/Modal';
 
-export default function MyApp({ Component, pageProps }) {
-  // const [globalContext, setGlobalContext] = useState < GlobalContextValue > {};
-
+export default function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [globalContext, setGlobalContext] = useState<GlobalContextValue>({
     modalContent: null,
     isModalVisible: false,
