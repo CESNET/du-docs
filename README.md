@@ -7,6 +7,7 @@
 - [ ] Make all hrefs clickable, i.e., convert https:// texts to links
 - [ ] Return log in redirect to active GPT modal window
 - [ ] Show links to chapters with answer
+- [ ] Allow sequential questions
 
 ## Engine
 
