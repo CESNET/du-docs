@@ -11,4 +11,5 @@
 
 ## Engine
 
-- [ ] Secure API endpoints by user sesstion
+- [x] Secure API endpoint `/buildPrompt` by user session
+- [ ] Secure API endpoint `/qa` by user session
