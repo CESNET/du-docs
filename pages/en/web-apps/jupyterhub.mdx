@@ -137,4 +137,11 @@ All of your named server are accessible under `Hub Control panel` where you can 
 ## Feature requests
 Any tips for features or new notebook types are welcomed at <a href="mailto:k8s@ics.muni.cz">IT Service desk</a>.
 
+## Building Own Image
 
+The best and easiest way for building custom image is to base minimal notebook from jupyterhub `jupyter/minimal-notebook:hub-4.0.2` and do necessary changes. Source for our Minimal notebook can be found [here](/examples/ceritsc/jupyterhub/Dockerfile-minimal).
+
+If for any reason, it is not desired to source this mininaml notebook, you can create a new one from any base, but make it sure it is ready to run as notebook:
+
+* Install `jupyterlab` package
+* Add [start-notebook.py]((/examples/ceritsc/jupyterhub/start-notebook.py), [start-notebook.sh]((/examples/ceritsc/jupyterhub/start-notebook.sh), [start-singleuser.py]((/examples/ceritsc/jupyterhub/start-singleuser.py), [start-singleuser.sh]((/examples/ceritsc/jupyterhub/start-singleuser.sh), [start.sh]((/examples/ceritsc/jupyterhub/start.sh) files and make them executable `chown a+rx start*`
