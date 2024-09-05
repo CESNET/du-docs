@@ -15,11 +15,11 @@ You can install specific Nextflow version exporting `NXF_VER` environment
 variable before running the install command, e.g.:
 
 ```shell
-export NXF_VER=24.04.2
+export NXF_VER=24.04.4
 curl -s https://get.nextflow.io | bash
 ```
 
-Currently, 24.04.2 is highest available version using this method. However, you can also download latest version from github:
+Currently, 24.04.4 is highest available version using this method. However, you can also download latest version from github:
 `https://github.com/nextflow-io/nextflow` installable as follows:
 
 ```shell
@@ -116,7 +116,7 @@ and selectors the following priority rules are applied (from lower to higher):
 To start a pipeline, you must use the `kuberun` subcommand of `nextflow`. If you use `nextflow` version 22.06.1 or later, you must add options 
 
 ```shell
--head-image 'cerit.io/nextflow/nextflow:24.04.2' -head-memory 4096Mi -head-cpus 1
+-head-image 'cerit.io/nextflow/nextflow:24.04.4' -head-memory 4096Mi -head-cpus 1
 ```
 
 These options are required just for *workflow controller pod* in our cluster. `head-memory`/`head-cpus` specify amount of memory/cpu dedicated to the controller pod  -- use higher number if your pipeline is expected to generate thousands of tasks.
@@ -124,7 +124,7 @@ These options are required just for *workflow controller pod* in our cluster. `h
 Example run command:
 
 ```shell
-nextflow kuberun hello -head-image 'cerit.io/nextflow/nextflow:24.04.2' -head-memory 4096Mi -head-cpus 1 -v PVC:/mnt 
+nextflow kuberun hello -head-image 'cerit.io/nextflow/nextflow:24.04.4' -head-memory 4096Mi -head-cpus 1 -v PVC:/mnt 
 ```
 
 If you are using `nextflow` version below 22.06.1 or you get an error message informing about `head-image not known`, you must add option
