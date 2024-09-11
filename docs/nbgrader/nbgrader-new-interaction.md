@@ -13,6 +13,13 @@ sidebar:
 
 Prihlasovanie je zabezpečené cez jednotné prihlásenie s extra kontrolou, či je človek z TULu. Keďže čistá kontrola iba TUL domény nezabezpečuje, že sa prihlasuje človek, ktorý je študentom/inštruktorom, vykonáva sa na pozadí kontrola emailu z vyššie spomínaných súborov a podľa (ne)existenciu mailu v niektorom z týchto súborov sa buď zobrazí prístup do kurzov pre inštruktora, spawn form pre študenta alebo nič.
 
+Zatiaľ nie je potrebná registrácia do Meta, toto sa vyrieši počas října. Pravdepodobne sa bude jednať o presun nejakých resourcov v Perune - nič, čo by ovplyvnilo chod hubu a spôsobilo zmenu pre študentov. 
+
+Testovací hub: https://avi-semt.dyn.cloud.e-infra.cz
+
+Produkcia: https://jupytul.cloud.e-infra.cz
+
+------
 Nie je nutná iná registrácia okrem MetaCentra a eINFRA. Ak študent/inštruktor nie je členom meta, musí sa zaregistrovať tu: https://metavo.metacentrum.cz/en/application/index.html. 
 
 # Kurzy - pridávanie a správa
@@ -38,12 +45,6 @@ Vyrobí sa súbor s názvom `[meno_kurzu]_students.txt` v stanovenej lokácii. S
 > Ak študent nevidí kurz a jeho email je určite v súbore, je možné, že má v Perune nastavený iný preferred email - ak už používal metacentrum a nastavil si iný preferred email než je oficiálny TUL email. Obráťte sa na nás s menom študenta a vyriešime. 
 
 
-Aktuálne funguje nbgrader tak, že študent má prístup z jedného singleuser servru na všetky kurzy, iba si ich preklikáva v menu. To by sme radi v blízkej budúcnosti zmenili tak, že čo kurz, to nový singleuser server pre študenta - toto správanie by zabezpečilo, že by bolo napr. možné používať iný image pre každý predmet (napr. s inými predinštalovanými knihovnami) a tiež by to bolo prehľadnejšie. 
-
-> [!NOTE]
-> Aktuálne, ak bol študent do kurzu pridaný dodatočne a jeho notebook už beží, musí svoj notebook vymazať a znova spustiť.
-
-
 
 ## Pridanie inštruktorov do kurzu
 
@@ -65,7 +66,11 @@ Notebooky študentov sú spúšťatné ako samostatné kontajnere. Inštruktori 
 
 ## Notebooky študentov
 
-Študenti majú k dispozícii perzistentný home v `/home/jovyan` ktorý sa dá premazať, ak je potrebné (voľba pri spúšťaní notebooku). Tiež je možné vybrať množstvo zdrojov, s ktorými bude študent pracovať - zatiaľ CPU a mem. Máme k dispozícii aj GPU karty no o zdrojoch píšem viac nižšie. V tejto časti sa dá nakonfigurovať kadečo, nemusí tam byť ani voľba výberu zdrojov - to môže byť pevne dané.
+Študenti majú k dispozícii perzistentný home v `/home/jovyan` ktorý sa dá premazať, ak je potrebné (voľba pri spúšťaní notebooku). Podľa dohody majú študenti CPU request=1 a CPU limit=2. Memory request=memory limit=4GB.
+
+Študenti si môžu spustiť až 3 notebooky (jeden na predmet) súčasne. Pužíva sa 1 image keďže užívate rovnaké knižnice. Cez `fakeroot apt-get install ...` sa dajú nainštalovať systémové knižnice rovno do notebooku. Mal by fungovať pip i conda. 
+
+Ak bol študent pridaný do kurzu dodatočne, stačí si spustiť nový notebook a vybrať s ktorým predmetom chce pracovať, prípadne reload na home stránku. 
 
 ## Prostredie inštruktora
 
@@ -75,7 +80,7 @@ Keďže inštuktori pracujú priamo v hub pode, nemajú možnosť si po prihlás
 
 ## Študent
 
-Študent si po prihlásení vyberie zo server options množstvo zdrojov, či chce premazať home a klikne na spawn/start. Po spustení singleservru uvidí túto stránku. Väčšinou neni vidieť kurzy hneď, treba kliknúť na refresh button a v zozname sa objavia. 
+Študent si po prihlásení vyberie kurz s ktorým chce pracovať, či chce premazať home a klikne na start. Po spustení notebooku uvidí túto stránku. Väčšinou neni vidieť kurzy hneď, treba kliknúť na refresh button a v zozname sa objavia. 
 
 ![coursesrefresh](nbgrader/courses_refresh.png)
 
@@ -86,6 +91,34 @@ Inštruktor po prihlásení uvidí (jednoduchý) klikací list s kurzami, kde je
 ![instructorlist](nbgrader/instructor_list.png)
 
 ![formgradert](nbgrader/formgrader.png)
+
+# Vytvorenie named servers
+
+Zo straný študenta, prvý notebook je možné vyrobiť rovno po prihlásení, keď klikne na štart. Tento notebook ale nebude pomenovaný a tak sa dá prejsť do časti `Home`.
+
+![homenamed](nbgrader/homenamed.png)
+
+V tejto časti sa dajú naklikať názvy notebookov a tak vytvoriť. Do panelu home sa dá prejšt vždy, čiže študent si môže vyrobiť jeden notebook, spustiť a keď bude chcieť ďalší, môže prejsť buď do home alebo z notebooku cez `Hub Control Panel` do toho istého menu (obr v ďalšej sekcii).
+
+![add](nbgrader/add.png)
+
+# Mazanie notebookv po skončení práce
+
+Ak prvý notebook nebol vyrobený cez zoznam ale rovno po prihlásení, nemá meno a maže sa veľkým červeným tlačítkom `Stop My Server` v Home časti (prípadne sa sem dá prejsť z `Hub Control Panel`).
+
+![stopmyserver](nbgrader/stopmyserver.png)
+
+Spustené pomenované notebooky sa dajú vymazať cez `Hub Control Panel - Stop`. 
+
+![controlpanel](nbgrader/controlpanel.png)
+
+![stop](nbgrader/stop.png)
+
+To vedie k zmazaniu reálneho kontajnera v Kubernetoch. Nie je nutné kliknúť na Delete, no doporučujeme pretože študenti majú potom prehľad. 
+
+![startdelete](nbgrader/startdelete.png)
+
+
 
 # Výpočetné zdroje
 
