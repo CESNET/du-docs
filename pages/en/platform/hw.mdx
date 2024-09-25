@@ -61,7 +61,7 @@ kub-c nodes (upcoming)
       <td>Disk:</td><td>60TB NVME SSD:</td><td>All nodes</td>
     </tr>
     <tr>
-      <td>GPU:</td><td>1x NVIDIA H100 per node:</td><td>All nodes</td>
+      <td>GPU:</td><td>1x NVIDIA H100 NVL (PCIE/94GB)per node:</td><td>All nodes</td>
     </tr>
     <tr>
       <td>Network:</td><td>1x 100Gbps Ethernet:<br/>1x 200Gbps Infiniband:</td><td>All nodes<br/>All nodes</td>
@@ -117,7 +117,7 @@ Local storage is not backed up, it is up to the user to ensure backing-up.
 ## Secure cluster
 ### kubas-cluster
 
-Kubas-cluster consists of 10 nodes and features 5x NVIDIA A40, 2x NVIDIA A100 (80GB variant), 4x NVIDIA P100, 2x NVIDIA H100 and on-demand 4x NVIDIA A100 GPU accelerators. Nodes *kub-cs1, kub-cs2* are physically located at different site than the rest of the cluster therefore it is possible to create HA setup in the secure cluster as well. 
+Kubas-cluster consists of 10 nodes and features 5x NVIDIA A40, 2x NVIDIA A100 (80GB variant), 4x NVIDIA P100, 2x NVIDIA H100 (NVL 94GB variant)and on-demand 4x NVIDIA A100 GPU accelerators. Nodes *kub-cs1, kub-cs2* are physically located at different site than the rest of the cluster therefore it is possible to create HA setup in the secure cluster as well. 
 
 <table>
   <thead>
@@ -138,7 +138,7 @@ Kubas-cluster consists of 10 nodes and features 5x NVIDIA A40, 2x NVIDIA A100 (8
       <td>Disk:</td><td>2x 3.5TB SSD SATA:<br/>60TB NVME SSD:<br/>1x 3.6TB SSD:<br/>1x 1.5TB SSD:</td><td>kub-as1 -- kub-as6<br/>kub-cs1, kub-cs2<br/>kblack<br/>kzia</td>
     </tr>
     <tr>
-      <td>GPU:</td><td>1x NVIDIA A40 per node:<br/>2x NVIDIA A100 (80GB) per node:<br/>2x NVIDIA H100 per node:<br/>4x NVIDIA P100:<br/>on-demand 1-4 NVIDIA A100 (40GB):</td><td>kub-as1 -- kub-as5<br/>kub-as6<br/>kub-cs1, kub-cs2<br/>kblack<br/>kzia</td>
+      <td>GPU:</td><td>1x NVIDIA A40 per node:<br/>2x NVIDIA A100 (80GB) per node:<br/>2x NVIDIA H100 NVL (94GB) per node:<br/>4x NVIDIA P100:<br/>on-demand 1-4 NVIDIA A100 (40GB):</td><td>kub-as1 -- kub-as5<br/>kub-as6<br/>kub-cs1, kub-cs2<br/>kblack<br/>kzia</td>
     </tr>
     <tr>
       <td>Network:</td><td>2x 10Gbps Ethernet:<br/>1x 100Gbps Ethernet:<br/>1x 10Gbps Ethernet:<br/>1x 10Gbps Ethernet:</td><td>kub-as1 -- kub-as6<br/>kub-cs1, kub-cs2<br/>kblack<br/>kzia</td>
