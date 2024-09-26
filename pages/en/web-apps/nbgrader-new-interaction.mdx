@@ -16,11 +16,11 @@ Prístup je zabezpečený cez členstvo inštruktorov aj študentov v skupine. E
 - `pav-students` [Perun skupina PAV students](https://perun.e-infra.cz/organizations/3898/groups/15922)
 - `pav-instructors`
 
-Do skupiny sa posiela prihláška - zatiaľ to robím ja, no môžte aj vy. Prihláška ma nejakú expiráciu (default 1 mesiac), je na študentoch/inšturktoroch aby ju prijali. Ak študent:
+Do skupiny sa posiela prihláška. Prihláška ma nejakú expiráciu (default 1 mesiac), je na študentoch/inšturktoroch aby ju prijali. Ak študent:
 - vidí `Access denied`, tak na 100% nie je členom *žiadnej* skupiny
 - vie sa prihlásiť ale nevidí správny kurz - je členom nesprávnej skupiny
 
-V perune (linky vyššie) si viete skontrolovať kto je člen skupiny a kto má Pending pozvánku. Ak osobu nenájdete ani v jednom zo zoznamov, nebola jej poslaná pozvánka - kontaktujte ma. 
+V perune (linky vyššie) si viete skontrolovať kto je člen skupiny a kto má Pending pozvánku. Ak osobu nenájdete ani v jednom zo zoznamov, nebola jej poslaná pozvánka. 
 
 ![mainmenu](/img/ceritsc/apps/nbgrader/mainmenu.png)
 
@@ -52,7 +52,19 @@ Pre pridanie/odobranie celého kurzu nutné komunikovať s nami.
 
 ### Pridanie študentov do kurzu
 
-Človek je študentom, ak je členom Perun subgroup `{kurz}-students` pod group `NBGrader Tulhub`.  Na pridanie študenta do skupiny potrebujem jeho mail, ideálne vo formáte `mail, meno studenta`. Študentovi príde pozvánka, je na ňom aby to odklikol. Kým to neurobí, nevidí kurz.
+Človek je študentom, ak je členom Perun subgroup `{kurz}-students` pod group `NBGrader Tulhub`.  Na pridanie študenta do skupiny potrebujemd jeho mail, ideálne vo formáte `mail, meno studenta`. Študentovi príde pozvánka, je na ňom aby to odklikol. Kým to neurobí, nevidí kurz.
+
+![membersnav](/img/ceritsc/apps/nbgrader/membersnav.png)
+
+![invnav](/img/ceritsc/apps/nbgrader/invnav.png)
+
+Ak vyberiete možnosť poslať pozánku len 1 človeku tak sa zobrazí:
+
+![single](/img/ceritsc/apps/nbgrader/single.png)
+
+Ak sa rozhodnete poslať pozánku viacerým ľuďom naraz tak sa zobrazí:
+
+![multiple](/img/ceritsc/apps/nbgrader/multiple.png)
 
 ### Pridanie inštruktorov do kurzu
 
@@ -108,7 +120,7 @@ HOME NEPOUŽÍVAJTE NA NIČ INÉ NEŽ NA UKLADANIE NEJAKÝCH EXTRA SÚBOROV NES�
 
 ## Vytvorenie pomenovaných kontajnerov
 
-študneit majú možnosť si vyrobiť až tri rôzne notebokove servre, čo sú samostatné kontajnere. Toto sa im hodí, ak by boli študentmi niekoľkých predmetov naraz pretože by v jednom menu mohli pristupovať ku každému kurzu samostatne keďže by mali 1 kontajner per predmet. 
+Študenti majú možnosť si vyrobiť až tri rôzne notebokove servre, čo sú samostatné kontajnere. Toto sa im hodí, ak by boli študentmi niekoľkých predmetov naraz pretože by v jednom menu mohli pristupovať ku každému kurzu samostatne keďže by mali 1 kontajner per predmet. 
 
 Zo straný študenta, prvý kontajner je možné vyrobiť rovno po prihlásení, keď klikne na štart a to mu stačí, ak je zapísaný len v 1 predmete. Tento notebook ale neni pomenovaný a ak by študent chcel ďalší server tak sa dá prejsť do časti `Home`.
 
