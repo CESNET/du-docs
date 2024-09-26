@@ -2,11 +2,11 @@ import { Callout } from 'nextra/components'
 
 # NBGrader Docs
 
-# URL Adresy
+## URL Adresy
 
 Primárna inštancia: jupytul.cloud.e-infra.cz
 
-# Prístup na jupytul
+## Prístup na jupytul
 
 Prístup je zabezpečený cez členstvo inštruktorov aj študentov v skupine. Existujúce skupiny:
 - `ald-students`  [Perun skupina ALD students](https://perun.e-infra.cz/organizations/3898/groups/15920)
@@ -29,11 +29,11 @@ V perune (linky vyššie) si viete skontrolovať kto je člen skupiny a kto má 
 ![pending](/img/ceritsc/apps/nbgrader/pending.png)
 
 
-# Prihlasovanie do jupytul
+## Prihlasovanie do jupytul
 
 Prihlasovanie je zabezpečené cez jednotné prihlásenie spravované Perun tímom pod hlavičkou e-INFRA CZ. Inštruktori aj študenti musia patriť do správnych skupín. 
 
-## Študent
+### Študent
 
 Študent si po prihlásení vyberie kurz s ktorým chce pracovať, či chce premazať home a klikne na start. Po spustení notebooku uvidí túto stránku. Väčšinou neni vidieť kurzy hneď, treba kliknúť na refresh button a v zozname sa objavia. 
 
@@ -46,15 +46,15 @@ Inštruktor po prihlásení uvidí (jednoduchý) klikací list s kurzami, kde je
 ![formgradert](/img/ceritsc/apps/nbgrader/formgrader.png)
 
 
-# Kurzy - pridávanie a správa
+## Kurzy - pridávanie a správa
 
 Pre pridanie/odobranie celého kurzu nutné komunikovať s nami. 
 
-## Pridanie študentov do kurzu
+### Pridanie študentov do kurzu
 
 Človek je študentom, ak je členom Perun subgroup `{kurz}-students` pod group `NBGrader Tulhub`.  Na pridanie študenta do skupiny potrebujem jeho mail, ideálne vo formáte `mail, meno studenta`. Študentovi príde pozvánka, je na ňom aby to odklikol. Kým to neurobí, nevidí kurz.
 
-## Pridanie inštruktorov do kurzu
+### Pridanie inštruktorov do kurzu
 
 Človek je inšturktorom, ak je členom Perun subgroup `{kurz}-instructors` pod group `NBGrader Tulhub`.  Na pridanie inštruktora do skupiny potrebujem jeho mail, ideálne vo formáte `mail, meno instruktora`. Inštruktorovi príde pozvánka, je na ňom aby to odklikol. Kým to neurobí, nevidí kurz.
 
@@ -66,7 +66,7 @@ Ak bol inštruktor pridaný ako inštruktor dodatočne (už sa niekedy prihlási
 Nemalo by sa stať, že inštruktor nejakého kurzu je zároveň aj študent iného. To zatiaľ vedie k mixu práv a nbgrader tak nefunguje dobre. Ak by to bolo v budúcnosti nutné, pozrieme sa na to no zatiaľ to nefunguje.
 </Callout>
 
-## Pridávanie assignments
+### Pridávanie assignments
 
 ASSIGNMENTS NESMÚ BYŤ V HOME!!! Assigments patria JEDINE A IBA do `/mnt/exchange/{kurz}/source`. Ak sa vyrobí `gradebook.db` inde než v  `/mnt/exchange/{kurz}/` tak je niečo zle.
 
@@ -81,11 +81,11 @@ ODPORÚČAME vytvárať assignemnts cez UI (pretože si ten nbgrader možno vytv
 
 ![image3](/img/ceritsc/apps/nbgrader/image3.png)
 
-## Custom konfigurácia nbgrader_config.py
+### Custom konfigurácia nbgrader_config.py
 
 Ak sa releasne assignemnt s nejakým configom, výsledok už nejde zmeniť. Ak zmeníte config, ďalší release už sa udeje s tým zmeneným configom.
 
-# Konfigurácia notebookového prostredia
+## Konfigurácia notebookového prostredia
 
 Notebooky študentov sú spúšťatné ako samostatné kontajnere. Inštruktori pracujú v tom istom jednom kontajneri ktorý ešte naviac slúži ako samotné hub prostredie (tak to má nbgrader, dá sa to preprogramovať ak by bolo nutné).
 ## Notebooky študentov
@@ -96,7 +96,7 @@ Notebooky študentov sú spúšťatné ako samostatné kontajnere. Inštruktori 
 
 Ak bol študent pridaný do kurzu dodatočne, stačí si spustiť nový notebook a vybrať s ktorým predmetom chce pracovať, prípadne reload na home stránku. 
 
-## Prostredie inštruktora
+### Prostredie inštruktora
 
 Keďže inštuktori pracujú priamo v hub kontajneri, nemajú možnosť si po prihlásení nakonfigurovať prostredie pretože hub už existuje a sú v ňom. 
 
@@ -106,7 +106,7 @@ Na prianie som doinštalovala balíčky, nastavila `HOME=/mnt/exchange/{kurz}/ho
 HOME NEPOUŽÍVAJTE NA NIČ INÉ NEŽ NA UKLADANIE NEJAKÝCH EXTRA SÚBOROV NESÚVSIACICH S ASSIGNMENTS A NBGRADROM. NEBUDE TO FUNGOVAŤ!!!! 
 </Callout>
 
-# Vytvorenie pomenovaných kontajnerov
+## Vytvorenie pomenovaných kontajnerov
 
 študneit majú možnosť si vyrobiť až tri rôzne notebokove servre, čo sú samostatné kontajnere. Toto sa im hodí, ak by boli študentmi niekoľkých predmetov naraz pretože by v jednom menu mohli pristupovať ku každému kurzu samostatne keďže by mali 1 kontajner per predmet. 
 
@@ -118,7 +118,7 @@ V tejto časti sa dajú naklikať názvy notebookov a tak vytvoriť. Do panelu h
 
 ![add](/img/ceritsc/apps/nbgrader/add.png)
 
-# Mazanie notebookov po skončení práce
+## Mazanie notebookov po skončení práce
 
 Ak prvý notebook nebol vyrobený cez zoznam ale rovno po prihlásení, nemá meno a maže sa veľkým červeným tlačítkom `Stop My Server` v Home časti (prípadne sa sem dá prejsť z `Hub Control Panel`).
 
@@ -134,7 +134,7 @@ To vedie k zmazaniu reálneho kontajnera v Kubernetoch. Nie je nutné kliknúť 
 
 ![startdelete](/img/ceritsc/apps/nbgrader/startdelete.png)
 
-# Výpočetné zdroje
+## Výpočetné zdroje
 
 Dohodnuté na vymazanie notebookov o polnoci.
 
