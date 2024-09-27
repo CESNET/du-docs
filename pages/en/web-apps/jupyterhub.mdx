@@ -185,3 +185,23 @@ The token is valid for all your running notebooks, not just for a particular not
 <Callout type="warning">
 The user who wants to use the share link with the token must not be logged in, e.g., must use an incognito browser window.
 </Callout>
+
+## AI GPT Support
+
+Some of the notebooks (marked with `AI`) are integrated with GPT, in particular the gpt-4o-mini model. Each user has access to prepaid the model with the following restrictions:
+
+* The model can only be used from the jupyterhub (the API key will not work anyway).
+
+* The user can currently spend $1 per month (for the gpt-4o-mini model, the limit is for 1.3M input+output tokens).
+
+* Using the GPT requires the user to agree to the [OpenAI terms of use](https://openai.com/policies/terms-of-use/). 
+
+* Only the gpt-4o-mini model is supported.
+
+<Callout type="warning">
+Your data will be sent to the third party service -- OpenAI. If you do not agree, do not use AI versions of notebooks.
+</Callout>
+
+### Currently Integrated Notebooks
+
+* Minimal NB AI -- see [https://jupyter-ai.readthedocs.io/en/latest/](https://jupyter-ai.readthedocs.io/en/latest/) for documentation.
