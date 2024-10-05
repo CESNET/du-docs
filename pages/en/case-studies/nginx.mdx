@@ -146,6 +146,10 @@ spec:
 The PVC name (`name: test-nginx`) must match the claimName (`claimName: test-nginx`).
 </Callout>
 
+<Callout type="info">
+Directory index is not enabled by default for the NGINX. Therefore, if there is no `index.html` file uploaded to the PVC, the NGINX will return error `403 Forbidden` if the URL explained below will be opened in browser.
+</Callout>
+
 ## Exposing the NGINX
 
 To make the running NGINX accessible from internet, see [Exposing applications](../kubernetes/expose) section. Basically, two additional simple manifests are needed:
