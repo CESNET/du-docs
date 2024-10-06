@@ -6,9 +6,9 @@ Trying to run [NGINX](https://nginx.org/en/) web server is common test to deploy
 
 ## Privileged vs. Unprivileged
 
-This Kubernetes platform is multitenant, i.e., it is shared by many users and therefore, it has some restrictions. One of them is necessity to set [security context](../kubernetes/securitycontext) because privilege escalation is not allowed. Setting the security context to unprivileged mode sometimes requires creating own docker image for the application. Luckily, for nginx, there is already prepared [unprivileged image](https://hub.docker.com/r/nginxinc/nginx-unprivileged). Its reference id is: `nginxinc/nginx-unprivileged`. This image is fully compatible with our platform as is, no changes into image are needed.
+This Kubernetes platform is multitenant, i.e., it is shared by many users and therefore, it has some restrictions. One of them is necessity to set [security context](../kubernetes/securitycontext) because privilege escalation is not allowed. Setting the security context to unprivileged mode sometimes requires creating own docker image for the application. Luckily, for NGINX, there is already prepared [unprivileged image](https://hub.docker.com/r/nginxinc/nginx-unprivileged). Its reference id is: `nginxinc/nginx-unprivileged`. This image is fully compatible with our platform as is, no changes into image are needed.
 
-## Running USER ID
+## Running User ID
 
 The above mentioned security context requires a correct user id and group id to be set (those `RunAsUser`, `RunAsGroup` fields). For the `nginx-unprivileged` image, the correct value for both of them is `101`. This value can be simply obtained using `docker` as follows. See the `uid=101` and `gid=101`:
 
