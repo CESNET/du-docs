@@ -1,5 +1,5 @@
 export default {
-        "rancher": "Úvod do Rancheru",
-        "quotas": "Projekty, namespacy a kvóvy",
+        "rancher": "Rancher",
+        "quotas": "Projekty, Namespaces a Kvóty",
         "reqproj": "Žádost o projekt, řízení přístupu"
 }

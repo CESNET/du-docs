@@ -2,17 +2,17 @@
 
 ## Autentizace Ingress
 
-Pokud chce uživatel využít základní autentizaci nebo oauth na ingress, může to být provedeno, jak je popsáno v [oficiální dokumentaci](https://kubernetes.github.io/ingress-nginx/examples/auth/basic/) nebo v [naší dokumentaci](/kubernetes/expose).
+Pokud chce uživatel využít základní autentizaci nebo oauth na ingress, může to být provedeno, jak je popsáno v [oficiální dokumentaci](https://kubernetes.github.io/ingress-nginx/examples/auth/basic/) nebo v [naší dokumentaci](expose).
 
-Tento přístup má jednu velkou bezpečnostní chybu. Autentizace je vyžadována pouze při připojení přes ingress, tj. z vnější strany Kubernetes clusteru. Uživatel platformy se však může také připojit přímo z vnitřku clusteru k odpovídající službě (musí však uhodnout její IP) a v takovém případě není autentizace vyžadována.
+Tento přístup má jednu velkou bezpečnostní chybu. Autentizace je vyžadována pouze při připojení přes ingress, tj. zvenčí Kubernetes clusteru. Uživatel platformy se však může také připojit přímo z vnitřku clusteru k odpovídající službě (musí však uhodnout její IP) a v takovém případě není autentizace vyžadována.
 
 Tato chyba může být zmírněna pomocí [síťové politiky](https://kubernetes.io/docs/concepts/services-networking/network-policies/), která může omezit původ síťového provozu. V tomto případě je užitečné povolit příchozí provoz na server pouze z *kube-system* namespace. Namespace *kube-system* hostí instanci Ingress Nginx, proto je vyžadováno připojení pouze z tohoto a pouze tohoto namespace.
 
-Příklad síťové politiky lze [stáhnout zde](deployments/netpolicy.yaml). Tato politika umožňuje příchozí provoz z *kube-system* do Podu s názvem `myapp`. Tato politika je aplikována na *namespace*, kde se Pod `myapp` nachází.
+Příklad síťové politiky lze [stáhnout zde](/examples/ceritsc/manifests/netpolicy.yaml). Tato politika povoluje příchozí provoz z *kube-system* do Podu s názvem `myapp`. Tato politika je aplikována na *namespace*, kde se Pod `myapp` nachází.
 
 ## E-infra Single Sign On (BETA)
 
-Je možné využít SSO službu e-infra k zabezpečení vaší aplikace. Abychom to umožnili, je třeba přidat některá data do ingressu.
+Je možné využít SSO službu e-infra k zabezpečení vaší aplikace. Abychom to umožnili, je nutné přidat některá data do ingressu.
 Ukážeme, jak upravit existující ingress, aby zahrnoval SSO.
 
 Tento příklad představuje existující ingress:
@@ -125,9 +125,9 @@ spec:
 ```
 
 Všimněte si, že `hosts` a `secretName` jsou stejné jako v původním ingressu.
-Jediné, co je třeba změnit v souboru, jsou všechny výskyty
+Jediná věc, kterou je třeba ve souboru změnit, jsou všechny výskyty
 `ingress-name` a `hostname`, nahraďte je názvem vašeho ingressu
 a URL webové stránky a aplikujte soubor.
 
-Se všemi provedenými změnami je vaše webová stránka nyní zabezpečena službou
-SSO e-infra.
+Po všech provedených změnách je vaše webová stránka nyní zabezpečena
+službou SSO e-infra.

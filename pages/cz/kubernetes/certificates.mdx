@@ -5,8 +5,8 @@ Kubernetes může vydávat a spravovat vlastní důvěryhodné certifikáty pomo
 To je obzvlášť důležité pro povolení TLS při vystavování ne-webových aplikací, tedy bez Ingress.
 
 V současnosti jsou k dispozici čtyři vydavatelé:
-* Vydavatel `letsencrypt-prod` je pouze pro web a automaticky kontroluje web na zadaném doménovém jménu během procesu vydávání. Je automaticky používán při vystavování aplikace prostřednictvím [ingress](/kubernetes/expose#web-based-applications).
-* Vydavatel `letsencrypt-prod-dns` je určen pro jiné aplikace. Rozdíl je v kontrole dns. Kontrola dns je však pomalejší, protože změna dns se musí nejprve propagovat.
+* Vydavatel `letsencrypt-prod` je pouze pro web a automaticky kontroluje web na zadaném doménovém jménu během procesu vydávání. Je automaticky používán při vystavování aplikace prostřednictvím [ingress](expose#web-based-applications).
+* Vydavatel `letsencrypt-prod-dns` je určen pro jiné aplikace. Rozdíl je v kontrole dns. Nicméně, kontrola dns je pomalejší, protože změna dns se musí nejprve propagovat.
 * `letsencrypt-stage` je stejný jako `letsencrypt-prod`, ale používá stagingové servery vhodné pro testování.
 * `letsencrypt-stage-dns` je stejný jako `letsencrypt-prod-dns`, ale používá stagingové servery vhodné pro testování.
 
@@ -31,4 +31,4 @@ spec:
 ```
 Kde `metadata.name`, `spec.secretName` odkazují na název vygenerovaného certifikátu. Položky `spec.dnsNames` jsou cílové dns názvy certifikátu. Vydavatel je specifikován v `spec.issuerRef.name` a měl by být nastaven na `letsencrypt-prod-dns`.
 
-Konfigurace generuje tajemství, specifikované v `spec.secretName`, obsahující certifikát a pár soukromých klíčů.
+Konfigurace generuje tajemství, specifikované v `spec.secretName`, obsahující certifikát a pár soukromého klíče.

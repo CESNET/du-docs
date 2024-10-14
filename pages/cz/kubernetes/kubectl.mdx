@@ -13,10 +13,10 @@ Je možné mít více konfigurací clusterů v jednom konfiguračním souboru.
 ## Více clusterů
 
 Jedna osoba může mít přístupová práva k více clusterům. Pro práci s nimi musí být `config` každého clusteru dostupný buď:
-- v `$HOME/.kube/config`
+- `$HOME/.kube/config`
 - v samostatném souboru, ale pak musí být při použití `kubectl` specifikováno `-f [název_souboru]`
 
-Je mnohem pohodlnější sloučit více konfigurací clusterů do jedné, protože se nemusíte obávat, kde se nachází vaše namespace. 
+Je mnohem pohodlnější sloučit více konfigurací clusterů do jedné, protože se nemusíte obávat, kde se nachází váš namespace. 
 
 ### Sloučení konfigurací
 Pokud váš `config` již obsahuje nějaký obsah, vypadá podobně jako:

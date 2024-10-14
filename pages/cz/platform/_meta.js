@@ -1,5 +1,6 @@
 export default {
-	"overview": "Přehled",
-	"hw": "Dostupný hardware",
-	"contacts": "Kontakty"
+	"overview": "Přehled platformy kontejnerů",
+	"hw": "Dostupný Hardware",
+	"contacts": "Kontakty",
+        "access": "Jak získat přístup"
 }

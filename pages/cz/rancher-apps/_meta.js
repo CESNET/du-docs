@@ -1,0 +1,15 @@
+export default {
+	"rancher-applications": "Přehled",
+	"ansys": "Ansys",
+	"desktop": "Desktop",
+	"matlab": "Matlab",
+	"minio": "Minio",
+	"moodle": "Moodle",
+	"owncloud": "ownCloud",
+	"pmon": "Personal Monitoring",
+	"phpmyadmin": "phpMyAdmin",
+	"rstudio": "RStudio Server",
+	"scipion": "Scipion",
+	"shinysom": "ShinySOM",
+	"samba": "Samba Server",
+}

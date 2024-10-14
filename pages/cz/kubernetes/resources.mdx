@@ -2,7 +2,7 @@
 
 ## Požadavky a limity
 
-Jak je popsáno v [dokumentaci Kubernetes](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/), platforma používá dva druhy "limitů" zdrojů. Jeden se nazývá *Požadavky* a poskytuje zaručené množství zdroje, druhý se nazývá *Limity* a specifikuje maximální limit zdroje, který nesmí být překročen. Uživatel může specifikovat pouze *Požadavky*, což umožňuje záruky bez limitu (což je na naší platformě zakázáno), nebo pouze *Limity*, a v tomto případě jsou *Požadavky* a *Limity* rovny. Všechny zdroje jsou alokovány z jednoho výpočetního uzlu, což znamená, že nemohou být větší než kapacita jednoho uzlu, např. požadavek na 1000 CPU nikdy nebude splněn. Zdroje mezi *Požadavky* a *Limity* nejsou zaručeny. Plánovač Kubernetes zohledňuje pouze *Požadavky* při plánování Podů na uzly, takže se může stát, že uzel zažije tlak na disk nebo paměť způsobený nadměrným využitím těchto druhů zdrojů. V tomto případě může být Pod vyhozen z uzlu. U CPU zdrojů mezi *Požadavky* a *Limity* může dojít ke zpomalení, pokud uzel již nemá volné CPU.
+Jak je popsáno v [dokumentaci Kubernetes](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/), platforma používá dva druhy "limitů" zdrojů. Jeden se nazývá *Požadavky* a poskytuje zaručené množství zdroje, druhý se nazývá *Limity* a specifikuje maximální limit zdroje, který nesmí být překročen. Uživatel může specifikovat pouze *Požadavky*, což umožňuje záruky bez limitu (což je na naší platformě zakázáno), nebo pouze *Limity*, a v tomto případě jsou *Požadavky* a *Limity* rovny. Všechny zdroje jsou alokovány z jednoho výpočetního uzlu, což znamená, že nemohou být větší než kapacita jednoho uzlu, např. požadavek na 1000 CPU nikdy nebude splněn. Zdroje mezi *Požadavky* a *Limity* nejsou zaručeny. Plánovač Kubernetes zohledňuje pouze *Požadavky* při plánování Podů na uzly, takže se může stát, že uzel zažije tlak na disk nebo paměť způsobený nadměrným využíváním těchto druhů zdrojů. V tomto případě může být Pod vyhozen z uzlu. U CPU zdrojů mezi *Požadavky* a *Limity* může dojít ke zpomalení, pokud uzel již nemá volné CPU.
 
 Obecný fragment YAML vypadá takto:
 ```yaml
@@ -19,7 +19,7 @@ CPU zdroj může být požadován v celých jednotkách CPU, jako je `2` pro dv�
 
 ## Paměť
 
-Paměťový zdroj může být požadován v bytech nebo násobcích binárních bytů. Notace je `1000Mi` nebo `1Gi` pro 1GB paměti. Množství tohoto zdroje zahrnuje sdílenou paměť (viz níže) a všechny paměťové objemy `emptyDir`. Následující příklad spotřebovává až 1GB paměťového zdroje a pokud aplikace vyžaduje např. 2GB paměti, uživatel musí požádat o 3GB paměťového zdroje.
+Paměťový zdroj může být požadován v bajtech nebo násobcích binárních bajtů. Notace je `1000Mi` nebo `1Gi` pro 1GB paměti. Množství tohoto zdroje zahrnuje sdílenou paměť (viz níže) a všechny paměťové objemy `emptyDir`. Následující příklad spotřebovává až 1GB paměťového zdroje a pokud aplikace vyžaduje např. 2GB paměti, uživatel musí požádat o 3GB paměťového zdroje.
 
 ```yaml
 volumes:
@@ -49,7 +49,7 @@ volumeMounts:
 
 ## GPU
 
-GPU zdroj může být požadován dvěma odlišnými způsoby. Uživatel může požadovat GPU výhradně pomocí `nvidia.com/gpu: x`, kde `x` je číslo označující počet požadovaných GPU. Uživatel může také požadovat pouze část GPU pomocí `nvidia.com/mig-1g.10gb: x`, kde `x` je číslo takových částí GPU, nebo `nvidia.com/mig-2g.20gb: x`. `nvidia.com/mig-1g.10gb` požaduje část GPU s velikostí paměti 10GB, `nvidia.com/mig-2g.20gb` požaduje část GPU s velikostí paměti 20GB. Více informací o částech GPU (MIG) lze nalézt [zde](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/index.html).
+GPU zdroj může být požadován dvěma odlišnými způsoby. Uživatel může požadovat GPU výhradně pomocí `nvidia.com/gpu: x`, kde `x` je číslo označující počet požadovaných GPU. Uživatel může také požadovat pouze část GPU pomocí `nvidia.com/mig-1g.10gb: x`, kde `x` je číslo takových částí GPU, nebo `nvidia.com/mig-2g.20gb: x`. `nvidia.com/mig-1g.10gb` požaduje část GPU s velikostí paměti 10GB, `nvidia.com/mig-2g.20gb` požaduje část GPU s velikostí paměti 20GB. Více informací o frakcích GPU (MIG) lze nalézt [zde](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/index.html).
 
 ## Úložiště
 
@@ -57,7 +57,7 @@ Uživatel by měl také specifikovat požadovaný zdroj `ephemeral-storage`. Jed
 
 ## Kompletní příklad zdrojů
 
-Následující příklad požaduje 1 GPU, 2 CPU a 4GB paměti zaručeně a 3 CPU a 6GB paměti jako tvrdý limit.
+Následující příklad požaduje 1 GPU, 2 CPU a 4GB paměti zaručeně, a 3 CPU a 6GB paměti jako tvrdý limit.
 
 ```yaml
 resources:
