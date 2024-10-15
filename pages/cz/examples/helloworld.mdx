@@ -129,7 +129,6 @@ Tento příkladový soubor se skládá z polí:
     - `host` je volitelný, pokud je poskytnut, pravidla se vztahují na tento host
     - `paths` (například, `/testpath`), z nichž každá má přidružený backend definovaný s `service.name` a `service.port.name` nebo `service.port.number`. `service.port.number` je port, který je vystaven službou, proto je v službě označen jako `spec.ports.port`, podobně `service.ports.[i].name` je ekvivalentní `spec.ports.[i].name`. Typ cesty může být specifikován, více o tom [zde](https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types)
 
-```markdown
 ### 4. Vytvořit
 Nyní vytvořte všechny zdroje s použitím celého adresáře jako argumentu a specifikujte svůj namespace
 ```bash
@@ -318,4 +317,3 @@ Listening on: http://hello-kubernetes-5547c96ddc-4hxnf:8080
 ```
 
 Další kombinace lze nalézt v [rozsáhlém cheat sheetu kubectl](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
-```
