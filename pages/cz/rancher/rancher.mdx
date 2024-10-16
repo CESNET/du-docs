@@ -7,16 +7,12 @@ Svět Rancheru a Kubernetes je organizován do *clusterů*, *projektů* a *names
 
 Každému uživateli je přiřazen *Výchozí projekt*, který obsahuje jeho křestní jméno a příjmení, a výchozím *Namespace* nazvaným `surname-ns`. Výchozí projekt a namespace jsou automaticky vytvořeny při prvním přihlášení uživatele do řídicího panelu Rancher. Uživatelé mohou vytvářet další namespaces pomocí GUI Rancher v přehledu namespaces stisknutím tlačítka `Vytvořit namespace` (nepoužívejte `kubectl` k vytvoření namespace). Pro více informací o vytváření namespaces a kvótách viz [kvóty](quotas).
 
-Přiřazené clustery, ke kterým máte přístup, naleznete v levém horním rohu:
+Přiřazené clustery, ke kterým máte přístup, naleznete v levém horním rohu nebo v seznamu na domovské stránce:
 
-![clusters](/img/ceritsc/cluster1.jpg)
-
-nebo v seznamu na domovské stránce:
-
-![home page](/img/ceritsc/cluster2.jpg)
+![clusters](/img/ceritsc/cluster1.png)
 
 Když vyberete cluster, můžete vidět své *projekty a namespaces*:
 
-![projects and namespaces](/img/ceritsc/projects.jpg)
+![projects and namespaces](/img/ceritsc/projects.png)
 
 Je možné pracovat s Rancherem pouze do určité míry. Nicméně, příkazový řádkový nástroj `kubectl` umožňuje více akcí. Můžete používat obě cesty, ale nedoporučujeme `kubectl` uživatelům, kteří nejsou zvyklí pracovat v terminálu.
