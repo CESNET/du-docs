@@ -2,13 +2,14 @@
 
 Naše kontejnerová platforma používá kvóty zdrojů na *Projekty* a *Namespaces*. Kvóta je omezení, kolik zdrojů může uživatel nebo skupina uživatelů využívat. Kubernetes používá dva druhy kvót zdrojů: *požadavky* a *limity*. Další informace o tomto konceptu naleznete v [dokumentaci Kubernetes](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/). Aktuálně aplikované kvóty jsou na zdroje *CPU* a *Paměť*. Tyto kvóty jsou nastaveny jak na *Projekt*, tak na *Namespace*.
 
-*Osobní* projekt a výchozí *Namespace* mají 20 CPU *požadavek*, 32 CPU *limit*, 40GB Paměti *požadavky* a 64GB Paměti *limity*. Ostatní typy kvót nejsou nastaveny. Uživatel může požádat o nový projekt s výrazně většími kvótami na <a href="mailto:k8s@ics.muni.cz">IT Service desk</a>.
+*Osobní* projekt a výchozí *Namespace* povolují 20 CPUs request, 32 CPUs limit, 40GB Memory requests, a  64GB Memory limits. Ostatní typy kvót nejsou nastaveny. Uživatel může požádat o nový projekt s výrazně většími kvótami na <a href="mailto:k8s@ics.muni.cz">IT Service desk</a>.
 
 ## Namespaces
 
-Bez žádosti o explicitní projekt je uživateli přidělen *Osobní* projekt s výše uvedenými limity. Spolu s *Osobním* projektem je vytvořen výchozí *Namespace*. Jak *Osobní* projekt, tak výchozí *Namespace* mají uvedené kvóty. Výchozí *Namespace* je nastaven na přesnou kvótu jako *Osobní* projekt, což znamená, že **jakýkoli nový** *Namespace* je mimo dostupné kvóty. Není možné rozšířit kvóty *Osobního* projektu, takže zde jsou dvě možnosti:
+Bez žádosti o explicitní projekt je uživateli přidělen *Osobní* projekt s výše uvedenými limity. Spolu s *Osobním* projektem je vytvořen výchozí *Namespace*. Jak *Osobní* projekt, tak výchozí *Namespace* mají uvedené kvóty. Výchozí *Namespace* je nastaven na přesně stejnou kvótu jako *Osobní* projekt, což znamená, že **jakýkoli nový** *Namespace* přesahuje dostupné kvóty. 
+Jelikož není možné rozšířit kvóty *Osobního* projektu, jsou k dispozici dvě možnosti:
 
-1. Požádat o explicitní projekt.
+1. Požádat o vytvoření explicitního projektu.
 2. Snížit kvóty pro výchozí *Namespaces* a uvolnit tak zdroje pro nový *Namespace*.
 
 ### Změna kvót Namespace
