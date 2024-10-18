@@ -24,11 +24,11 @@ Poté můžete změnit `Resource Quotas` pro *Namespace* podle potřeby a uloži
 
 ### Vytváření nových Namespaces
  
-Aby vše fungovalo správně, nevytvářejte *Namespace* pomocí `kubectl`, `helm` nebo jiných nástrojů. Je to sice možné, ale poté tento *NamespaceY* neuvidíte v uživatelském rozhraní Rancher. Místo toho použijte uživatelské rozhraní Rancher. Většina nástrojů, jako je `helm`, `kustomize`, by měla s již existujícími *Namespaces* pracovat bez problémů.
+Aby vše fungovalo správně, nevytvářejte *Namespace* pomocí `kubectl`, `helm` nebo jiných nástrojů. Je to sice možné, ale poté tento *Namespace* neuvidíte v uživatelském rozhraní Rancher. Místo toho použijte uživatelské rozhraní Rancher. Většina nástrojů, jako je `helm`, `kustomize`, by měla s již existujícími *Namespaces* pracovat bez problémů.
 
-1. Nejprve v projektu, kde chcete vytvořit nový namespace, snižte kvóty zdrojů některých z existujících namespaces, abyste vytvořili prostor pro nový namespace. Proveďte to podle předchozí sekce.
+1. Nejprve v projektu, kde chcete vytvořit nový namespace, snižte kvóty zdrojů některých z již existujících namespaces, abyste vytvořili prostor pro nový namespace. Proveďte to podle předchozí sekce.
 
-2. Vytvořte nový namespace v projektu pomocí tlačítka UI a nastavte některé kvóty zdrojů.
+2. Vytvořte nový namespace v projektu pomocí tlačítka v uživatelském rozhraní Rancher a nastavte některé kvóty zdrojů.
 
 ![create-ns](/img/ceritsc/create-ns.png)  
 
