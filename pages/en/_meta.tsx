@@ -5,95 +5,53 @@ export default {
     type: 'separator',
     title: <AskGPTButton />,
   },
-  'platform': { 
+  'infrastructure': { 
       title: (
        <>
-        <strong>Platform</strong>
+        <strong>Data Storage Infrastructure</strong>
        </>
       )
   },
-  'rancher': {
+  'repositories': {
      title: (
       <>
-       <strong>Rancher</strong>
+       <strong>Data Repositories</strong>
       </>
     )
   },
-  'docker': {
+  'object-storage-s3': {
      title: (
       <>
-       <strong>Docker</strong>
+       <strong>S3 Object Storage</strong>
       </>
     )
   },
-  'kubernetes': {
+  'object-storage-rbd': {
      title: (
       <>
-       <strong>Kubernetes</strong>
+       <strong>RBD Object Storage</strong>
+      </>
+    )
+  },
+  'collaboration': {
+     title: (
+      <>
+       <strong>Collaborative Tools</strong>
       </>
      )
   },
-  'operators': { 
+  'perun': { 
      title: (
       <>
-       <strong>Operators</strong>
+       <strong>User Management System</strong>
       </>
      )
   },
-  'examples': {
+  'faq': {
     title: (
      <>
-      <strong>Examples</strong>
+      <strong>Frequently Asked Questions</strong>
      </>
     )
-  },
-  'rancher-apps': {
-    title: (
-      <>
-       <strong>Rancher Applications</strong>
-      </>
-    )
-  },
-  'web-apps': {
-    title: (
-      <>
-       <strong>Web Applications</strong>
-      </>
-    )
-  },
-  'workflows': {
-    title: (
-      <>
-       <strong>Task/Workflow execution services</strong>
-      </>
-    ) 
-  },
-  'gitops': {
-    title: (
-      <>
-       <strong>GitOps</strong>
-      </>
-    ) 
-  },
-  'case-studies': {
-    title: (
-      <>
-       <strong>Case Studies</strong>
-      </>
-    ) 
-  },
-  'debugging': {
-    title: (
-      <>
-       <strong>Debugging</strong>
-      </>
-    ) 
-  },
-  'other': {
-    title: (
-      <>
-       <strong>Other Services</strong>
-      </>
-    ) 
   },
 };
