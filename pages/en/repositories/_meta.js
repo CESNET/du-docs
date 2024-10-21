@@ -1,5 +1,4 @@
 export default {
-	"dockerfile": "Dockerfile",
-	"limitations": "Limitations",
-	"harbor": "Harbor (hub.cerit.io)"
+	"nma": "National Metadata Directory",
+	"nrp": "National Repository Platform"
 }

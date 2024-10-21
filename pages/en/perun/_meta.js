@@ -1,5 +1,4 @@
 export default {
-	"dockerfile": "Dockerfile",
-	"limitations": "Limitations",
-	"harbor": "Harbor (hub.cerit.io)"
+	"user-management": "User Management",
+	"service-account": "Service account handling"
 }

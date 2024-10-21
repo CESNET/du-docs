@@ -1,5 +1,4 @@
 export default {
-	"dockerfile": "Dockerfile",
-	"limitations": "Limitations",
-	"harbor": "Harbor (hub.cerit.io)"
+	"rbd-service": "RBD Description",
+	"rbd-setup": "RBD Setup"
 }
