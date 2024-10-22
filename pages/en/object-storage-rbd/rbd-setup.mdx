@@ -73,7 +73,7 @@ sudo dnf install ceph-common
 ### Ubuntu/Debian setup
 Ubuntu/Ceph includes all necessary packages natively. So you can just run following command.
 ```bash
-    sudo apt install ceph
+sudo apt install ceph
 ```
 
 ## RBD configuration and its mapping
@@ -234,16 +234,16 @@ Settings for automatic RBD connection, including LUKS encryption and mount files
 Edit configuration file in the path `/etc/ceph/rbdmap` by inserting following lines.
 
 ```conf filename="/etc/ceph/rbdmap" copy
-    # RbdDevice             Parameters
-    #poolname/imagename     id=client,keyring=/etc/ceph/ceph.client.keyring
-    pool_name/image_name id=rbd_user,keyring=/etc/ceph/ceph.keyring
+# RbdDevice             Parameters
+#poolname/imagename     id=client,keyring=/etc/ceph/ceph.client.keyring
+pool_name/image_name id=rbd_user,keyring=/etc/ceph/ceph.keyring
 ```
 
 ### LUKS
 Edit configuration file in the path `/etc/crypttab` by inserting following lines.
 ```conf filename="/etc/crypttab" copy
-    # <target name> <source device>         <key file>      <options>
-    rbd_luks_pool /dev/rbd/pool_name/image_name  /etc/ceph/luks.keyfile luks,_netdev
+# <target name> <source device>         <key file>      <options>
+rbd_luks_pool /dev/rbd/pool_name/image_name  /etc/ceph/luks.keyfile luks,_netdev
 ```
 
 where `/etc/ceph/luks.keyfile` is LUKS key.

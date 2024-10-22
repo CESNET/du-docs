@@ -41,7 +41,7 @@ For smooth operation is necessary to use option `--endpoint-url` with particular
 </Callout>
 
 <Callout type="warning" emoji="⚠️">
-**Multipart S3 upload - the maximal size of the file is limited up to 5 GB**. It's a best practice to use aws s3 commands (such as aws s3 cp) for multipart uploads and downloads because these aws s3 commands automatically perform multipart uploading and downloading based on the file size. By comparison, **aws s3api** commands, such as aws s3api create-multipart-upload, should be used only when aws s3 commands don't support a specific upload need, such as when the multipart upload involves multiple servers, a multipart upload is manually stopped and resumed later, or when the aws s3 command doesn't support a required request parameter. More information can be found on the [AWS websites](https://aws.amazon.com/premiumsupport/knowledge-center/s3-multipart-upload-cli/).
+**Multipart S3 upload - the maximal size of the file is limited up to 5 GB**. It is a best practice to use aws s3 commands (such as aws s3 cp) for multipart uploads and downloads because these aws s3 commands automatically perform multipart uploading and downloading based on the file size. By comparison, **aws s3api** commands, such as aws s3api create-multipart-upload, should be used only when aws s3 commands do not support a specific upload need, such as when the multipart upload involves multiple servers, a multipart upload is manually stopped and resumed later, or when the aws s3 command doesn't support a required request parameter. More information can be found on the [AWS websites](https://aws.amazon.com/premiumsupport/knowledge-center/s3-multipart-upload-cli/).
 </Callout>
 
 ## Controls of AWS CLI - high-level (s3)
