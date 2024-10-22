@@ -10,5 +10,5 @@ export default {
 	"s3cmd": "s3cmd",
 	"s5cmd": "s5cmd",
 	"s3-features": "Advanced S3 features",
-	"veaam-backup": "VEEAM backups"
+	"veeam-backup": "VEEAM backups"
 }
