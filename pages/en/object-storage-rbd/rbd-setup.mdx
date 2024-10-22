@@ -15,13 +15,13 @@ Ceph RBD (RADOS Block Device) provides users with a network block device that lo
 ## Setup of RBD client (Linux)
 
 <Callout type="warning" emoji="⚠️">
-  To connect RBD, it is recommended to have a newer kernel version on your system. In lower kernel versions are the appropriate RBD connection modules deprecated. So not all advanced features are supported. Developers even recommend a kernel version at least 5.0 or higher. However developers has backported some functionalities to CentOS 7 core.
+ To connect RBD, it is recommended to have a newer kernel version on your system. In lower kernel versions are the appropriate RBD connection modules deprecated. So not all advanced features are supported. Developers even recommend a kernel version at least 5.0 or higher. However developers has backported some functionalities to CentOS 7 core.
 </Callout>
 
 
 <Callout type="info" emoji="ℹ️">
-  **Ceph client version**
-  For proper functioning it is highly desired to use the same version of Ceph tools as is the current version being operated on our clusters. Currently it is version 16 with the code name Pacific . So we will set up the appropriate repositories, see below.
+**Ceph client version**
+For proper functioning it is highly desired to use the same version of Ceph tools as is the current version being operated on our clusters. Currently it is version 16 with the code name Pacific . So we will set up the appropriate repositories, see below.
 </Callout>
 
 ### CentOS setup
@@ -260,7 +260,7 @@ Edit configuration file in the path `/etc/fstab` by inserting following lines.
 ```
 
 <Callout type="info" emoji="ℹ️">
-path to LUKS container (“<file system>”) is generally `/dev/mapper/$LUKS_NAME`, where `$LUKS_NAME` is defined in `/etc/crypttab` (like “<taget name>”)
+path to LUKS container (`file system`) is generally `/dev/mapper/$LUKS_NAME`, where `$LUKS_NAME` is defined in `/etc/crypttab` (like `taget name`)
 </Callout>
 
 
