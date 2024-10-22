@@ -1,4 +1,5 @@
 import { Callout } from 'nextra/components'
+
 # AWS CLI tool for command line usage
 
 AWS CLI is a common tool allowing to control S3 service. AWS CLI tool is written in python.
@@ -13,6 +14,7 @@ If you need to install AWS CLI in the virtual environment you can use [this guid
 </Callout>
 
 ## Configuration of AWS CLI
+
 <Callout type="info" emoji="ℹ️">
 **User profile**
 To configure AWS CLI we recommend using the option `--profile` which allows you to define multiple user profiles with different user credentials. Of course, you can also use the settings without the option `--profile`. All commands will be the same, you will just omit the option `--profile`. AWS will then use the **default** settings.
@@ -47,27 +49,32 @@ For smooth operation is necessary to use option `--endpoint-url` with particular
 ## Controls of AWS CLI - high-level (s3)
 
 To show the help (available commands) you can use help - **aws s3** tool allows you to use several advanced functions, see below.
+
 ```bash
 aws s3 help
 ```
 
 ### Operation with buckets
+
 <Callout type="info" emoji="ℹ️">
 **Unique name of the bucket**
 The bucket name has to be unique within tenant. It should contain lower letters, numbers, dashes, and dots. The bucket name should begin only with a letter or number and cannot contain dots followed by a dash or dots preceded by a dash or multiple dots. We also recommend not using “slash” in the bucket name. Using the slash will disallow the usage of the bucket via API.
 </Callout>
 
 **Bucket creation**
+
 ```bash    
 aws s3 --profile test_user --endpoint-url https://s3.cl2.du.cesnet.cz mb s3://test1
 ```
 
 **Bucket listing**
+
 ```bash
 aws s3 --profile test_user --endpoint-url https://s3.cl2.du.cesnet.cz ls
 2019-09-18 13:30:17 test1
 ```
 **Bucket deletion**
+
 ```bash
 aws s3  --profile test_user --endpoint-url https://s3.cl2.du.cesnet.cz rb s3://test1
 ```
@@ -81,38 +88,45 @@ upload: Desktop\test_file.zip to s3://test1/test_file.zip
 ```
 
 **File download**
+
 ```bash
 aws s3 --profile test_user --endpoint-url https://s3.cl2.du.cesnet.cz cp s3://test1/test_file.zip C:\Users\User\Downloads\
 download: s3://test1/test_file.zip to Downloads\test_file.zip
 ```
 
 **File deletion**
+
 ```bash
 aws s3 --profile test_user --endpoint-url https://s3.cl2.du.cesnet.cz rm s3://test1/test_file.zip 
 delete: s3://test1/test_file.zip
 ```
 
 ### Directory/Folder operation
+
 <Callout type="info" emoji="ℹ️">
 The content of the source folder is always copied while using the following command. It does not depend on the slash character at the end of the source path. The behavior of **aws** is in this perspective different than the rsync behavior. If you wish to have the source directory in the destination you can add the name of the source directory to the destination path. **AWS tool will create the directory in the destination while copying the data**, see the exemplary commands below. The same is valid in the case of directory downloads or synchronization via **aws s3 sync**.
 </Callout>
 
 **Upload the directory**
+
 ```bash
 aws s3 --profile test_user --endpoint-url https://s3.cl2.du.cesnet.cz cp C:\Users\User\Desktop\test_dir  s3://test1/test_dir/ --recursive
 ```
 
 **Download the directory**
+
 ```bash
 aws s3 --profile test_user --endpoint-url https://s3.cl2.du.cesnet.cz cp s3://test1/test_dir C:\Users\User\Downloads\test_dir\ --recursive
 ```
 
 **Directory deletion**
+
 ```bash
 aws s3 --profile test_user --endpoint-url https://s3.cl2.du.cesnet.cz rm s3://test1/test_dir --recursive
 ```
 
 **Directory sync -> upload to cloud**
+
 ```bash
 aws s3 --profile test_user --endpoint-url https://s3.cl2.du.cesnet.cz sync C:\Users\User\Desktop\test_sync  s3://test1/test_sync/
 ```
@@ -130,6 +144,7 @@ The set of available commands can be obtained by the following command with the 
 
 ## Exemplary configuration file for AWS-CLI
 After successful configuration, the configuration file should be created. You can find the example below. You can find the credentials file in the same path.
+
 <Callout type="info" emoji="ℹ️">
   **Config file**
 Windows: C:/Users/User/.aws/config

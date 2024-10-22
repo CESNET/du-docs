@@ -1,9 +1,11 @@
 import { Callout } from 'nextra/components'
+
 # Advanced S3 features
 
 In the following sections, you can find a basic description of advanced S3 features that can enhance the effectiveness of your data workflow.
 
 ## Sharing S3 object using (presigned) URL
+
 <Callout type="warning" emoji="⚠️">
 To be able to generate the URL links for objects stored on the S3 storage you have to setup **[aws tool first](aws-cli.mdx)**.
 </Callout>
@@ -12,11 +14,13 @@ To be able to generate the URL links for objects stored on the S3 storage you ha
 All objects and buckets are by default private. The pre-signed URL is a reference to Ceph S3 object, which allows anyone who receives the URL to retrieve the S3 object with an HTTP GET request.
 
 The following presigning command generates a pre-signed URL for a specified bucket and key that is valid for one hour:
+
 ```bash
 aws s3 --profile myprofile presign s3://bucket/file
 ```
 
 If you want to create a pre-signed URL with a custom lifetime that links to an object in an S3 bucket you have to use:
+
 ```bash
 aws s3 --profile myprofile presign s3://bucket/file --expires-in 2419200
 ```
@@ -24,6 +28,7 @@ aws s3 --profile myprofile presign s3://bucket/file --expires-in 2419200
 This will create URL accessible for a month. Parametr `--expires-in` is in seconds.
 
 When pre-signed URL has been expired, you will see something like following:
+
 ```error 
     This XML file does not appear to have any style information associated with it. The document tree is shown below.
     <Error>
@@ -73,21 +78,25 @@ The bucket name must be unique within tenant and should contain only uppercase a
 </Callout>
 
 First we need to create the bucket, whete we will setup the versionig.
+
 ```bash 
 aws s3api create-bucket --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz 
 ```
 
 Then we can check whether the versionig is enabled.
+
 ```bash
 aws s3api get-bucket-versioning --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz
 ```
 
 Now we will enable the versioning.
+
 ```bash
 aws s3api put-bucket-versioning --bucket "bucket name" --versioning-configuration Status=Enabled --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz
 ```
  
 If we check the status of versioning again we can see that it is enabled.
+
 ```bash
 aws s3api get-bucket-versioning --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz
     
@@ -98,6 +107,7 @@ aws s3api get-bucket-versioning --bucket "bucket name" --profile "profil name" -
 ```
 ### Adding the object
 Now we will put new object into created bucket.
+
 ```bash
 aws s3api put-object --key "file name" --body "file path 1" --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz 
     
@@ -108,6 +118,7 @@ aws s3api put-object --key "file name" --body "file path 1" --bucket "bucket nam
 ```
 
 Now we can change the file via updating the body.
+
 ```bash
 aws s3api put-object --key "file name" --body "file path 2" --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz
 
@@ -118,6 +129,7 @@ aws s3api put-object --key "file name" --body "file path 2" --bucket "bucket nam
 ```
 
 Now we can list the object versinos.
+
 ```bash
 aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz
 
@@ -154,6 +166,7 @@ aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --
 ```
 ### Retrieve an object
 For a versionless bucket with object lookup, it always returns a single available object. For a bucket with versioning, the search returns the current object:
+
 ```bash
 aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz 
 
@@ -190,6 +203,7 @@ aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --
 ```
 
 Now we can retrieve desired object.
+
 ```bash
 aws s3api get-object --key "file name" "file name.out" --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz 
 
@@ -205,6 +219,7 @@ aws s3api get-object --key "file name" "file name.out" --bucket "bucket name" --
 ```
 
 For a versioned bucket, inactive objects can be retrieved by specifying the Version ID:
+
 ```bash
 aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz 
     {
@@ -239,6 +254,7 @@ aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --
     }
 ```
 Now we can list the particular versions.
+
 ```bash
 aws s3api list-object-versions --bucket "bucket name" --version-id KdS5Yl0d06bBSYriIddtVb0h5gofiNX --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz
 
@@ -254,6 +270,7 @@ aws s3api list-object-versions --bucket "bucket name" --version-id KdS5Yl0d06bBS
 ```
 ### An object removal
 For a versionless bucket, the object is permanently deleted and cannot be recovered. For a versioned bucket, all versions remain in the bucket and RGW inserts a delete flag that becomes the current version:
+
 ```bash
 aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz
     
@@ -274,6 +291,7 @@ aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --
         },
 ```
 Now we can check the object versions again.
+
 ```bash
 aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz 
 
@@ -309,6 +327,7 @@ aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --
 ```
 
 In the case of a versioned bucket, if an object with a specific VersionID is deleted, it is permanently deleted:
+
 ```bash
 aws s3api delete-object --key "file name" --version-id KdS5Yl0d06bBSYriIddtVb0h5gofiNX --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz
 
@@ -318,6 +337,7 @@ aws s3api delete-object --key "file name" --version-id KdS5Yl0d06bBSYriIddtVb0h5
 ```
 
 Now we can check the object versions again.
+
 ```bash
 aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz 
     
@@ -336,8 +356,10 @@ aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --
 
     }
 ```
+
 ### An object restoration
 To restore an object, the recommended approach is to copy the previous version of the object to the same bucket. The copied object becomes the current version of the object and all versions of the object are preserved:
+
 ```bash
 aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz 
 
@@ -373,6 +395,7 @@ aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --
 ```
 
 Now we can restore the particular version of the object.
+
 ```bash
 aws s3api copy-object --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz --copy-source "bucket name"/"file name"?versionId=xNQC4pIgMYx59digj5.gk15WC4efOOa --key "file name" 
 
@@ -385,6 +408,7 @@ aws s3api copy-object --bucket "bucket name" --profile "profil name" --endpoint-
 ```
 
 And check the object versions.
+
 ```bash
 aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --endpoint-url=https://s3.cl2.du.cesnet.cz 
     {
@@ -430,5 +454,6 @@ aws s3api list-object-versions --bucket "bucket name" --profile "profil name" --
     ]
     }
 ```
+
 ## Setup bucket policies for sharing (AWS-CLI S3 plugin)
 Coming soon...
