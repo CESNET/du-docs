@@ -220,8 +220,10 @@ To apply changes you have to unmap image and map it again.
 The approach described above is not persistent (won't survive reboot). To do it persistent you have to add following line into “/etc/udev/rules.d/50-read-ahead-kb.rules” file.
 </Callout>
 
-      # Setting specific kernel parameters for a subset of block devices (Ceph RBD)
+You can set specific kernel parameters for a subset of block devices (Ceph RBD)
+```bash
 KERNEL=="rbd[0-9]*", ENV{DEVTYPE}=="disk", ACTION=="add|change", ATTR{bdi/read_ahead_kb}="524288"
+```
 
 ## Permanently mapping of RBD
 Settings for automatic RBD connection, including LUKS encryption and mount filesystems. + proper disconnection (in reverse order) when the machine is switched off in a controlled manner.
@@ -245,7 +247,7 @@ Edit configuration file in the path `/etc/crypttab` by inserting following lines
 where `/etc/ceph/luks.keyfile` is LUKS key.
 
 <Callout type="info" emoji="ℹ️">
-Path to block device (“<source device>”) is generally `/dev/rbd/$POOL/$IMAGE`
+Path to block device `source device` is generally `/dev/rbd/$POOL/$IMAGE`
 </Callout>
 
 ### fstab file
