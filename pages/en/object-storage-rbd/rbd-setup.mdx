@@ -242,7 +242,6 @@ pool_name/image_name id=rbd_user,keyring=/etc/ceph/ceph.keyring
 ### LUKS
 Edit configuration file in the path `/etc/crypttab` by inserting following lines.
 ```conf filename="/etc/crypttab" copy
-# <target name> <source device>         <key file>      <options>
 rbd_luks_pool /dev/rbd/pool_name/image_name  /etc/ceph/luks.keyfile luks,_netdev
 ```
 
@@ -255,7 +254,6 @@ Path to block device `source device` is generally `/dev/rbd/$POOL/$IMAGE`
 ### fstab file
 Edit configuration file in the path `/etc/fstab` by inserting following lines.
 ```conf filename="/etc/fstab" copy
-# <file system> <mount point>   <type>  <options>       <dump>  <pass>
 /dev/mapper/rbd_luks_pool /mnt/rbd_luks_pool btrfs defaults,noatime,auto,_netdev 0 0
 ```
 
