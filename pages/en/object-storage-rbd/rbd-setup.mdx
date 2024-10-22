@@ -126,7 +126,9 @@ Further in the directory **/etc/ceph/** create the text file **ceph.keyring**. T
 
 <Callout type="warning" emoji="⚠️">
 If the location of the files `ceph.conf` and `username.keyring` differs from the default directory **/etc/ceph/**, the corresponding paths must be specified during mapping. See below.
-        sudo rbd -c /home/username/ceph/ceph.conf -k /home/username/ceph/username.keyring --id rbd_user device map name_pool/name_image
+```bash
+sudo rbd -c /home/username/ceph/ceph.conf -k /home/username/ceph/username.keyring --id rbd_user device map name_pool/name_image
+```
 </Callout>
 
     If the location of the files `ceph.conf` and `username.keyring` differs from the default directory **/etc/ceph/**, the corresponding paths must be specified during mapping. See below.
