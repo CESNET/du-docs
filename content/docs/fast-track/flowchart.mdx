@@ -2,17 +2,24 @@
 title: Set up things fast
 ---
 
+This chapter aims to the impatient: no details, no philosophy, no theory - just go through the following steps and there is a good chance you land having something useful up and running. Start with the flowchart and let it guide you.
+
 ```mermaid
-graph TD
-    A[Start] --> B{I need a storage space to store data}
+flowchart TB
+    A(Start) --> B{I need a storage space to store data}
     B -->|no| C[Think again]
     C --> B
-    B -->|yes| D{I need a long-term storage to store / publish results of my research, create an annotated dataset, link it to my publication, etc.}
-    D -->|yes| E(Use <i>National Repository Platform</i>)
-    D -->|no| F{I am an expert / developer / application maintainer, I undrestand principles of S3 / TBD and I know what I need}
+    B -->|yes| D{"`I need a long-term storage to store/publish results of my research,
+create an annotated dataset,
+link it to my publication, etc.`"}
+    D -->|no| F{"`I am an expert/developer/application maintainer,
+I undrestand principles of S3/RBD
+and I know what I need`"}
+    D -->|yes| E(("`Use *National Repository Platform*`"))
+    click E "https://docs.nrp.eosc.cz/" "NRP"
     F -->|yes| G{I need your help or assistance}
     G -->|yes| J(("`*Contact us* Specify your setup and ideas / requirements`"))
-    click G href "../introduction/support" "Support Page"
+    click G "../introduction/support" "Support Page"
     G -->|no| K(("`*Great!* Just go ahead!`"))
     F -->|no| H{I have studied S3 use cases and RBD use cases and I know what I need}
     H -->|yes| G
@@ -30,5 +37,6 @@ graph TD
     O -->|perhaps| Q
     O -->|I do not know| R((Well...))
     P -->|mostly me and/or my devices| S((Consider personal S3 storage service))
-    P -->|"a group of people (possible accross institutions) and/or instruments/devices"| T(("Consider multiuser S3 storage service (Virtual Organization = VO)"))
+    P -->|"`a group of people (possible accross institutions)
+and/or instruments/devices`"| T(("Consider multiuser S3 storage service (Virtual Organization = VO)"))
 ```
