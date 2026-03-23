@@ -2,7 +2,7 @@
 title: Set up things fast
 ---
 
-This chapter aims to the impatient: no details, no philosophy, no theory - just go through the following steps and there is a good chance you land having something useful up and running. Start with the flowchart and let it guide you.
+This chapter aims to the impatient: almost no details, no philosophy, no theory - just go through the following steps and there is a good chance you land having something useful up and running fast. Start with the flowchart and let it guide you.
 
 ```mermaid
 flowchart TB
@@ -21,7 +21,8 @@ and I know what I need`"}
     G -->|yes| J(("`*Contact us* Specify your setup and ideas / requirements`"))
     click G "../introduction/support" "Support Page"
     G -->|no| K(("`*Great!* Just go ahead!`"))
-    F -->|no| H{I have studied S3 use cases and RBD use cases and I know what I need}
+    F -->|no| H{"`I have studied *S3 use cases* and/or *RBD use cases* and I know what I need`"}
+    click H "../object-storage-s3/s3-use-cases" "S4 Use Cases"
     H -->|yes| G
     H -->|no / too technical / do not have time / ...| I{I have special needs that are worth spending time on solving various technical difficulties}
     I -->|yes| J
@@ -29,6 +30,7 @@ and I know what I need`"}
     I -->|I am not sure| L[Let's try easy options firts, it may save you a lot of time]
     L --> M
     M -->|"daily operational data (documents, graphics, tables, [processed] experimental data, ...)"| Q((Consider OwnCloud))
+    click Q "../fast-track" "Fast-track Instructions Owncloud"
     M -->|raw research data, archives, backups, device / instrumentations outputs| P{"Data will be accessed (stored, read, modified) by ..."}
     M -->|hard to say| N{I need to have the data available offline and online, automatically synchronized between the storage and my computer}
     N -->|I do not care| O{I may need to share some of the data with a couple of colleagues here or there}
@@ -37,6 +39,6 @@ and I know what I need`"}
     O -->|perhaps| Q
     O -->|I do not know| R((Well...))
     P -->|mostly me and/or my devices| S((Consider personal S3 storage service))
-    P -->|"`a group of people (possible accross institutions)
-and/or instruments/devices`"| T(("Consider multiuser S3 storage service (Virtual Organization = VO)"))
+    click S "../fast-track" "Fast-track Instructions S3 Personal"
+    P -->|"`a group of people (possible accross institutions)<br/>and/or instruments/devices`"| T(("Consider multiuser S3 storage service (Virtual Organization = VO)"))
 ```
