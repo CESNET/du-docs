@@ -30,7 +30,7 @@ and I know what I need`"}
     I -->|I am not sure| L[Let's try easy options firts, it may save you a lot of time]
     L --> M
     M -->|"daily operational data (documents, graphics, tables, [processed] experimental data, ...)"| Q((Consider OwnCloud))
-    click Q "../fast-track" "Fast-track Instructions Owncloud"
+    click Q "../fast-track#owncloud" "Fast-track Instructions Owncloud"
     M -->|raw research data, archives, backups, device / instrumentations outputs| P{"Data will be accessed (stored, read, modified) by ..."}
     M -->|hard to say| N{I need to have the data available offline and online, automatically synchronized between the storage and my computer}
     N -->|I do not care| O{I may need to share some of the data with a couple of colleagues here or there}
@@ -39,6 +39,6 @@ and I know what I need`"}
     O -->|perhaps| Q
     O -->|I do not know| R((Well...))
     P -->|mostly me and/or my devices| S((Consider personal S3 storage service))
-    click S "../fast-track" "Fast-track Instructions S3 Personal"
+    click S "../fast-track#personal-s3" "Fast-track Instructions S3 Personal"
     P -->|"`a group of people (possible accross institutions)<br/>and/or instruments/devices`"| T(("Consider multiuser S3 storage service (Virtual Organization = VO)"))
 ```
