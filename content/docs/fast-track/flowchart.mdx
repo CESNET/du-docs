@@ -18,9 +18,9 @@ and I know what I need`"}
     D -->|yes| E(("`Use *National Repository Platform*`"))
     click E "https://docs.nrp.eosc.cz/" "NRP"
     F -->|yes| G{I need your help or assistance}
+    G -->|no| K(("`*Great!* Just go ahead!`"))
     G -->|yes| J(("`*Contact us* Specify your setup and ideas / requirements`"))
     click G "../introduction/support" "Support Page"
-    G -->|no| K(("`*Great!* Just go ahead!`"))
     F -->|no| H{"`I have studied *S3 use cases* and/or *RBD use cases* and I know what I need`"}
     click H "../object-storage-s3/s3-use-cases" "S4 Use Cases"
     H -->|yes| G
@@ -29,15 +29,16 @@ and I know what I need`"}
     I -->|no| M{My data is ...}
     I -->|I am not sure| L[Let's try easy options firts, it may save you a lot of time]
     L --> M
+    N -->|I do not care| O{I may need to share some of the data with a couple of colleagues here or there}
     M -->|"daily operational data (documents, graphics, tables, [processed] experimental data, ...)"| Q((Consider OwnCloud))
     click Q "../fast-track#owncloud" "Fast-track Instructions Owncloud"
     M -->|raw research data, archives, backups, device / instrumentations outputs| P{"Data will be accessed (stored, read, modified) by ..."}
     M -->|hard to say| N{I need to have the data available offline and online, automatically synchronized between the storage and my computer}
-    N -->|I do not care| O{I may need to share some of the data with a couple of colleagues here or there}
     N -->|yes| Q
     N -->|no| P
     O -->|perhaps| Q
     O -->|I do not know| R((Well...))
+    click R "https://www.storelocal.com/blogs/the-philosophy-of-storing-10-storage-features-to-enlighten-your-load/" "To Be Or Not To Be"
     P -->|mostly me and/or my devices| S((Consider personal S3 storage service))
     click S "../fast-track#personal-s3" "Fast-track Instructions S3 Personal"
     P -->|"`a group of people (possible accross institutions)<br/>and/or instruments/devices`"| T(("Consider multiuser S3 storage service (Virtual Organization = VO)"))
