@@ -2,6 +2,12 @@
 title: Fast Track Setup
 ---
 
+---
+
+Use this page to quickly **choose a service** from a set of services we offer and set it up so that it works for you on the basic level in less than an hour. This fast process requires an **average experienced** computer user. Once you have the service up and running, you will be offered a set of **follow-up options** to fine-tune the storage and its properties.
+
+# Choose a service
+
 ```mermaid
 flowchart TB
 %%    A{("`Start`")
@@ -21,14 +27,14 @@ flowchart TB
     N{"`I need to have the data available offline and online, automatically synchronized between the storage and my computer`"}
 %%    O{"`I may need to share some of the data with a couple of colleagues here or there`"}
     P{"`Data will be accessed (stored, read, modified) by ...`"}
-    Q(("`Consider OwnCloud`"))
+    Q(("`Use OwnCloud`"))
 %%    R(("`Well...`"))
     S(("`Use *personal S3 storage* service`"))
     T(("`Use *multiuser S3 storage* service (Virtual Organization = VO)`"))
 
     click E "https://docs.nrp.eosc.cz/" "NRP"
-    click G "../introduction/support" "Support Page"
-    click H "../object-storage-s3/s3-use-cases" "S4 Use Cases"
+%%    click G "../introduction/support" "Support Page"
+%%    click H "../object-storage-s3/s3-use-cases" "S4 Use Cases"
     click Q "../fast-track#owncloud" "Fast-track Instructions Owncloud"
     click S "../fast-track#personal-s3" "Fast-track Instructions S3 Personal"
 %%    click R "https://www.storelocal.com/blogs/the-philosophy-of-storing-10-storage-features-to-enlighten-your-load/" "To Be Or Not To Be"
@@ -52,12 +58,11 @@ flowchart TB
     P -->|"`a group of people (possible accross institutions)<br/>or instruments or devices`"| T
 ```
 
-
 ---
 
-## OwnCloud
+# OwnCloud
 
-### Quick setup
+## Quick setup
 
 * To register and/or log in click on `Log in` button [here](https://owncloud.cesnet.cz/) and follow the instructions. Once logged-in, use drag-and-drop to upload files, click to download.
 * (optional) To **sync** the cloud data storage space to your local drive download and install [OwnCloud client](https://owncloud.com/desktop-app), run it and configure it using https://ownloud.cesnet.cz as the server address.
@@ -67,9 +72,9 @@ If it does not work: [read full documentation](https://du.cesnet.cz/en/navody/ow
 
 ---
 
-## Personal S3
+# Personal S3
 
-### Windows quick setup
+## Windows quick setup
 
 * Register in [Perun](https://einfra.cesnet.cz/), wait for 30 minutes to allow database synchrozation.
 * Register in [Gatekeeper](https://access.du.cesnet.cz/) and generate a pair of keys, record the endpoint address and both keys.
@@ -94,7 +99,7 @@ Where to go from here:
 
 ---
 
-### MAC quick setup
+## MAC quick setup
 
 * Register in [Perun](https://einfra.cesnet.cz/), wait for 30 minutes to allow database synchrozation.
 * Register in [Gatekeeper](https://access.du.cesnet.cz/) and generate a pair of keys, record the endpoint address and both keys.
@@ -119,7 +124,7 @@ Where to go from here:
 
 ---
 
-### Linux quick setup
+## Linux quick setup
 
 * Register in [Perun](https://einfra.cesnet.cz/), wait for 30 minutes to allow database synchrozation.
 * Register in [Gatekeeper](https://access.du.cesnet.cz/) and generate a pair of keys, record the endpoint address and both keys.
