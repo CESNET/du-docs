@@ -2,6 +2,57 @@
 title: Fast Track Setup
 ---
 
+```mermaid
+flowchart TB
+%%    A{("`Start`")
+    A("`I need a storage space to store data`")
+%%    B{"`I need a storage space to store data`"}
+%%    C["`Think again`"]
+    D{"`I need a long-term storage to store/publish **results of my research**, create an annotated dataset, link it to my **publication**, etc.`"}
+    M{"`My data is ...`"}
+    E(("`Use *National Repository Platform*`"))
+%%    F{"`I am an expert/developer/application maintainer, I undrestand principles of S3/RBD and I know what I need`"}
+%%    G{"`I need your help or assistance`"}
+%%    H{"`I have studied *S3 use cases* and/or *RBD use cases* and I know what I need`"}
+%%    I{"`I have special needs that are worth spending time on solving various technical difficulties`"}
+%%    J(("`*Contact us* Specify your setup and ideas / requirements`"))
+%%    K(("`*Great!* Just go ahead!`"))
+%%    L["`Let's try easy options firts, it may save you a lot of time`"]
+    N{"`I need to have the data available offline and online, automatically synchronized between the storage and my computer`"}
+%%    O{"`I may need to share some of the data with a couple of colleagues here or there`"}
+    P{"`Data will be accessed (stored, read, modified) by ...`"}
+    Q(("`Consider OwnCloud`"))
+%%    R(("`Well...`"))
+    S(("`Use *personal S3 storage* service`"))
+    T(("`Use *multiuser S3 storage* service (Virtual Organization = VO)`"))
+
+    click E "https://docs.nrp.eosc.cz/" "NRP"
+    click G "../introduction/support" "Support Page"
+    click H "../object-storage-s3/s3-use-cases" "S4 Use Cases"
+    click Q "../fast-track#owncloud" "Fast-track Instructions Owncloud"
+    click S "../fast-track#personal-s3" "Fast-track Instructions S3 Personal"
+%%    click R "https://www.storelocal.com/blogs/the-philosophy-of-storing-10-storage-features-to-enlighten-your-load/" "To Be Or Not To Be"
+
+%%    A --> B
+      A --> D
+%%    B -->|no| C
+%%    C --> B
+%%    B -->|yes| D
+    D -->|yes| E
+    D -->|no| M
+    M -->|"daily operational data (documents, graphics, tables, processed experimental data, ...)"| Q
+    M -->|raw research data, archives, backups, device or instrumentations outputs| P
+    M -->|hard to say| N
+%%   N -->|I do not care| O
+    N -->|yes| Q
+    N -->|no| P
+%%    O -->|perhaps| Q
+%%    O -->|I do not know| R
+    P -->|mostly me and/or my devices| S
+    P -->|"`a group of people (possible accross institutions)<br/>or instruments or devices`"| T
+```
+
+
 ---
 
 ## OwnCloud
@@ -20,7 +71,7 @@ If it does not work: [read full documentation](https://du.cesnet.cz/en/navody/ow
 
 ### Windows quick setup
 
-* Register in [Perun](https://einfra.cesnet.cz/).
+* Register in [Perun](https://einfra.cesnet.cz/), wait for 30 minutes to allow database synchrozation.
 * Register in [Gatekeeper](https://access.du.cesnet.cz/) and generate a pair of keys, record the endpoint address and both keys.
 * Install [S3 Browser](https://s3browser.com/).
 * Add a new account to S3 Browser (*Accounts* / *Add new account..*); select `S3 Compatible Storage` as *Account type* and enter the credentials recorded before: `endpoint address` as *API endpoint*, `access-key` as *Access Key ID*, and `secret-key` as *Secret Access Key*.
@@ -45,7 +96,7 @@ Where to go from here:
 
 ### MAC quick setup
 
-* Register in [Perun](https://einfra.cesnet.cz/).
+* Register in [Perun](https://einfra.cesnet.cz/), wait for 30 minutes to allow database synchrozation.
 * Register in [Gatekeeper](https://access.du.cesnet.cz/) and generate a pair of keys, record the endpoint address and both keys.
 * Install [Cyber Duck](https://cyberduck.io/). 
 * Open connection (*File* / *Open Connection*); select `Amazon S3` and enter the credentials recorded before: `endpoint address` as *Server*, `access-key` as *Access Key ID*, and `secret-key` as *Secret Access Key*.
@@ -70,7 +121,7 @@ Where to go from here:
 
 ### Linux quick setup
 
-* Register in [Perun](https://einfra.cesnet.cz/).
+* Register in [Perun](https://einfra.cesnet.cz/), wait for 30 minutes to allow database synchrozation.
 * Register in [Gatekeeper](https://access.du.cesnet.cz/) and generate a pair of keys, record the endpoint address and both keys.
 * [Download](https://rclone.org/downloads/) and install **rclone**.
 * [Configure](../object-storage-s3/rclone) **rclone** by calling ```rclone config```; use credentials recorded before.
