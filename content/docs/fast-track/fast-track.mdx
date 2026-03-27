@@ -17,11 +17,11 @@ flowchart TB
     D{"`I need a long-term storage to store/publish **results of my research**, create an annotated dataset, link it to my **publication**, etc.`"}
     M{"`My data is ...`"}
     E(("`Use *National Repository Platform*`"))
-%%    F{"`I am an expert/developer/application maintainer, I undrestand principles of S3/RBD and I know what I need`"}
+    F{"`I am an expert, developer, application maintainer, I have special or low-level requirements, or I need a significatly large storage space (more than 2 TB)...`"}
 %%    G{"`I need your help or assistance`"}
 %%    H{"`I have studied *S3 use cases* and/or *RBD use cases* and I know what I need`"}
 %%    I{"`I have special needs that are worth spending time on solving various technical difficulties`"}
-%%    J(("`*Contact us* Specify your setup and ideas / requirements`"))
+    J(("`Please *Contact us*<br/>Specify your setup, ideas, requirements`"))
 %%    K(("`*Great!* Just go ahead!`"))
 %%    L["`Let's try easy options firts, it may save you a lot of time`"]
     N{"`I need to have the data available offline and online, automatically synchronized between the storage and my computer`"}
@@ -35,19 +35,22 @@ flowchart TB
     click E "https://docs.nrp.eosc.cz/" "NRP"
 %%    click G "../introduction/support" "Support Page"
 %%    click H "../object-storage-s3/s3-use-cases" "S4 Use Cases"
+    click J "../introduction/support" "Support Page"
     click Q "../fast-track#owncloud" "Fast-track Instructions Owncloud"
     click S "../fast-track#personal-s3" "Fast-track Instructions S3 Personal"
 %%    click R "https://www.storelocal.com/blogs/the-philosophy-of-storing-10-storage-features-to-enlighten-your-load/" "To Be Or Not To Be"
 
 %%    A --> B
-      A --> D
+      A --> F
+      F -->|yes| J
+      F -->|no| D
 %%    B -->|no| C
 %%    C --> B
 %%    B -->|yes| D
     D -->|yes| E
     D -->|no| M
-    M -->|"daily operational data (documents, graphics, tables, processed experimental data, ...)"| Q
-    M -->|raw research data, archives, backups, device or instrumentations outputs| P
+    M -->|"daily operational data (documents, graphics, tables, processed experimental data, ... of up to ~100 GB)"| Q
+    M -->|raw research data, archives, backups, device or instrumentations outputs of up to ~2 TB| P
     M -->|hard to say| N
 %%   N -->|I do not care| O
     N -->|yes| Q
