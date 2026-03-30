@@ -1,6 +1,7 @@
 {
 "pages": [
 "introduction",
+"fast-track",
 "object-storage-s3",
 "object-storage-rbd",
 "collaboration",
