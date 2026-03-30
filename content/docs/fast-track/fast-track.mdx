@@ -4,9 +4,9 @@ title: Fast Track Setup
 
 ---
 
-Use this page to quickly **choose a service** from a set of services we offer and set it up so that it works for you on the basic level in less than an hour. This fast process requires an **average experienced** computer user. Once you have the service up and running, you will be offered a set of **follow-up options** to fine-tune the storage and its properties.
+Use this page to quickly **choose a service** from a set of **basic** services we offer and **set it up** so that it works for you on a couple of minutes. This fast process requires an **average experienced** computer user.
 
-# Choose a service
+# 1. Choose a service
 
 ```mermaid
 flowchart TB
@@ -30,15 +30,16 @@ flowchart TB
     Q(("`Use OwnCloud`"))
 %%    R(("`Well...`"))
     S(("`Use *personal S3 storage* service`"))
-    T(("`Use *multiuser S3 storage* service (Virtual Organization = VO)`"))
+    T(("`Use *multiuser S3 storage* service (Virtual Organization)<br/>Please contact us first.`"))
 
     click E "https://docs.nrp.eosc.cz/" "NRP"
 %%    click G "../introduction/support" "Support Page"
 %%    click H "../object-storage-s3/s3-use-cases" "S4 Use Cases"
     click J "../introduction/support" "Support Page"
     click Q "../fast-track#owncloud" "Fast-track Instructions Owncloud"
-    click S "../fast-track#personal-s3" "Fast-track Instructions S3 Personal"
 %%    click R "https://www.storelocal.com/blogs/the-philosophy-of-storing-10-storage-features-to-enlighten-your-load/" "To Be Or Not To Be"
+    click S "../fast-track#personal-s3" "Fast-track Instructions S3 Personal"
+    click T "../introduction/support" "Support Page"
 
 %%    A --> B
       A --> F
@@ -58,26 +59,27 @@ flowchart TB
 %%    O -->|perhaps| Q
 %%    O -->|I do not know| R
     P -->|mostly me and/or my devices| S
-    P -->|"`a group of people (possible accross institutions)<br/>or instruments or devices`"| T
+    P -->|"`a group of people (possibly accross institutions)<br/>or instruments or devices`"| T
 ```
 
----
+# 2. Install and Configure
 
-# OwnCloud
+## OwnCloud
 
-## Quick setup
+### Quick setup
 
 * To register and/or log in click on `Log in` button [here](https://owncloud.cesnet.cz/) and follow the instructions. Once logged-in, use drag-and-drop to upload files, click to download.
-* (optional) To **sync** the cloud data storage space to your local drive download and install [OwnCloud client](https://owncloud.com/desktop-app), run it and configure it using https://ownloud.cesnet.cz as the server address.
-* (optional) To **share** a folder with a colleague, click on the share symbol and enter your colleaugue's e-mail address (you need to enter whole address as there is [intentionaly] no autocomplete).
 
 If it does not work: [read full documentation](https://du.cesnet.cz/en/navody/owncloud/start), [contact support](https://docs.du.cesnet.cz/en/docs/introduction/support).
 
----
+> #### Where to go from here
+>
+> * To **sync** the cloud data storage space to your local drive, download and install [OwnCloud client](https://owncloud.com/desktop-app), run it and configure it using https://ownloud.cesnet.cz as the server address.
+> * To **share** a folder with a colleague, click on the share symbol and enter your colleaugue's e-mail address (you need to enter whole address as there is [intentionally] no autocomplete).
 
-# Personal S3
+## Personal S3
 
-## Windows quick setup
+### Windows Quick setup
 
 * Register in [Perun](https://einfra.cesnet.cz/), wait for 30 minutes to allow database synchrozation.
 * Register in [Gatekeeper](https://access.du.cesnet.cz/) and generate a pair of keys, record the endpoint address and both keys.
@@ -87,22 +89,20 @@ If it does not work: [read full documentation](https://du.cesnet.cz/en/navody/ow
 
 If it does not work: [read full documentation](../object-storage-s3/s3-service), [contact support](https://docs.du.cesnet.cz/en/docs/introduction/support).
 
-Where to go from here:
+> #### Where to go from here:
+>
+> - understand more about the [S3 service](../object-storage-s3/s3-service)
+> - check [different ways](../object-storage-s3/s3-clients) to access your storage
+> - get [more information](https://s3browser.com/help.aspx) about using **S3 Browser**
+> - setup and use [versioning support](https://s3browser.com/amazon-s3-versioning.aspx) in **S3 Browser**
+> - install and configure [rclone](object-storage-s3/rclone) command line tool to
+>      - [synchronize files](../object-storage-s3/rclone#rclone-basic-controls) between the local drive and the storage
+>      - create automation scripts
+>      - configure and use [encrypted storage](../object-storage-s3/rclone#configuration-and-management-of-encrypted-buckets)
+>      - [mount](../object-storage-s3/rclone#mounting-the-remote-as-a-filesystem-or-a-drive) S3 storage as disk
+> - ask for [help or support](../introduction/support)
 
-- understand more about the [S3 service](../object-storage-s3/s3-service)
-- check [different ways](../object-storage-s3/s3-clients) to access your storage
-- get [more information](https://s3browser.com/help.aspx) about using **S3 Browser**
-- setup and use [versioning support](https://s3browser.com/amazon-s3-versioning.aspx) in **S3 Browser**
-- install and configure [rclone](object-storage-s3/rclone) command line tool to
-     - [synchronize files](../object-storage-s3/rclone#rclone-basic-controls) between the local drive and the storage
-     - create automation scripts
-     - configure and use [encrypted storage](../object-storage-s3/rclone#configuration-and-management-of-encrypted-buckets)
-     - [mount](../object-storage-s3/rclone#mounting-the-remote-as-a-filesystem-or-a-drive) S3 storage as disk
-- ask for [help or support](../introduction/support)
-
----
-
-## MAC quick setup
+### MAC quick setup
 
 * Register in [Perun](https://einfra.cesnet.cz/), wait for 30 minutes to allow database synchrozation.
 * Register in [Gatekeeper](https://access.du.cesnet.cz/) and generate a pair of keys, record the endpoint address and both keys.
@@ -113,21 +113,19 @@ Where to go from here:
 
 If it does not work: [read full documentation](../object-storage-s3/s3-service), [contact support](https://docs.du.cesnet.cz/en/docs/introduction/support).
 
-Where to go from here:
+> #### Where to go from here:
+>
+> - understand more about the [S3 service](../object-storage-s3/s3-service)
+> - check [different ways](../object-storage-s3/s3-clients) to access your storage
+> - get [more information](https://docs.cyberduck.io/) or [ask community for help](https://github.com/iterate-ch/cyberduck/discussions) about using **Cyber Duck**
+> - install and configure [rclone](object-storage-s3/rclone) command line tool to
+>      - [synchronize files](../object-storage-s3/rclone#rclone-basic-controls) between the local drive and the storage
+>      - create automation scripts
+>      - configure and use [encrypted storage](../object-storage-s3/rclone#configuration-and-management-of-encrypted-buckets)
+>      - [mount](../object-storage-s3/rclone#mounting-the-remote-as-a-filesystem-or-a-drive) S3 storage as disk
+> - ask for [help or support](../introduction/support)
 
-- understand more about the [S3 service](../object-storage-s3/s3-service)
-- check [different ways](../object-storage-s3/s3-clients) to access your storage
-- get [more information](https://docs.cyberduck.io/) or [ask community for help](https://github.com/iterate-ch/cyberduck/discussions) about using **Cyber Duck**
-- install and configure [rclone](object-storage-s3/rclone) command line tool to
-     - [synchronize files](../object-storage-s3/rclone#rclone-basic-controls) between the local drive and the storage
-     - create automation scripts
-     - configure and use [encrypted storage](../object-storage-s3/rclone#configuration-and-management-of-encrypted-buckets)
-     - [mount](../object-storage-s3/rclone#mounting-the-remote-as-a-filesystem-or-a-drive) S3 storage as disk
-- ask for [help or support](../introduction/support)
-
----
-
-## Linux quick setup
+### Linux quick setup
 
 * Register in [Perun](https://einfra.cesnet.cz/), wait for 30 minutes to allow database synchrozation.
 * Register in [Gatekeeper](https://access.du.cesnet.cz/) and generate a pair of keys, record the endpoint address and both keys.
@@ -137,16 +135,16 @@ Where to go from here:
 
 If it does not work: [read full documentation](../object-storage-s3/s3-service), [contact support](https://docs.du.cesnet.cz/en/docs/introduction/support).
 
-Where to go from here:
-
-- understand more about the [S3 service](../object-storage-s3/s3-service)
-- check [different ways](../object-storage-s3/s3-clients) to access your storage
-- get [more information]https://rclone.org/) about using **rclone**
-- use [rclone](object-storage-s3/rclone) to
-     - [synchronize files](../object-storage-s3/rclone#rclone-basic-controls) between the local drive and the storage
-     - create automation scripts
-     - configure and use [encrypted storage](../object-storage-s3/rclone#configuration-and-management-of-encrypted-buckets)
-     - [mount](../object-storage-s3/rclone#mounting-the-remote-as-a-filesystem-or-a-drive) S3 storage as disk
-- ask for [help or support](../introduction/support)
+> #### Where to go from here:
+>
+> - understand more about the [S3 service](../object-storage-s3/s3-service)
+> - check [different ways](../object-storage-s3/s3-clients) to access your storage
+> - get [more information]https://rclone.org/) about using **rclone**
+> - use [rclone](object-storage-s3/rclone) to
+>      - [synchronize files](../object-storage-s3/rclone#rclone-basic-controls) between the local drive and the storage
+>      - create automation scripts
+>      - configure and use [encrypted storage](../object-storage-s3/rclone#configuration-and-management-of-encrypted-buckets)
+>      - [mount](../object-storage-s3/rclone#mounting-the-remote-as-a-filesystem-or-a-drive) S3 storage as disk
+> - ask for [help or support](../introduction/support)
 
 
