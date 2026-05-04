@@ -1,7 +1,6 @@
 {
 "pages": [
 "introduction",
-"scenarios",
 "fast-track",
 "object-storage-s3",
 "object-storage-rbd",
