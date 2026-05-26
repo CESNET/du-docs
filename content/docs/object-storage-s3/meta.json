@@ -16,6 +16,7 @@
     "boto3",
     "s3-features",
     "veeam-backup",
+    "synology",
     "rclone-encryption-module"
   ]
 }
