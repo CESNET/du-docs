@@ -1,5 +1,5 @@
 ---
-title: Connecting and Configuring Ceph RBD Using a Linux Client
+title: LUG - Connecting and Configuring Ceph RBD Using a Linux Client
 ---
 Ceph RBD (RADOS Block Device) offers users a network block device that appears as a local disk on the system where it is connected. The block device is entirely managed by the user, who can create a file system on it and use it according to his needs.
 
@@ -86,44 +86,12 @@ To configure and connect to RBD, use the credentials provided by the system admi
 
 In the directory **/etc/ceph/** create a text file **ceph.conf** with the following content. 
 
-**CL1 Data Storage**
+**LUG Data Storage**
 ```ini filename="ceph.conf" copy
 [global]
-    fsid = 19f6785a-70e1-45e8-a23a-5cff0c39aa54
-    mon_host = [v2:78.128.244.51:3300,v1:78.128.244.51:6789],[v2:78.128.244.52:3300,v1:78.128.244.52:6789],[v2:78.128.244.53:3300,v1:78.128.244.53:6789],[v2:78.128.244.54:3300,v1:78.128.244.54:6789],[v2:78.128.244.55:3300,v1:78.128.244.55:6789]
-    auth_client_required = cephx
-```
-
-**CL2 Data Storage**
-```ini filename="ceph.conf" copy
-[global]
-    fsid = 3ea58563-c8b9-4e63-84b0-a504a5c71f76
-    mon_host = [v2:78.128.244.65:3300/0,v1:78.128.244.65:6789/0],[v2:78.128.244.69:3300/0,v1:78.128.244.69:6789/0],[v2:78.128.244.71:3300/0,v1:78.128.244.71:6789/0]
-    auth_client_required = cephx
-```
-
-**CL3 Data Storage**
-```ini filename="ceph.conf" copy
-[global]
-    fsid = b16aa2d2-fbe7-4f35-bc2f-3de29100e958
-    mon_host = [v2:78.128.244.240:3300/0,v1:78.128.244.240:6789/0],[v2:78.128.244.241:3300/0,v1:78.128.244.241:6789/0],[v2:78.128.244.242:3300/0,v1:78.128.244.242:6789/0]
-    auth_client_required = cephx
-```
-
-**CL4 Data Storage**
-```ini filename="ceph.conf" copy
-[global]
-    fsid = c4ad8c6f-7ef3-4b0e-873c-b16b00b5aac4
-    mon_host = [v2:78.128.245.29:3300/0,v1:78.128.245.29:6789/0] [v2:78.128.245.30:3300/0,v1:78.128.245.30:6789/0] [v2:78.128.245.31:3300/0,v1:78.128.245.31:6789/0]
-    auth_client_required = cephx
-```
-
-**CL5 Data Storage**
-```ini
-[global]
-fsid = c581dace-40ff-4519-878b-c0ffeec0ffee
-mon_host = [v2:78.128.245.157:3300/0,v1:78.128.245.157:6789/0] [v2:78.128.245.158:3300/0,v1:78.128.245.158:6789/0] [v2:78.128.245.159:3300/0,v1:78.128.245.159:6789/0]
-auth_client_required = cephx
+    fsid = 3d8d9fd1-418a-4b13-b3d6-a437c9294ebf
+    mon_host = [v2:195.113.231.135:3300/0,v1:195.113.231.135:6789/0] [v2:195.113.231.136:3300/0,v1:195.113.231.136:6789/0] [v2:195.113.231.137:3300/0,v1:195.113.231.137:6789/0]
+    auth_client_required = cephx 
 ```
 
 Next, in the **/etc/ceph/** directory, create a text file **ceph.keyring**. Then, save the keyring in that file, as shown in the example below.
@@ -310,6 +278,7 @@ mount /storage/rbd/image_name
 
 xfs_growfs /dev/mapper/image_name
 ```
+
 ## Snapshots of RBD image
 
 <Callout type="info" emoji="ℹ️">
