@@ -17,7 +17,7 @@ flowchart TB
     D{"`I need a long-term storage to store/publish **results of my research**, create an annotated dataset, link it to my **publication**, etc.`"}
     M{"`My data is ...`"}
     E(("`Use *National Repository Platform*`"))
-    F{"`I am an expert, developer, application maintainer, I have special or low-level requirements, or I need a significatly large storage space (more than 2 TB)...`"}
+    F{"`I am an expert, developer, application maintainer, I have special or low-level requirements, or I need a significatly large storage space (more than 10 TB)...`"}
 %%    G{"`I need your help or assistance`"}
 %%    H{"`I have studied *S3 use cases* and/or *RBD use cases* and I know what I need`"}
 %%    I{"`I have special needs that are worth spending time on solving various technical difficulties`"}
@@ -51,7 +51,7 @@ flowchart TB
     D -->|yes| E
     D -->|no| M
     M -->|"daily operational data (documents, graphics, tables, processed experimental data, ... of up to ~100 GB)"| Q
-    M -->|raw research data, archives, backups, device or instrumentations outputs of up to ~2 TB| P
+    M -->|raw research data, archives, backups, device or instrumentations outputs of up to ~10 TB| P
     M -->|hard to say| N
 %%   N -->|I do not care| O
     N -->|yes| Q
@@ -74,7 +74,7 @@ If it does not work: [read full documentation](https://du.cesnet.cz/en/navody/ow
 
 > #### Where to go from here
 >
-> * To **sync** the cloud data storage space to your local drive, download and install [OwnCloud client](https://owncloud.com/desktop-app), run it and configure it using https://ownloud.cesnet.cz as the server address.
+> * To **sync** the cloud data storage space to your local drive, download and install [OwnCloud client **version 6**](https://download.owncloud.com/desktop/ownCloud/stable/6.0.3.18040/) (do **not** install version 7!), run it, and configure it using https://ownloud.cesnet.cz as the server address.
 > * To **share** a folder with a colleague, click on the share symbol and enter your colleaugue's e-mail address (you need to enter whole address as there is [intentionally] no autocomplete).
 
 ## Personal S3
