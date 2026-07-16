@@ -23,10 +23,10 @@ In case you want to generate the static pages locally (could be useful for large
 3. *(Optional)* Checkout to specific branch `git checkout branch_to_test`.
 4. Run the build (change the fumadocs version number if needed; version 16.11.1 was installed on July 15, 2016):
 ```bash
-docker run -it --rm -p 3000:3000 -e STARTPAGE=/en/docs/introduction/introduction -v ./public:/opt/fumadocs/public -v ./content/docs:/opt/fumadocs/content/docs cerit.io/docs/fuma:v16.11.1
+docker run -it --rm -p 3000:3000 --name du-docs-test -e STARTPAGE=/en/docs/introduction/introduction -v ./public:/opt/fumadocs/public -v ./content/docs:/opt/fumadocs/content/docs cerit.io/docs/fuma:v16.11.1
 ```
-5. Open another terminal and change to *du-docs* `cd du-docs`. Find the container name (`docker container ls`), then copy local files in *app* and *components* directories over the container directories (replace *\<container_name\>* with the actual name of the container):
+5. Open another terminal and change to *du-docs* `cd du-docs`. Copy local files in *app* and *components* directories over the container directories:
 ```bash
-for dir in app components; do docker cp $dir <container_name>:/opt/fumadocs; done
+for dir in app components; do docker cp $dir du-docs-test:/opt/fumadocs; done
 ```
 6. Documentation will be available at [http://localhost:3000/en/docs/introduction/introduction](http://localhost:3000/en/docs/introduction/introduction); it is automatically rebuilt on source change.
